@@ -1,0 +1,6 @@
+# onepage configuration file
+qid: Q1058
+languages: [en, hi]
+base_language: en
+max_refs_per_claim: 3
+emit: [ir, wikitext, html]

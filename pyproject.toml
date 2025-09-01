@@ -1,0 +1,84 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "onepage"
+version = "0.1.0"
+description = "Merge Wikipedia articles across languages into one comprehensive, source-attributed page"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "onepage contributors"},
+]
+keywords = ["wikipedia", "wikidata", "translation", "nlp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+dependencies = [
+    "click>=8.0.0",
+    "requests>=2.28.0",
+    "pyyaml>=6.0",
+    "wikitextparser>=0.55.0",
+    "sentence-transformers>=2.2.0",
+    "transformers>=4.20.0",
+    "torch>=1.12.0",
+    "numpy>=1.21.0",
+    "beautifulsoup4>=4.11.0",
+    "lxml>=4.9.0",
+    "tqdm>=4.64.0",
+    "python-dateutil>=2.8.0",
+    "langdetect>=1.0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=22.0.0",
+    "flake8>=5.0.0",
+    "mypy>=1.0.0",
+    "types-requests>=2.28.0",
+    "types-PyYAML>=6.0.0",
+]
+
+[project.scripts]
+onepage = "onepage.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/soodoku/onepage"
+Repository = "https://github.com/soodoku/onepage"
+Issues = "https://github.com/soodoku/onepage/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["onepage*"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38']
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

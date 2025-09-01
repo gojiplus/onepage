@@ -115,7 +115,14 @@ class TranslationService:
                 return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
             response.raise_for_status()
 
-            data = response.json()
+            try:
+                data = response.json()
+            except ValueError:
+                # Service returned an empty or non-JSON response
+                print("Translation failed: invalid JSON from LibreTranslate")
+                self.last_request_time = time.time()
+                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
+
             if "translatedText" in data:
                 translated = data["translatedText"]
                 self.last_request_time = time.time()
@@ -155,7 +162,12 @@ class TranslationService:
             }
             response = self.session.get(url, params=params, timeout=10)
             response.raise_for_status()
-            data = response.json()
+            try:
+                data = response.json()
+            except ValueError:
+                print("Google translation failed: invalid JSON response")
+                self.last_request_time = time.time()
+                return None
             translated = "".join(segment[0] for segment in data[0])
             self.last_request_time = time.time()
             return translated

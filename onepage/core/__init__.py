@@ -1,0 +1,1 @@
+"""Core data models and structures for onepage."""

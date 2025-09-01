@@ -3,8 +3,6 @@
 import requests
 from typing import List, Dict, Optional, Tuple
 import time
-import re
-import wikitextparser as wtp
 
 try:
     from langdetect import detect
@@ -14,7 +12,7 @@ except ImportError:
     def detect(text: str) -> str:
         return "unknown"
 
-from .models import Claim
+from ..core.models import Claim
 
 
 class TranslationService:
@@ -207,5 +205,5 @@ class TextCleaner:
         
         # Normalize URLs
         ref_text = re.sub(r'https?://(www\.)?', 'https://', ref_text)
-
+        
         return ref_text

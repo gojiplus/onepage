@@ -3,14 +3,9 @@
 import json
 import pytest
 
-from onepage.models import (
-    Entity,
-    Claim,
-    Fact,
-    Reference,
-    Provenance,
-    Section,
-    IntermediateRepresentation,
+from onepage.core.models import (
+    Entity, Claim, Fact, Reference, Provenance, 
+    Section, IntermediateRepresentation
 )
 
 

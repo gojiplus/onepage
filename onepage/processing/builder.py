@@ -13,6 +13,7 @@ from .text import WikitextProcessor, Sentence
 from .translation import TranslationService
 from .alignment import SentenceAligner, AlignmentCluster  
 from .references import ReferenceCanonicalizationService
+from .content_merger import ContentMergerPipeline
 
 
 @dataclass
@@ -26,11 +27,14 @@ class BuildResult:
 class IRBuilder:
     """Builds Intermediate Representation from fetched Wikipedia content."""
     
-    def __init__(self):
+    def __init__(self, use_modular_merger: bool = True):
         self.text_processor = WikitextProcessor()
         self.translator = TranslationService()
         self.aligner = SentenceAligner()
         self.ref_canonicalizer = ReferenceCanonicalizationService()
+        self.use_modular_merger = use_modular_merger
+        if use_modular_merger:
+            self.content_merger = ContentMergerPipeline()
     
     def build_ir(self, input_dir: str, qid: str) -> BuildResult:
         """
@@ -49,70 +53,108 @@ class IRBuilder:
         # Load entity metadata
         entity = self._load_entity(input_path)
         
-        # Load articles and extract content
-        articles_data = self._load_articles(input_path)
-        all_sentences = self._extract_all_sentences(articles_data)
+        if self.use_modular_merger:
+            # Use new modular content merger
+            merge_result = self.content_merger.merge_content(input_dir)
+            ir_data = self.content_merger.convert_to_ir_format(merge_result, entity)
+            
+            # Build facts from Wikidata claims
+            wikidata_facts = self._build_facts_from_wikidata(input_path, qid)
+            
+            # Add Wikidata facts to content
+            for fact in wikidata_facts:
+                ir_data['content'][fact.id] = fact
+                
+            stats = merge_result.stats
+            stats.update({
+                "wikidata_facts": len(wikidata_facts),
+                "total_content_items": len(ir_data['content']),
+                "sections": len(ir_data['sections'])
+            })
+            
+        else:
+            # Use original pipeline approach
+            articles_data = self._load_articles(input_path)
+            all_sentences = self._extract_all_sentences(articles_data)
+            
+            # Convert sentences to claims
+            claims = self._sentences_to_claims(all_sentences)
+            
+            # Translate non-English claims
+            translated_claims = self.translator.translate_claims(claims)
+            
+            # Align claims across languages
+            alignment_clusters = self.aligner.align_claims(translated_claims)
+            
+            # Build sections from aligned content
+            sections = self._build_sections(alignment_clusters)
+            
+            # Extract and canonicalize references
+            all_references = self._extract_all_references(articles_data)
+            canonical_refs = self.ref_canonicalizer.canonicalize_references(all_references)
+            
+            # Build facts from Wikidata claims
+            facts = self._build_facts_from_wikidata(input_path, qid)
         
-        # Convert sentences to claims
-        claims = self._sentences_to_claims(all_sentences)
-        
-        # Translate non-English claims
-        translated_claims = self.translator.translate_claims(claims)
-        
-        # Align claims across languages
-        alignment_clusters = self.aligner.align_claims(translated_claims)
-        
-        # Build sections from aligned content
-        sections = self._build_sections(alignment_clusters)
-        
-        # Extract and canonicalize references
-        all_references = self._extract_all_references(articles_data)
-        canonical_refs = self.ref_canonicalizer.canonicalize_references(all_references)
-        
-        # Build facts from Wikidata claims
-        facts = self._build_facts_from_wikidata(input_path, qid)
-        
-        # Combine content
-        content = {}
-        
-        # Add claims from alignment clusters
-        for cluster in alignment_clusters:
-            claim = cluster.primary_claim
-            if claim:
-                content[claim.id] = claim
-        
-        # Add facts
-        for fact in facts:
-            content[fact.id] = fact
-        
-        # Build reference dictionary
-        references = {ref.canonical_id: self._canonical_ref_to_reference(ref) 
-                     for ref in canonical_refs}
-        
-        # Create IR
-        ir = IntermediateRepresentation(
-            entity=entity,
-            sections=sections,
-            content=content,
-            references=references,
-            metadata={
-                "build_timestamp": str(input_path / "fetch_metadata.json"),
-                "languages_processed": list(articles_data.keys()),
+        if self.use_modular_merger:
+            # Create IR from modular merge result
+            ir = IntermediateRepresentation(
+                entity=ir_data['entity'],
+                sections=ir_data['sections'],
+                content=ir_data['content'],
+                references=ir_data['references'],
+                metadata={
+                    "build_timestamp": str(input_path / "fetch_metadata.json"),
+                    "merger_type": "modular",
+                    "languages_processed": stats.get('languages_processed', 0),
+                    "total_content_items": stats.get('total_content_items', 0),
+                }
+            )
+            
+        else:
+            # Original pipeline approach
+            # Combine content
+            content = {}
+            
+            # Add claims from alignment clusters
+            for cluster in alignment_clusters:
+                claim = cluster.primary_claim
+                if claim:
+                    content[claim.id] = claim
+            
+            # Add facts
+            for fact in facts:
+                content[fact.id] = fact
+            
+            # Build reference dictionary
+            references = {ref.canonical_id: self._canonical_ref_to_reference(ref) 
+                         for ref in canonical_refs}
+            
+            # Create IR
+            ir = IntermediateRepresentation(
+                entity=entity,
+                sections=sections,
+                content=content,
+                references=references,
+                metadata={
+                    "build_timestamp": str(input_path / "fetch_metadata.json"),
+                    "merger_type": "original",
+                    "languages_processed": list(articles_data.keys()),
+                    "total_claims": len(claims),
+                    "total_clusters": len(alignment_clusters),
+                    "total_references": len(canonical_refs),
+                }
+            )
+            
+            # Calculate stats for original approach
+            stats = {
+                "total_sentences": len(all_sentences),
                 "total_claims": len(claims),
-                "total_clusters": len(alignment_clusters),
-                "total_references": len(canonical_refs),
+                "alignment_clusters": len(alignment_clusters),
+                "canonical_references": len(canonical_refs),
+                "languages_processed": len(articles_data),
+                "sections": len(sections),
             }
-        )
-        
-        # Calculate stats
-        stats = {
-            "total_sentences": len(all_sentences),
-            "total_claims": len(claims),
-            "alignment_clusters": len(alignment_clusters),
-            "canonical_references": len(canonical_refs),
-            "languages_processed": len(articles_data),
-            "sections": len(sections),
-        }
         
         return BuildResult(ir=ir, stats=stats, warnings=warnings)
     

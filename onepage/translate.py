@@ -64,7 +64,7 @@ class TranslationService:
         # In production, you'd want to use a proper translation API
         translated_text = self._translate_via_libre(text, source_lang, "en")
 
-        # If MyMemory fails, fall back to Google's lightweight endpoint
+        # If LibreTranslate fails, fall back to Google's lightweight endpoint
         if translated_text.startswith("[TRANSLATION UNAVAILABLE"):
             google_text = self._translate_via_google(text, source_lang, "en")
             if google_text is not None:
@@ -77,9 +77,12 @@ class TranslationService:
         return translated_text, confidence
     
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
-        """Translate using MyMemory free translation API.
+        """Translate using the LibreTranslate API.
 
-        Falls back to a generic placeholder when the service is unavailable.
+        Falls back to a generic placeholder when the service is unavailable or
+        rate limited.  ``LibreTranslate`` is an open source translation service
+        with a free public instance at ``libretranslate.de`` which does not
+        require an API key for light usage.
         """
         # Rate limiting
         current_time = time.time()
@@ -94,27 +97,27 @@ class TranslationService:
             # Limit text length to avoid API limits
             text_to_translate = text[:500] if len(text) > 500 else text
 
-            url = "https://api.mymemory.translated.net/get"
-            params = {
+            url = "https://libretranslate.de/translate"
+            data = {
                 "q": text_to_translate,
-                "langpair": f"{source}|{target}",
+                "source": source,
+                "target": target,
+                "format": "text",
             }
 
-            response = self.session.get(url, params=params, timeout=10)
+            response = self.session.post(url, data=data, timeout=10)
             if response.status_code == 429:
                 # Respect server rate limiting and avoid spamming requests
                 retry_after = int(response.headers.get("Retry-After", "1"))
-                print("Translation rate limited by MyMemory; backing off")
+                print("Translation rate limited by LibreTranslate; backing off")
                 time.sleep(retry_after)
                 self.last_request_time = time.time()
                 return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
             response.raise_for_status()
 
             data = response.json()
-            if data.get("responseStatus") == 200:
-                translated = data["responseData"]["translatedText"]
-                # Clean up common translation artifacts
-                translated = translated.replace("&quot;", '"').replace("&amp;", "&")
+            if "translatedText" in data:
+                translated = data["translatedText"]
                 self.last_request_time = time.time()
                 return translated
 

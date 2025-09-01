@@ -2,7 +2,7 @@
 
 **Merge Wikipedia articles across languages into one comprehensive, source‑attributed page.**
 
-Input: a Wikidata **QID**. Output: deterministic **English wikitext** (for now) + a machine‑readable **IR (JSON)**. Provenance is preserved per sentence. Later, the same IR can render to other languages.
+Input: a Wikidata **QID**. Output: deterministic **English wikitext**, a machine‑readable **IR (JSON)** and, with `pandoc` installed, an optional **HTML preview**. Provenance is preserved per sentence. Later, the same IR can render to other languages.
 
 ---
 
@@ -26,7 +26,7 @@ Different language Wikipedias describe the same topic independently. Sitelinks a
 
 * **`onepage.en.wikitext`** — MediaWiki wikitext ready for human review/paste.
 * **`onepage.ir.json`** — Intermediate Representation with sections, claims, facts, refs, and attribution.
-* **`preview.en.html`** — Optional HTML preview.
+* **`preview.en.html`** — Optional HTML preview (requires [`pandoc`](https://pandoc.org)).
 * **`ATTRIBUTION.md`** — Source language + revision IDs for share‑alike compliance.
 
 ---
@@ -66,8 +66,7 @@ If the CLI has issues, you can generate HTML previews directly with Python:
 
 ```python
 import json
-from onepage.renderers.html import HTMLRenderer
-from onepage.core.models import IntermediateRepresentation
+from onepage import HTMLRenderer, IntermediateRepresentation
 
 # Load or create IR data
 with open('./out/Q1058/onepage.ir.json', 'r') as f:

@@ -1,10 +1,12 @@
-"""Wikitext renderer from IR to MediaWiki format."""
+"""Rendering utilities for converting the IR into textual formats."""
 
 from typing import List, Dict, Any, Optional
 import re
+import subprocess
+import shutil
 from datetime import datetime
 
-from ..core.models import IntermediateRepresentation, Section, Claim, Fact, Reference
+from .models import IntermediateRepresentation, Section, Claim, Fact, Reference
 
 
 class WikitextRenderer:
@@ -200,7 +202,7 @@ class WikitextRenderer:
         """Render a fact as readable text (for facts not in infobox)."""
         # This could be expanded to convert facts to natural language
         return None
-    
+
     def _format_reference(self, ref: Reference) -> str:
         """Format a reference for citation."""
         if ref.doi:
@@ -264,3 +266,32 @@ class WikitextRenderer:
             if section.id == section_id:
                 return section
         return None
+
+
+class HTMLRenderer:
+    """Render the :class:`IntermediateRepresentation` to HTML.
+
+    This renderer converts the IR to wikitext using :class:`WikitextRenderer`
+    and then invokes ``pandoc`` to translate the wikitext into HTML. ``pandoc``
+    must be available on the ``PATH``; if it is not installed a helpful
+    ``RuntimeError`` is raised.
+    """
+
+    def __init__(self, language: str = "en") -> None:
+        self.language = language
+        self._wikitext = WikitextRenderer(language=language)
+
+    def render(self, ir: IntermediateRepresentation) -> str:
+        """Render the IR to an HTML string."""
+        if not shutil.which("pandoc"):
+            raise RuntimeError("pandoc is required for HTML rendering but was not found")
+
+        wikitext = self._wikitext.render(ir)
+        proc = subprocess.run(
+            ["pandoc", "-s", "-f", "mediawiki", "-t", "html"],
+            input=wikitext.encode("utf-8"),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=True,
+        )
+        return proc.stdout.decode("utf-8")

@@ -66,8 +66,8 @@ If the CLI has issues, you can generate HTML previews directly with Python:
 
 ```python
 import json
-from onepage.renderers.html import HTMLRenderer
-from onepage.core.models import IntermediateRepresentation
+from onepage.render import HTMLRenderer
+from onepage.models import IntermediateRepresentation
 
 # Load or create IR data
 with open('./out/Q1058/onepage.ir.json', 'r') as f:

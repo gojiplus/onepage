@@ -264,3 +264,63 @@ class WikitextRenderer:
             if section.id == section_id:
                 return section
         return None
+
+
+class HTMLRenderer:
+    """Renders IntermediateRepresentation to simple HTML."""
+
+    def __init__(self, language: str = "en") -> None:
+        self.language = language
+
+    def render(self, ir: IntermediateRepresentation) -> str:
+        """Render the IR to a basic HTML document."""
+        parts = ["<html>", "<body>"]
+
+        title = ir.entity.labels.get(self.language, ir.entity.qid)
+        parts.append(f"<h1>{title}</h1>")
+
+        lead = self._find_section_by_id(ir.sections, "lead")
+        if lead:
+            lead_content = self._render_section_content(lead, ir)
+            if lead_content:
+                parts.append(lead_content)
+
+        for section in ir.sections:
+            if section.id != "lead":
+                section_html = self._render_section(section, ir)
+                if section_html:
+                    parts.append(section_html)
+
+        parts.extend(["</body>", "</html>"])
+        return "\n".join(parts)
+
+    def _render_section(self, section: Section, ir: IntermediateRepresentation) -> str:
+        parts = []
+        title = section.title.get(self.language)
+        if title:
+            level = max(2, section.level)
+            heading_tag = f"h{level}"
+            parts.append(f"<{heading_tag}>{title}</{heading_tag}>")
+
+        content = self._render_section_content(section, ir)
+        if content:
+            parts.append(content)
+
+        return "\n".join(parts)
+
+    def _render_section_content(self, section: Section, ir: IntermediateRepresentation) -> str:
+        sentences = []
+        for item_id in section.items:
+            item = ir.content.get(item_id)
+            if isinstance(item, Claim):
+                sentences.append(item.text)
+
+        if sentences:
+            return "<p>" + " ".join(sentences) + "</p>"
+        return ""
+
+    def _find_section_by_id(self, sections: List[Section], section_id: str) -> Optional[Section]:
+        for section in sections:
+            if section.id == section_id:
+                return section
+        return None

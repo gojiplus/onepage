@@ -3,18 +3,19 @@
 from click.testing import CliRunner
 
 from onepage.cli import cli
+from onepage.api import ArticleFetcher
 
 
 def test_fetch_command(monkeypatch, tmp_path):
     """Fetch command should invoke ArticleFetcher and output messages."""
     captured = {}
 
-    class DummyFetcher:
-        def fetch_all(self, qid, languages, out):
-            captured["args"] = (qid, languages, out)
+    def mock_fetch_all(self, qid, languages, out):
+        captured["args"] = (qid, languages, out)
+        captured["self"] = self
 
-    # Replace ArticleFetcher with dummy implementation
-    monkeypatch.setattr("onepage.cli.ArticleFetcher", DummyFetcher)
+    # Patch ArticleFetcher.fetch_all to avoid network calls but keep real class
+    monkeypatch.setattr("onepage.cli.ArticleFetcher.fetch_all", mock_fetch_all)
 
     runner = CliRunner()
     out_dir = tmp_path / "data"
@@ -27,3 +28,4 @@ def test_fetch_command(monkeypatch, tmp_path):
     assert "Fetching articles for Q1 in languages: en, hi" in result.output
     assert "Results written to" in result.output
     assert captured["args"] == ("Q1", ["en", "hi"], str(out_dir))
+    assert isinstance(captured["self"], ArticleFetcher)

@@ -12,6 +12,14 @@ class Provenance:
     wiki: str  # e.g., "enwiki", "hiwiki"
     title: str  # Article title in the source language
     rev_id: int  # Revision ID
+    
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert to dictionary for JSON serialization."""
+        return {
+            "wiki": self.wiki,
+            "title": self.title,
+            "rev_id": self.rev_id,
+        }
 
 
 @dataclass

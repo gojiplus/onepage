@@ -52,7 +52,11 @@ class ArticleFetcher:
                     # Save individual article data
                     article_file = output_path / f"{lang}.json"
                     with open(article_file, 'w', encoding='utf-8') as f:
-                        json.dump(article_data, f, indent=2, ensure_ascii=False)
+                        # Convert Provenance object to dict for JSON serialization
+                        serializable_data = {**article_data}
+                        if 'provenance' in serializable_data:
+                            serializable_data['provenance'] = article_data['provenance'].to_dict()
+                        json.dump(serializable_data, f, indent=2, ensure_ascii=False)
                         
                 except Exception as e:
                     print(f"Warning: Could not fetch {lang} article: {e}")

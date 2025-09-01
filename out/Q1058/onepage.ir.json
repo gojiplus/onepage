@@ -1,0 +1,104 @@
+{
+  "entity": {
+    "qid": "Q1058",
+    "labels": {
+      "en": "Narendra Modi",
+      "hi": "नरेन्द्र मोदी"
+    },
+    "descriptions": {
+      "en": "Prime Minister of India since 2014",
+      "hi": "भारत के प्रधानमंत्री"
+    },
+    "aliases": {
+      "en": [
+        "Modi",
+        "NaMo",
+        "Modi Ji",
+        "Modiji",
+        "Narendra Damodardas Modi"
+      ]
+    }
+  },
+  "sections": [
+    {
+      "id": "lead",
+      "items": ["c1", "c2"]
+    },
+    {
+      "id": "early_life",
+      "title": {
+        "en": "Early life"
+      },
+      "items": ["c3"]
+    }
+  ],
+  "content": {
+    "c1": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Narendra Damodardas Modi is an Indian politician who has served as the prime minister of India since 2014.",
+      "sources": ["r1"],
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1234567
+      }
+    },
+    "c2": {
+      "type": "claim",
+      "lang": "en", 
+      "text": "Modi was the chief minister of Gujarat from 2001 to 2014 and is the member of parliament for Varanasi.",
+      "sources": ["r1"],
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1234567
+      }
+    },
+    "c3": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi was born and raised in Vadnagar, Bombay State (present-day Gujarat), where he completed his secondary education.",
+      "sources": ["r1"],
+      "provenance": {
+        "wiki": "enwiki", 
+        "title": "Narendra Modi",
+        "rev_id": 1234567
+      }
+    },
+    "f1": {
+      "type": "fact",
+      "property": "P569",
+      "value": "1950-09-17",
+      "qualifiers": {},
+      "sources": ["r2"],
+      "from": "wikidata"
+    },
+    "f2": {
+      "type": "fact",
+      "property": "P39",
+      "value": {"qid": "Q192711"},
+      "qualifiers": {
+        "P580": "2014-05-26"
+      },
+      "sources": ["r2"],
+      "from": "wikidata"
+    }
+  },
+  "references": {
+    "r1": {
+      "url": "https://en.wikipedia.org/wiki/Narendra_Modi",
+      "title": "Wikipedia article: Narendra Modi",
+      "date": "2025-09-01"
+    },
+    "r2": {
+      "url": "https://www.wikidata.org/wiki/Q1058",
+      "title": "Wikidata: Narendra Modi",
+      "date": "2025-09-01"
+    }
+  },
+  "metadata": {
+    "build_timestamp": "2025-09-01",
+    "languages_processed": ["en"]
+  }
+}

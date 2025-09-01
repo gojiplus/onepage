@@ -2,6 +2,7 @@
 
 from typing import Dict, List, Any, Optional
 import html
+import re
 from datetime import datetime
 
 from ..core.models import IntermediateRepresentation, Section, Claim, Fact, Reference
@@ -12,6 +13,19 @@ class HTMLRenderer:
     
     def __init__(self, language: str = "en"):
         self.language = language
+        
+        # Wikidata property mappings for infobox
+        self.infobox_mappings = {
+            "P18": "image",         # image
+            "P569": "birth_date",   # date of birth
+            "P19": "birth_place",   # place of birth
+            "P570": "death_date",   # date of death
+            "P20": "death_place",   # place of death  
+            "P39": "office",        # position held
+            "P102": "party",        # political party
+            "P27": "nationality",   # country of citizenship
+            "P106": "occupation",   # occupation
+        }
     
     def render(self, ir: IntermediateRepresentation) -> str:
         """
@@ -34,7 +48,8 @@ class HTMLRenderer:
             self._render_html_footer(),
         ]
         
-        return "\n".join(html_parts)
+        # Filter out None values before joining
+        return "\n".join(part for part in html_parts if part is not None)
     
     def _render_html_header(self, title: str) -> str:
         """Render HTML document header."""

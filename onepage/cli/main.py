@@ -9,6 +9,7 @@ import click
 import yaml
 
 from ..core.config import Config
+from ..core.models import IntermediateRepresentation
 from ..api.fetcher import ArticleFetcher
 from ..processing.builder import IRBuilder
 from ..renderers.wikitext import WikitextRenderer

@@ -40,7 +40,7 @@ cd onepage
 pip install -r requirements.txt
 
 # Verify installation
-python verify_structure.py
+python scripts/verify_structure.py
 python -m onepage.cli.main --help
 
 # 1) Fetch sitelinks and pull article content
@@ -51,14 +51,41 @@ python -m onepage.cli.main build --qid Q1058 --in ./out/Q1058 --out ./out/Q1058
 
 # 3) Render the final English Wikipedia page (wikitext)
 python -m onepage.cli.main render --qid Q1058 --lang en --format wikitext \
-  --out ./out/Q1058/onepage.en.wikitext
+  --out ./out/Q1058/onepage.en.wikitext --ir ./out/Q1058/onepage.ir.json
 
-# 4) Optional HTML preview
-python -m onepage.cli.main preview --qid Q1058 --lang en --out ./out/Q1058/preview.en.html
+# 4) Optional HTML preview (requires IR from step 2)
+python -m onepage.cli.main preview --qid Q1058 --lang en --out ./out/Q1058/preview.en.html --ir ./out/Q1058/onepage.ir.json
 
 # Or run complete pipeline with config
 python -m onepage.cli.main run --config onepage.yaml --out ./out/Q1058
 ```
+
+### Alternative: Manual Preview Generation
+
+If the CLI has issues, you can generate HTML previews directly with Python:
+
+```python
+import json
+from onepage.renderers.html import HTMLRenderer
+from onepage.core.models import IntermediateRepresentation
+
+# Load or create IR data
+with open('./out/Q1058/onepage.ir.json', 'r') as f:
+    ir_data = json.load(f)
+
+ir = IntermediateRepresentation.from_dict(ir_data)
+renderer = HTMLRenderer('en')
+html_content = renderer.render(ir)
+
+with open('./out/Q1058/preview.en.html', 'w') as f:
+    f.write(html_content)
+```
+
+### Known Issues
+- ~~JSON serialization error with Provenance objects~~ ✓ Fixed
+- ~~PyTorch version issues~~ ✓ Fixed (upgraded to 2.2.2)
+- TensorFlow AVX warnings (from sentence-transformers dependency, can be ignored)
+- CLI may crash on some systems - use manual Python approach above
 
 **Example** QID: `Q1058` (Narendra Modi). The command above merges English (`enwiki`) and Hindi (`hiwiki`) articles into one English page.
 
@@ -200,13 +227,13 @@ onepage/
 Run the verification script to test basic functionality:
 
 ```bash
-python verify_structure.py
+python scripts/verify_structure.py
 ```
 
 Run the example to test with real data:
 
 ```bash
-python example.py
+python scripts/example.py
 ```
 
 Run unit tests:

@@ -29,11 +29,13 @@ def parse_wikitext(wikitext: str) -> ParsedArticle:
 
     parsed = wtp.parse(wikitext)
 
-    # Extract images from ``[[File:..]]`` links and ensure uniqueness
+    # Extract images from ``[[File:..]]`` or ``[[Image:..]]`` links and ensure
+    # uniqueness. ``wikitextparser`` exposes these as regular wikilinks, so we
+    # filter by the link title prefix.
     images: List[str] = []
-    for image in parsed.images:
-        title = image.title.strip()
-        if title not in images:
+    for link in parsed.wikilinks:
+        title = link.title.strip()
+        if title.lower().startswith(("file:", "image:")) and title not in images:
             images.append(title)
 
     # Extract the first infobox template, keeping simple key/value pairs

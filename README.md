@@ -35,7 +35,7 @@ Different language Wikipedias describe the same topic independently. Sitelinks a
 
 ```bash
 # 0) Install dependencies
-git clone https://github.com/soodoku/onepage.git
+git clone https://github.com/gojiplus/onepage.git
 cd onepage
 pip install -r requirements.txt
 

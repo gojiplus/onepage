@@ -180,12 +180,16 @@ class TextCleaner:
         """Extract plain text from wikitext, removing all markup."""
         parsed = wtp.parse(wikitext)
         
-        # Remove templates
-        for template in parsed.templates:
+        # Remove templates starting from the end so index positions remain
+        # valid for earlier entries. ``wikitextparser`` objects become
+        # "dead" when text before them is mutated, so iterating in reverse
+        # avoids ``DeadIndexError`` when stripping multiple templates.
+        for template in parsed.templates[::-1]:
             template.string = ""
-        
-        # Remove references
-        for tag in parsed.get_tags():
+
+        # Remove references using the same reverse-iteration strategy to
+        # prevent index invalidation after previous mutations.
+        for tag in parsed.get_tags()[::-1]:
             if tag.name and tag.name.lower() in ["ref", "references"]:
                 tag.string = ""
         

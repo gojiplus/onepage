@@ -62,12 +62,7 @@ class TranslationService:
     
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
         """
-        Translate using LibreTranslate (if available) or return original text.
-        
-        This is a placeholder implementation. In a real application, you would:
-        1. Use a proper translation service (Google Translate, Azure, etc.)
-        2. Handle authentication and rate limiting properly
-        3. Cache translations to avoid redundant requests
+        Translate using MyMemory free translation API.
         """
         # Rate limiting
         current_time = time.time()
@@ -75,13 +70,38 @@ class TranslationService:
         if time_since_last < self.min_request_interval:
             time.sleep(self.min_request_interval - time_since_last)
         
-        # For now, return a placeholder that indicates translation is needed
-        # In a real implementation, this would make an actual API call
-        if source != "en":
+        if source == target:
+            return text
+            
+        # Use MyMemory free translation API
+        try:
+            # Limit text length to avoid API limits
+            text_to_translate = text[:500] if len(text) > 500 else text
+            
+            url = "https://api.mymemory.translated.net/get"
+            params = {
+                'q': text_to_translate,
+                'langpair': f'{source}|{target}',
+            }
+            
+            response = self.session.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            
+            data = response.json()
+            if data.get('responseStatus') == 200:
+                translated = data['responseData']['translatedText']
+                # Clean up common translation artifacts
+                translated = translated.replace('&quot;', '"').replace('&amp;', '&')
+                self.last_request_time = time.time()
+                return translated
+            else:
+                # Fallback to placeholder
+                return f"[TRANSLATED FROM {source.upper()}] {text}"
+                
+        except Exception as e:
+            # Fallback to placeholder on error
+            print(f"Translation failed: {e}")
             return f"[TRANSLATED FROM {source.upper()}] {text}"
-        
-        self.last_request_time = time.time()
-        return text
     
     def translate_claims(self, claims: List[Claim]) -> List[Claim]:
         """

@@ -5,19 +5,28 @@ from typing import List, Dict, Tuple, Set, Optional
 from dataclasses import dataclass
 import re
 
-try:
-    from sentence_transformers import SentenceTransformer
-    HAS_SENTENCE_TRANSFORMERS = True
-except ImportError:
-    HAS_SENTENCE_TRANSFORMERS = False
-    # Mock SentenceTransformer for when it's not available
-    class SentenceTransformer:
-        def __init__(self, model_name: str):
-            pass
-        def encode(self, texts):
-            import numpy as np
-            # Return dummy embeddings for testing
-            return np.random.rand(len(texts), 384)
+# Lazy import to avoid crashes
+HAS_SENTENCE_TRANSFORMERS = False
+SentenceTransformer = None
+
+def _lazy_import_sentence_transformers():
+    global HAS_SENTENCE_TRANSFORMERS, SentenceTransformer
+    if SentenceTransformer is None:
+        try:
+            from sentence_transformers import SentenceTransformer as ST
+            SentenceTransformer = ST
+            HAS_SENTENCE_TRANSFORMERS = True
+        except ImportError:
+            # Mock SentenceTransformer for when it's not available
+            class MockSentenceTransformer:
+                def __init__(self, model_name: str):
+                    pass
+                def encode(self, texts):
+                    import numpy as np
+                    # Return dummy embeddings for testing
+                    return np.random.rand(len(texts), 384)
+            SentenceTransformer = MockSentenceTransformer
+            HAS_SENTENCE_TRANSFORMERS = False
 
 from ..core.models import Claim
 
@@ -52,6 +61,7 @@ class SentenceAligner:
         Args:
             model_name: Name of the sentence transformer model to use
         """
+        _lazy_import_sentence_transformers()
         self.model = SentenceTransformer(model_name)
         
         # Similarity thresholds for alignment

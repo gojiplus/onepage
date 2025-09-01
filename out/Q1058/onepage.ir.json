@@ -10,95 +10,1621 @@
       "hi": "भारत के प्रधानमंत्री"
     },
     "aliases": {
+      "hi": [
+        "नरेन्द्र दामोदरदास मोदी",
+        "नमो",
+        "नरेंद्रभाई मोदी",
+        "नरेंद्रभाई दामोदरदास मोदी",
+        "मोदी"
+      ],
       "en": [
         "Modi",
         "NaMo",
         "Modi Ji",
         "Modiji",
-        "Narendra Damodardas Modi"
+        "Narendra Bhai",
+        "Narendra Damodardas Modi",
+        "Narendrabhai Damodardas Modi",
+        "Narendrabhai"
       ]
     }
   },
   "sections": [
     {
       "id": "lead",
-      "items": ["c1", "c2"]
+      "items": [
+        "c_en_0",
+        "c_en_1",
+        "c_en_2",
+        "c_en_3",
+        "c_en_4",
+        "c_en_5",
+        "c_en_6",
+        "c_en_7",
+        "c_en_8",
+        "c_en_9",
+        "c_en_10",
+        "c_en_11",
+        "c_en_12",
+        "c_en_13",
+        "c_en_14",
+        "c_en_15",
+        "c_en_16",
+        "c_en_17",
+        "c_en_18",
+        "c_en_19",
+        "c_en_20",
+        "c_en_21",
+        "c_en_22",
+        "c_en_23",
+        "c_en_24",
+        "c_en_25",
+        "c_en_26",
+        "c_hi_30",
+        "c_hi_31",
+        "c_hi_32",
+        "c_hi_33",
+        "c_hi_34",
+        "c_hi_35",
+        "c_hi_36",
+        "c_hi_37",
+        "c_hi_38",
+        "c_hi_39",
+        "c_hi_40",
+        "c_hi_41",
+        "c_hi_42",
+        "c_hi_43",
+        "c_hi_44",
+        "c_hi_45",
+        "c_hi_46",
+        "c_hi_47",
+        "c_hi_48",
+        "c_hi_49",
+        "c_hi_50",
+        "c_hi_51",
+        "c_hi_52",
+        "c_hi_53",
+        "c_hi_54",
+        "c_hi_55",
+        "c_hi_56",
+        "c_hi_57",
+        "c_hi_58",
+        "c_hi_59",
+        "c_hi_60",
+        "c_hi_61",
+        "c_hi_62",
+        "c_hi_63",
+        "c_hi_64",
+        "c_hi_65",
+        "c_hi_66",
+        "c_hi_67"
+      ]
     },
     {
-      "id": "early_life",
+      "id": "early_life_and_education",
+      "items": [
+        "c_en_27",
+        "c_en_28",
+        "c_en_29"
+      ],
       "title": {
-        "en": "Early life"
-      },
-      "items": ["c3"]
+        "en": "Early Life And Education"
+      }
+    },
+    {
+      "id": "नज_जवन",
+      "items": [
+        "c_hi_68",
+        "c_hi_69",
+        "c_hi_70"
+      ],
+      "title": {
+        "en": "नज जवन"
+      }
     }
   ],
   "content": {
-    "c1": {
+    "c_en_0": {
       "type": "claim",
       "lang": "en",
-      "text": "Narendra Damodardas Modi is an Indian politician who has served as the prime minister of India since 2014.",
-      "sources": ["r1"],
+      "text": "Narendra Damodardas Modi (born 17 September 1950) is an Indian politician who has served as the prime minister of India since 2014.",
+      "sources": [
+        "r1"
+      ],
+      "text_en": "Narendra Damodardas Modi (born 17 September 1950) is an Indian politician who has served as the prime minister of India since 2014.",
       "provenance": {
         "wiki": "enwiki",
         "title": "Narendra Modi",
-        "rev_id": 1234567
-      }
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
     },
-    "c2": {
+    "c_en_1": {
       "type": "claim",
-      "lang": "en", 
-      "text": "Modi was the chief minister of Gujarat from 2001 to 2014 and is the member of parliament for Varanasi.",
-      "sources": ["r1"],
+      "lang": "en",
+      "text": "Modi was the chief minister of Gujarat from 2001 to 2014 and is the member of parliament (MP) for Varanasi.",
+      "sources": [
+        "r2"
+      ],
+      "text_en": "Modi was the chief minister of Gujarat from 2001 to 2014 and is the member of parliament (MP) for Varanasi.",
       "provenance": {
         "wiki": "enwiki",
         "title": "Narendra Modi",
-        "rev_id": 1234567
-      }
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
     },
-    "c3": {
+    "c_en_2": {
+      "type": "claim",
+      "lang": "en",
+      "text": "He is a member of the Bharatiya Janata Party (BJP) and of the Rashtriya Swayamsevak Sangh (RSS), a right-wing Hindutva paramilitary volunteer organisation.",
+      "sources": [
+        "r3"
+      ],
+      "text_en": "He is a member of the Bharatiya Janata Party (BJP) and of the Rashtriya Swayamsevak Sangh (RSS), a right-wing Hindutva paramilitary volunteer organisation.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_3": {
+      "type": "claim",
+      "lang": "en",
+      "text": "He is the longest-serving prime minister outside the Indian National Congress.",
+      "sources": [
+        "r4"
+      ],
+      "text_en": "He is the longest-serving prime minister outside the Indian National Congress.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_4": {
       "type": "claim",
       "lang": "en",
       "text": "Modi was born and raised in Vadnagar, Bombay State (present-day Gujarat), where he completed his secondary education.",
-      "sources": ["r1"],
+      "sources": [
+        "r5"
+      ],
+      "text_en": "Modi was born and raised in Vadnagar, Bombay State (present-day Gujarat), where he completed his secondary education.",
       "provenance": {
-        "wiki": "enwiki", 
+        "wiki": "enwiki",
         "title": "Narendra Modi",
-        "rev_id": 1234567
-      }
-    },
-    "f1": {
-      "type": "fact",
-      "property": "P569",
-      "value": "1950-09-17",
-      "qualifiers": {},
-      "sources": ["r2"],
-      "from": "wikidata"
-    },
-    "f2": {
-      "type": "fact",
-      "property": "P39",
-      "value": {"qid": "Q192711"},
-      "qualifiers": {
-        "P580": "2014-05-26"
+        "rev_id": 1308920460
       },
-      "sources": ["r2"],
-      "from": "wikidata"
+      "confidence": 1.0
+    },
+    "c_en_5": {
+      "type": "claim",
+      "lang": "en",
+      "text": "He was introduced to the RSS at the age of eight, becoming a full-time worker for the organisation in Gujarat in 1971.",
+      "sources": [
+        "r6"
+      ],
+      "text_en": "He was introduced to the RSS at the age of eight, becoming a full-time worker for the organisation in Gujarat in 1971.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_6": {
+      "type": "claim",
+      "lang": "en",
+      "text": "The RSS assigned him to the BJP in 1985, and he rose through the party hierarchy, becoming general secretary in 1998.",
+      "sources": [
+        "r7"
+      ],
+      "text_en": "The RSS assigned him to the BJP in 1985, and he rose through the party hierarchy, becoming general secretary in 1998.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_7": {
+      "type": "claim",
+      "lang": "en",
+      "text": "In 2001, Modi was appointed chief minister of Gujarat and elected to the legislative assembly soon after.",
+      "sources": [
+        "r8"
+      ],
+      "text_en": "In 2001, Modi was appointed chief minister of Gujarat and elected to the legislative assembly soon after.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_8": {
+      "type": "claim",
+      "lang": "en",
+      "text": "His administration is considered complicit in the 2002 Gujarat riots and has been criticised for its management of the crisis.",
+      "sources": [
+        "r9"
+      ],
+      "text_en": "His administration is considered complicit in the 2002 Gujarat riots and has been criticised for its management of the crisis.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_9": {
+      "type": "claim",
+      "lang": "en",
+      "text": "According to official records, a little over 1,000 people were killed, three-quarters of whom were Muslim; independent sources estimated 2,000 deaths, mostly Muslim.",
+      "sources": [
+        "r10"
+      ],
+      "text_en": "According to official records, a little over 1,000 people were killed, three-quarters of whom were Muslim; independent sources estimated 2,000 deaths, mostly Muslim.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_10": {
+      "type": "claim",
+      "lang": "en",
+      "text": "* * * * A Special Investigation Team appointed by the Supreme Court of India in 2012 found no evidence to initiate prosecution proceedings against him.",
+      "sources": [
+        "r11"
+      ],
+      "text_en": "* * * * A Special Investigation Team appointed by the Supreme Court of India in 2012 found no evidence to initiate prosecution proceedings against him.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_11": {
+      "type": "claim",
+      "lang": "en",
+      "text": "While his policies as chief minister were credited for encouraging economic growth, his administration was criticised for failing to significantly improve health, poverty and education indices in the state.",
+      "sources": [
+        "r12"
+      ],
+      "text_en": "While his policies as chief minister were credited for encouraging economic growth, his administration was criticised for failing to significantly improve health, poverty and education indices in the state.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_12": {
+      "type": "claim",
+      "lang": "en",
+      "text": "In the 2014 Indian general election, Modi led the BJP to a parliamentary majority, the first for a party since 1984.",
+      "sources": [
+        "r13"
+      ],
+      "text_en": "In the 2014 Indian general election, Modi led the BJP to a parliamentary majority, the first for a party since 1984.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_13": {
+      "type": "claim",
+      "lang": "en",
+      "text": "His administration increased direct foreign investment and reduced spending on healthcare, education, and social-welfare programs.",
+      "sources": [
+        "r14"
+      ],
+      "text_en": "His administration increased direct foreign investment and reduced spending on healthcare, education, and social-welfare programs.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_14": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi began a high-profile sanitation campaign and weakened or abolished environmental and labour laws.",
+      "sources": [
+        "r15"
+      ],
+      "text_en": "Modi began a high-profile sanitation campaign and weakened or abolished environmental and labour laws.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_15": {
+      "type": "claim",
+      "lang": "en",
+      "text": "His demonetisation of banknotes in 2016 and introduction of the Goods and Services Tax in 2017 sparked controversy.",
+      "sources": [
+        "r16"
+      ],
+      "text_en": "His demonetisation of banknotes in 2016 and introduction of the Goods and Services Tax in 2017 sparked controversy.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_16": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi's administration launched the 2019 Balakot airstrike against an alleged terrorist training camp in Pakistan; the airstrike failed, but the action had nationalist appeal.",
+      "sources": [
+        "r17"
+      ],
+      "text_en": "Modi's administration launched the 2019 Balakot airstrike against an alleged terrorist training camp in Pakistan; the airstrike failed, but the action had nationalist appeal.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_17": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi's party won the 2019 general election which followed.",
+      "sources": [
+        "r18"
+      ],
+      "text_en": "Modi's party won the 2019 general election which followed.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_18": {
+      "type": "claim",
+      "lang": "en",
+      "text": "In its second term, his administration revoked the special status of Jammu and Kashmir and introduced the Citizenship Amendment Act, prompting widespread protests and spurring the 2020 Delhi riots in which Muslims were brutalised and killed by Hindu mobs.",
+      "sources": [
+        "r19"
+      ],
+      "text_en": "In its second term, his administration revoked the special status of Jammu and Kashmir and introduced the Citizenship Amendment Act, prompting widespread protests and spurring the 2020 Delhi riots in which Muslims were brutalised and killed by Hindu mobs.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_19": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Three controversial farm laws led to sit-ins by farmers across the country, eventually causing their formal repeal.",
+      "sources": [
+        "r20"
+      ],
+      "text_en": "Three controversial farm laws led to sit-ins by farmers across the country, eventually causing their formal repeal.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_20": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi oversaw India's response to the COVID-19 pandemic, during which, according to the World Health Organization, 4.",
+      "sources": [
+        "r21"
+      ],
+      "text_en": "Modi oversaw India's response to the COVID-19 pandemic, during which, according to the World Health Organization, 4.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_21": {
+      "type": "claim",
+      "lang": "en",
+      "text": "In the 2024 general election, Modi's party lost its majority in the lower house of Parliament and formed a government leading the National Democratic Alliance coalition.",
+      "sources": [
+        "r22"
+      ],
+      "text_en": "In the 2024 general election, Modi's party lost its majority in the lower house of Parliament and formed a government leading the National Democratic Alliance coalition.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_22": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Following a terrorist attack in Indian-administered Jammu and Kashmir, Modi presided over the 2025 India–Pakistan conflict, which resulted in a ceasefire.",
+      "sources": [
+        "r23"
+      ],
+      "text_en": "Following a terrorist attack in Indian-administered Jammu and Kashmir, Modi presided over the 2025 India–Pakistan conflict, which resulted in a ceasefire.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_23": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Under Modi's tenure, India has experienced democratic backsliding and has shifted towards an authoritarian style of government, with a cult of personality centred around him.",
+      "sources": [
+        "r24"
+      ],
+      "text_en": "Under Modi's tenure, India has experienced democratic backsliding and has shifted towards an authoritarian style of government, with a cult of personality centred around him.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_24": {
+      "type": "claim",
+      "lang": "en",
+      "text": "As prime minister, he has received consistently high approval ratings within India.",
+      "sources": [
+        "r25"
+      ],
+      "text_en": "As prime minister, he has received consistently high approval ratings within India.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_25": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Modi has been described as engineering a political realignment towards right-wing politics.",
+      "sources": [
+        "r26"
+      ],
+      "text_en": "Modi has been described as engineering a political realignment towards right-wing politics.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_26": {
+      "type": "claim",
+      "lang": "en",
+      "text": "He remains a highly controversial figure domestically and internationally over his Hindu nationalist beliefs and handling of the Gujarat riots, which have been cited as evidence of a majoritarian and exclusionary social agenda.",
+      "sources": [
+        "r27"
+      ],
+      "text_en": "He remains a highly controversial figure domestically and internationally over his Hindu nationalist beliefs and handling of the Gujarat riots, which have been cited as evidence of a majoritarian and exclusionary social agenda.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_hi_30": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "नरेन्द्र दामोदरदास मोदी (, ; जन्म: भारांग: भाद्रपद शुक्ल षष्ठी १९०७/ ग्रेगोरी कैलेंडर: सितम्बर 17, 1950) 26 मई 2014 से अब तक लगातार तीसरी बार वे भारत के प्रधानमन्त्री बने हैं तथा वाराणसी से लोकसभा सांसद भी चुने गये हैं।",
+      "sources": [
+        "r28"
+      ],
+      "text_en": "Narendra Damodardas Modi ( ;; born: Bharanga: Bhadrapad Shukla Shashthi 1907/ Gregorian Calendar: September 17, 1950) is the third Prime Minister of India and the Lok Sabha MP from Varanasi since May 26, 2014.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.219
+    },
+    "c_hi_31": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "वे भारत के प्रधानमन्त्री पद पर आसीन होने वाले स्वतन्त्र भारत में जन्मे प्रथम व्यक्ति हैं।",
+      "sources": [
+        "r29"
+      ],
+      "text_en": "He is the first person born in independent India to hold the post of Prime Minister of India.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.089
+    },
+    "c_hi_32": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "इससे पहले वे 7 अक्तूबर 2001 से 22 मई 2014 तक गुजरात राज्य के मुख्यमन्त्री रह चुके हैं।",
+      "sources": [
+        "r30"
+      ],
+      "text_en": "Prior to this, he was the Chief Minister of the state of Gujarat from 7 October 2001 to 22 May 2014.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.086
+    },
+    "c_hi_33": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "मोदी भारतीय जनता पार्टी (भाजपा) एवं राष्ट्रीय स्वयंसेवक संघ (RSS) के सदस्य हैं, जो एक दक्षिणपन्थी (right wing) हिंदू राष्ट्रवादी अर्धसैनिक स्वयंसेवी संगठन है।",
+      "sources": [
+        "r31"
+      ],
+      "text_en": "Modi is a member of the Bharatiya Janata Party (BJP) and the Rashtriya Swayamsevak Sangh (RSS), a right-wing Hindu nationalist paramilitary volunteer organization.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.158
+    },
+    "c_hi_34": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "वडनगर के एक गुजराती परिवार में पैदा हुए, मोदी ने अपने बचपन में चाय बेचने में अपने पिता की मदद की, और बाद में अपना खुद का स्टाल चलाया।",
+      "sources": [
+        "r32"
+      ],
+      "text_en": "Born into a Gujarati family in Vadnagar, Modi helped his father sell tea in his childhood, and later ran his own stall.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.133
+    },
+    "c_hi_35": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "आठ वर्ष की आयु में वे आरएसएस से जुड़े, जिसके साथ एक लम्बे समय तक सम्बन्धित रहे।",
+      "sources": [
+        "r33"
+      ],
+      "text_en": "At the age of eight he joined the RSS, with which he was associated for a long time.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.079
+    },
+    "c_hi_36": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "स्नातक होने के बाद उन्होंने अपना घर छोड़ दिया।",
+      "sources": [
+        "r34"
+      ],
+      "text_en": "He left his home after graduation.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.046
+    },
+    "c_hi_37": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "मोदी ने दो साल तक भारत भर में यात्रा की, और अनेकों धार्मिक केन्द्रों का दौरा किया।",
+      "sources": [
+        "r35"
+      ],
+      "text_en": "Modi travelled across India for two years, visiting a number of religious centres.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.082
+    },
+    "c_hi_38": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "1969 या 1970 वे गुजरात लौटे उसके बाद अहमदाबाद चले गए।",
+      "sources": [
+        "r36"
+      ],
+      "text_en": "1969 or 1970 he returned to Gujarat and then moved to Ahmedabad.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.053
+    },
+    "c_hi_39": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "1971 में वह आरएसएस के लिए पूर्णकालिक कार्यकर्ता बन गए।",
+      "sources": [
+        "r37"
+      ],
+      "text_en": "In 1971 he became a full-time worker for the RSS.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.054
+    },
+    "c_hi_40": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "1975 में देश भर में आपातकाल की स्थिति के समय उन्हें कुछ समय के लिए अज्ञातवास करना पड़ा।",
+      "sources": [
+        "r38"
+      ],
+      "text_en": "He had to live in exile for some time during the state of emergency across the country in 1975.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.087
+    },
+    "c_hi_41": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "1985 में वे बीजेपी से जुड़े और 2001 तक पार्टी पदानुक्रम के भीतर कई पदों पर कार्य किया, जहाँ से वे धीरे धीरे भाजपा में सचिव के पद पर पहुँचे गए।",
+      "sources": [
+        "r39"
+      ],
+      "text_en": "In 1985 he joined the BJP and served in several positions within the party hierarchy till 2001, from where he gradually rose to the post of secretary in the BJP.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.142
+    },
+    "c_hi_42": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "गुजरात भूकम्प २००१, (भुज में भूकम्प) के बाद गुजरात के तत्कालीन मुख्यमन्त्री केशुभाई पटेल के असफल स्वास्थ्य और खराब सार्वजनिक छवि के कारण श्री नरेंद्र मोदी को 2001 में गुजरात के मुख्यमन्त्री पद पर नियुक्त किया गया।",
+      "sources": [
+        "r40"
+      ],
+      "text_en": "Shri Narendra Modi was appointed as the Chief Minister of Gujarat in 2001 due to the failing health and poor public image of the then Chief Minister of Gujarat Keshubhai Patel after the Gujarat earthquake 2001, (earthquake in Bhuj).",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.213
+    },
+    "c_hi_43": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "श्री नरेंद्र मोदी शीघ्र ही विधायी विधानसभा के लिए चुने गए।",
+      "sources": [
+        "r41"
+      ],
+      "text_en": "Mr. Narendra Modi was soon elected to the Legislative Assembly.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.058
+    },
+    "c_hi_44": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "2002 के गुजरात दंगों में उनके प्रशासन को कठोर माना गया है, इस समय उनके संचालन की आलोचना भी हुई।",
+      "sources": [
+        "r42"
+      ],
+      "text_en": "His administration has been considered harsh in the 2002 Gujarat riots, at which time his operations were also criticized.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.095
+    },
+    "c_hi_45": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "हालाँकि सर्वोच्च न्यायालय द्वारा नियुक्त विशेष जाँच दल (एसआईटी) को अभियोजन पक्ष की कार्यवाही आरम्भ करने के लिए कोई प्रमाण नहीं मिला।",
+      "sources": [
+        "r43"
+      ],
+      "text_en": "However, the Supreme Court-appointed Special Investigation Team (sit) did not find any evidence to initiate prosecution proceedings.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.132
+    },
+    "c_hi_46": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "गुजरात के मुख्यमन्त्री के रूप में उनकी नीतियों को आर्थिक विकास को प्रोत्साहित करने के लिए श्रेय दिया गया।",
+      "sources": [
+        "r44"
+      ],
+      "text_en": "His policies as Chief Minister of Gujarat were credited for encouraging economic development.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.105
+    },
+    "c_hi_47": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "वे गुजरात राज्य के 14वें मुख्यमन्त्री रहे।",
+      "sources": [
+        "r45"
+      ],
+      "text_en": "He was the 14th Chief Minister of the state of Gujarat.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.042
+    },
+    "c_hi_48": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "उन्हें उनके अच्छे कामों के कारण गुजरात की जनता ने लगातार 4 बार (2001 से 2014 तक) गुजरात का मुख्यमन्त्री चुना।",
+      "sources": [
+        "r46"
+      ],
+      "text_en": "He was elected as the Chief Minister of Gujarat 4 times in a row (2001 to 2014) by the people of Gujarat because of his good works.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.109
+    },
+    "c_hi_49": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "गुजरात विश्वविद्यालय से राजनीति विज्ञान में स्नातकोत्तर डिग्री प्राप्त श्री नरेन्द्र मोदी विकास पुरुष के नाम से जाने जाते हैं और वर्तमान समय में देश के सबसे लोकप्रिय नेताओं में से हैं॥ टाइम पत्रिका ने मोदी को पर्सन ऑफ़ द ईयर 2013 के 42 उम्मीदवारों की सूची में शामिल किया है।",
+      "sources": [
+        "r47"
+      ],
+      "text_en": "Time magazine has included Modi in the list of 42 candidates for the Person of the Year 2013.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.274
+    },
+    "c_hi_50": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "अटल बिहारी वाजपेयी की तरह नरेन्द्र मोदी एक राजनेता और कवि हैं।",
+      "sources": [
+        "r48"
+      ],
+      "text_en": "Like Atal Bihari Vajpayee, Narendra Modi is a politician and poet.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.062
+    },
+    "c_hi_51": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "वे गुजराती भाषा के अलावा हिन्दी में भी देशप्रेम से ओतप्रोत कविताएँ लिखते हैं।",
+      "sources": [
+        "r49"
+      ],
+      "text_en": "Apart from Gujarati language, he also writes patriotic poems in Hindi.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.077
+    },
+    "c_hi_52": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "उनके नेतृत्व में भारत की प्रमुख विपक्षी पार्टी भारतीय जनता पार्टी ने 2014 का लोकसभा चुनाव लड़ा और 282 सीटें जीतकर अभूतपूर्व सफलता प्राप्त की।",
+      "sources": [
+        "r50"
+      ],
+      "text_en": "Under his leadership the Bharatiya Janata Party, India's main opposition party, contested the 2014 Lok Sabha elections and achieved unprecedented success by winning 282 seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.141
+    },
+    "c_hi_53": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "एक सांसद के रूप में उन्होंने उत्तर प्रदेश की सांस्कृतिक नगरी वाराणसी एवं अपने गृहराज्य गुजरात के वडोदरा संसदीय क्षेत्र से चुनाव लड़ा और दोनों जगह से जीत दर्ज की।",
+      "sources": [
+        "r51"
+      ],
+      "text_en": "As an MP, he contested from the cultural city of Varanasi in Uttar Pradesh and the Vadodara parliamentary constituency in his home state of Gujarat and won both the seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.161
+    },
+    "c_hi_54": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "उनके राज में भारत का प्रत्यक्ष विदेशी निवेश एवं बुनियादी सुविधाओं पर खर्च तेजी से बढ़ा।",
+      "sources": [
+        "r52"
+      ],
+      "text_en": "Under his rule, India's foreign direct investment and spending on infrastructure grew rapidly.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.087
+    },
+    "c_hi_55": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "उन्होंने अफसरशाही में कई सुधार किये तथा योजना आयोग को हटाकर नीति आयोग का गठन किया।",
+      "sources": [
+        "r53"
+      ],
+      "text_en": "He made many reforms in the bureaucracy and formed the NiTi Aayog by removing the Planning Commission.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.082
+    },
+    "c_hi_56": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "इसके बाद वर्ष 2019 में भारतीय जनता पार्टी ने उनके नेतृत्त्व में दोबारा चुनाव लड़ा और इस बार पहले से भी ज्यादा बड़ी जीत हासिल हुई।",
+      "sources": [
+        "r54"
+      ],
+      "text_en": "After this, in the year 2019, the Bharatiya Janata Party contested the election again under his leadership and this time it won even bigger than before.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.129
+    },
+    "c_hi_57": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "पार्टी ने कुल 303 सीटों पर जीत हासिल की।",
+      "sources": [
+        "r55"
+      ],
+      "text_en": "The party won a total of 303 seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.04
+    },
+    "c_hi_58": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "भाजपा के समर्थक दलों यानी राजग को कुल 352 सीटें प्राप्त हुईं।",
+      "sources": [
+        "r56"
+      ],
+      "text_en": "The pro-BJP parties, the NDA, won a total of 352 seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.061
+    },
+    "c_hi_59": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "30 मई 2019 को शपथ ग्रहण कर नरेन्द्र मोदी लगातार दूसरी बार प्रधानमन्त्री बने।",
+      "sources": [
+        "r57"
+      ],
+      "text_en": "Sworn in on 30 May 2019, Narendra Modi became Prime Minister for the second time in a row.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.076
+    },
+    "c_hi_60": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "2019 के आम चुनाव में उनकी पार्टी की जीत के बाद, उनके प्रशासन ने जम्मू और कश्मीर की विशेष राज्य का दर्जा को रद्द कर दिया।",
+      "sources": [
+        "r58"
+      ],
+      "text_en": "Following his party's victory in the 2019 general election, his administration revoked the special status of Jammu and Kashmir.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.12
+    },
+    "c_hi_61": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "उनके प्रशासन ने नागरिकता (संशोधन) अधिनियम, २०१९ भी पेश किया, जिसके परिणामस्वरूप देश भर में व्यापक विरोध प्रदर्शन हुए।",
+      "sources": [
+        "r59"
+      ],
+      "text_en": "His administration also introduced the Citizenship (Amendment) Act, 2019, which resulted in widespread protests across the country.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.117
+    },
+    "c_hi_62": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "मोदी अपने हिन्दू राष्ट्रवादी विश्वासों और 2002 के गुजरात दंगों के दौरान उनकी कथित भूमिका पर घरेलू और अन्तरराष्ट्रीय स्तर पर विवाद का एक आँकड़ा बना हुआ है, जिसे एक बहिष्कारवादी सामाजिक एजेण्डे के प्रमाण के रूप में उद्धृत किया गया है।",
+      "sources": [
+        "r60"
+      ],
+      "text_en": "Modi remains a figure of controversy both domestically and internationally over his Hindu nationalist beliefs and his alleged role during the 2002 Gujarat riots, which has been cited as evidence of a boycottist social agenda.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.232
+    },
+    "c_hi_63": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "मोदी के कार्यकाल में, भारत ने लोकतान्त्रिक बैकस्लेडिंग का अनुभव किया है।",
+      "sources": [
+        "r61"
+      ],
+      "text_en": "Under Modi, India has experienced democratic backsliding.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.072
+    },
+    "c_hi_64": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "￼ ‌‌इसके बाद वर्ष 2024 में भारतीय जनता पार्टी ने उनके नेतृत्त्व में दोबारा चुनाव लड़ा और इस बार पार्टी ने कुल 240 सीटों पर जीत हासिल की।",
+      "sources": [
+        "r62"
+      ],
+      "text_en": "After this, in the year 2024, the Bharatiya Janata Party contested again under his leadership and this time the party won a total of 240 seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.136
+    },
+    "c_hi_65": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "भाजपा के समर्थक दलों यानी राजग को कुल 292 सीटें प्राप्त हुईं।",
+      "sources": [
+        "r63"
+      ],
+      "text_en": "The pro-BJP parties, the NDA, won a total of 292 seats.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.061
+    },
+    "c_hi_66": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "9 जून 2024 को शपथ ग्रहण कर नरेन्द्र मोदी लगातार तीसरी बार प्रधानमन्त्री बने।",
+      "sources": [
+        "r64"
+      ],
+      "text_en": "On 9 June 2024, Narendra Modi was sworn in as the Prime Minister for the third time in a row.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.076
+    },
+    "c_hi_67": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "शपथ ग्रहण के बाद वह पहले ऐसे अन कांग्रेसी प्रधानमंत्री बने जो 1962 के बाद लगातार तीसरी बार प्रधानमंत्री बने और उन्होंने पंडित जवाहर लाल नेहरू के बराबरी की।",
+      "sources": [
+        "r65"
+      ],
+      "text_en": "After taking oath, he became the first non-Congress Prime Minister who became the Prime Minister for the third consecutive time after 1962 and he equalled Pandit Jawaharlal Nehru.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.155
+    },
+    "c_en_27": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Narendra Damodardas Modi was born on 17 September 1950 to a Gujarati family of Other Backward Class (OBC) background and Hindu faith{{#invoke:cite|news|last=Rashid |first=Omar |date=27 April 2019 |title=Modi hits back on 'fake OBC' jibes, says he is 'most backward' |url=https://www.",
+      "sources": [
+        "r66"
+      ],
+      "text_en": "Narendra Damodardas Modi was born on 17 September 1950 to a Gujarati family of Other Backward Class (OBC) background and Hindu faith{{#invoke:cite|news|last=Rashid |first=Omar |date=27 April 2019 |title=Modi hits back on 'fake OBC' jibes, says he is 'most backward' |url=https://www.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_28": {
+      "type": "claim",
+      "lang": "en",
+      "text": "com/elections/lok-sabha-2019/modi-hits-back-on-fake-obc-jibes-says-he-is-most-backward/article61557945.",
+      "sources": [
+        "r67"
+      ],
+      "text_en": "com/elections/lok-sabha-2019/modi-hits-back-on-fake-obc-jibes-says-he-is-most-backward/article61557945.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_en_29": {
+      "type": "claim",
+      "lang": "en",
+      "text": "ece |access-date=6 April 2024 |work=The Hindu |language=en-IN |issn=0971-751X |archive-date=25 August 2023 |archive-url=https://web.",
+      "sources": [
+        "r68"
+      ],
+      "text_en": "ece |access-date=6 April 2024 |work=The Hindu |language=en-IN |issn=0971-751X |archive-date=25 August 2023 |archive-url=https://web.",
+      "provenance": {
+        "wiki": "enwiki",
+        "title": "Narendra Modi",
+        "rev_id": 1308920460
+      },
+      "confidence": 1.0
+    },
+    "c_hi_68": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "नरेन्द्र मोदी का जन्म तत्कालीन बॉम्बे राज्य के महेसाना जिला स्थित वडनगर ग्राम में हीराबेन मोदी और दामोदरदास मूलचन्द मोदी के एक मध्यम-वर्गीय परिवार में १७ सितम्बर १९५० को हुआ था।",
+      "sources": [
+        "r69"
+      ],
+      "text_en": "Narendra Modi was born on 17 September 1950 in a middle-class family of Heeraben Modi and Damodardas Moolchand Modi in Vadnagar village in Mahesana district of the erstwhile Bombay state.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.177
+    },
+    "c_hi_69": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "वह पैदा हुए छह बच्चों में तीसरे थे।",
+      "sources": [
+        "r70"
+      ],
+      "text_en": "He was the third of six children born.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.035
+    },
+    "c_hi_70": {
+      "type": "claim",
+      "lang": "hi",
+      "text": "मोदी का परिवार 'मोध-घांची-तेली' समुदाय से था, जिसे भारत सरकार द्वारा अन्य पिछड़ा वर्ग के रूप में वर्गीकृत किया जाता है।",
+      "sources": [
+        "r71"
+      ],
+      "text_en": "Modi's family belonged to the 'Modh-Ghanchi-Teli' community, which is classified as Other Backward Classes by the Government of India.",
+      "provenance": {
+        "wiki": "hiwiki",
+        "title": "नरेन्द्र मोदी",
+        "rev_id": 6467531
+      },
+      "confidence": 0.119
     }
   },
   "references": {
     "r1": {
-      "url": "https://en.wikipedia.org/wiki/Narendra_Modi",
-      "title": "Wikipedia article: Narendra Modi",
-      "date": "2025-09-01"
+      "id": "r1",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
     },
     "r2": {
-      "url": "https://www.wikidata.org/wiki/Q1058",
-      "title": "Wikidata: Narendra Modi",
-      "date": "2025-09-01"
+      "id": "r2",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r3": {
+      "id": "r3",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r4": {
+      "id": "r4",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r5": {
+      "id": "r5",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r6": {
+      "id": "r6",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r7": {
+      "id": "r7",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r8": {
+      "id": "r8",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r9": {
+      "id": "r9",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r10": {
+      "id": "r10",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r11": {
+      "id": "r11",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r12": {
+      "id": "r12",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r13": {
+      "id": "r13",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r14": {
+      "id": "r14",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r15": {
+      "id": "r15",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r16": {
+      "id": "r16",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r17": {
+      "id": "r17",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r18": {
+      "id": "r18",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r19": {
+      "id": "r19",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r20": {
+      "id": "r20",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r21": {
+      "id": "r21",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r22": {
+      "id": "r22",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r23": {
+      "id": "r23",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r24": {
+      "id": "r24",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r25": {
+      "id": "r25",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r26": {
+      "id": "r26",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r27": {
+      "id": "r27",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r28": {
+      "id": "r28",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r29": {
+      "id": "r29",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r30": {
+      "id": "r30",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r31": {
+      "id": "r31",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r32": {
+      "id": "r32",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r33": {
+      "id": "r33",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r34": {
+      "id": "r34",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r35": {
+      "id": "r35",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r36": {
+      "id": "r36",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r37": {
+      "id": "r37",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r38": {
+      "id": "r38",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r39": {
+      "id": "r39",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r40": {
+      "id": "r40",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r41": {
+      "id": "r41",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r42": {
+      "id": "r42",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r43": {
+      "id": "r43",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r44": {
+      "id": "r44",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r45": {
+      "id": "r45",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r46": {
+      "id": "r46",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r47": {
+      "id": "r47",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r48": {
+      "id": "r48",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r49": {
+      "id": "r49",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r50": {
+      "id": "r50",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r51": {
+      "id": "r51",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r52": {
+      "id": "r52",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r53": {
+      "id": "r53",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r54": {
+      "id": "r54",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r55": {
+      "id": "r55",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r56": {
+      "id": "r56",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r57": {
+      "id": "r57",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r58": {
+      "id": "r58",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r59": {
+      "id": "r59",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r60": {
+      "id": "r60",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r61": {
+      "id": "r61",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r62": {
+      "id": "r62",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r63": {
+      "id": "r63",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r64": {
+      "id": "r64",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r65": {
+      "id": "r65",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r66": {
+      "id": "r66",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r67": {
+      "id": "r67",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r68": {
+      "id": "r68",
+      "url": "https://en.wikipedia.org/wiki/Narendra Modi",
+      "title": "Narendra Modi - English Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r69": {
+      "id": "r69",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r70": {
+      "id": "r70",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
+    },
+    "r71": {
+      "id": "r71",
+      "url": "https://hi.wikipedia.org/wiki/नरेन्द्र मोदी",
+      "title": "नरेन्द्र मोदी - Hindi Wikipedia",
+      "publisher": "Wikipedia"
     }
   },
   "metadata": {
     "build_timestamp": "2025-09-01",
-    "languages_processed": ["en"]
+    "languages_processed": [
+      "en",
+      "hi"
+    ],
+    "total_claims": 71,
+    "translation_service": "mymemory_api"
   }
 }

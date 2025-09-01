@@ -266,7 +266,11 @@ class HTMLRenderer:
     
     def _render_claim_html(self, claim: Claim, ir: IntermediateRepresentation) -> str:
         """Render a claim as HTML with references."""
-        text = html.escape(claim.text)
+        # Use English translation if available, otherwise original text
+        if hasattr(claim, 'text_en') and claim.text_en and claim.lang != "en":
+            text = html.escape(claim.text_en)
+        else:
+            text = html.escape(claim.text)
         
         # Add reference links
         if claim.sources:

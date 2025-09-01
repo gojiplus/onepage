@@ -141,7 +141,7 @@ class WikitextProcessor:
         refs = self._extract_references(parsed)
         
         # Convert to plain text
-        plain_text = parsed.plain()
+        plain_text = parsed.plain_text()
         
         # Clean up the text
         plain_text = self._clean_text(plain_text)
@@ -169,34 +169,60 @@ class WikitextProcessor:
     
     def _clean_templates(self, parsed: wtp.WikiList) -> None:
         """Remove or clean templates from parsed wikitext."""
+        # Collect templates to modify to avoid mutation during iteration
+        templates_to_remove = []
+        templates_to_replace = {}
+        
         for template in parsed.templates:
-            template_name = str(template.name).strip().lower()
-            
-            # Remove citation needed, cleanup, and similar maintenance templates
-            if any(x in template_name for x in ["citation needed", "cleanup", "unreferenced", "stub"]):
-                template.string = ""
-            # Keep cite templates but mark them for reference extraction
-            elif template_name.startswith("cite"):
-                continue
-            # Remove most other templates but keep some content
-            else:
-                # For now, just remove the template but keep any plain text content
-                if hasattr(template, 'arguments') and template.arguments:
-                    # Try to extract meaningful content from template arguments
-                    content = " ".join(str(arg.value) for arg in template.arguments if arg.value)
-                    template.string = content
+            try:
+                template_name = str(template.name).strip().lower()
+                
+                # Remove citation needed, cleanup, and similar maintenance templates
+                if any(x in template_name for x in ["citation needed", "cleanup", "unreferenced", "stub"]):
+                    templates_to_remove.append(template)
+                # Keep cite templates but mark them for reference extraction
+                elif template_name.startswith("cite"):
+                    continue
+                # Remove most other templates but keep some content
                 else:
-                    template.string = ""
+                    # Try to extract meaningful content from template arguments
+                    if hasattr(template, 'arguments') and template.arguments:
+                        try:
+                            content = " ".join(str(arg.value) for arg in template.arguments if arg.value)
+                            if content.strip():
+                                templates_to_replace[template] = content
+                            else:
+                                templates_to_remove.append(template)
+                        except:
+                            templates_to_remove.append(template)
+                    else:
+                        templates_to_remove.append(template)
+            except:
+                # If we can't process the template, remove it
+                templates_to_remove.append(template)
+        
+        # Apply modifications after iteration
+        for template in templates_to_remove:
+            try:
+                template.string = ""
+            except:
+                pass  # Template may have been deleted already
+                
+        for template, replacement in templates_to_replace.items():
+            try:
+                template.string = replacement
+            except:
+                pass  # Template may have been deleted already
     
     def _extract_references(self, parsed: wtp.WikiList) -> List[Dict[str, str]]:
         """Extract reference information from wikitext."""
         references = []
         
         # Extract from <ref> tags
-        for tag in parsed.get_tags(attrs={"name": "ref"}):
+        for tag in parsed.get_tags("ref"):
             ref_content = str(tag.contents) if tag.contents else ""
             references.append({
-                "type": "ref_tag",
+                "type": "ref_tag", 
                 "content": ref_content,
                 "raw": str(tag),
             })

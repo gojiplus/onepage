@@ -205,9 +205,12 @@ class IntermediateRepresentation:
         
         references = {}
         for ref_id, ref_data in data["references"].items():
+            # Remove 'id' from ref_data if it exists to avoid duplicate parameter
+            ref_dict = dict(ref_data)
+            ref_dict.pop('id', None)
             references[ref_id] = Reference(
                 id=ref_id,
-                **ref_data
+                **ref_dict
             )
         
         return cls(

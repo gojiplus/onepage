@@ -6,8 +6,8 @@ from onepage.render import WikitextRenderer
 
 
 def main():
-    qid = "Q42"  # Douglas Adams
-    languages = ["en", "de"]
+    qid = "Q1058"  # Narendra Modi
+    languages = ["en", "hi"]
 
     # This call requires network access to the Wikimedia APIs.
     ir = merge_article(qid, languages)

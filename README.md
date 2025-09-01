@@ -18,6 +18,7 @@ Different language Wikipedias describe the same topic independently. Sitelinks a
 * **English‑pivot rendering:** Translate non‑English sentences to English for alignment; final output is English wikitext.
 * **Provenance first:** Track `wiki`, `title`, `rev_id`, and source refs for every claim.
 * **Deterministic emit:** Same IR → same wikitext; no silent heuristics that change across runs.
+* **Clean merge:** Strip wikitext markup, normalize headings, and deduplicate sentences across languages.
 * **Policy‑aware:** Surface conflicts; don’t synthesize unsourced claims; respect BLP.
 
 ---

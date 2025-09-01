@@ -67,6 +67,7 @@ If the CLI has issues, you can generate HTML previews directly with Python:
 
 ```python
 import json
+import os
 from onepage.render import HTMLRenderer
 from onepage.models import IntermediateRepresentation
 
@@ -78,6 +79,8 @@ ir = IntermediateRepresentation.from_dict(ir_data)
 renderer = HTMLRenderer('en')
 html_content = renderer.render(ir)
 
+# Ensure output directory exists before writing the preview
+os.makedirs('./out/Q1058', exist_ok=True)
 with open('./out/Q1058/preview.en.html', 'w') as f:
     f.write(html_content)
 ```

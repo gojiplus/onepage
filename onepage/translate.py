@@ -28,6 +28,9 @@ class TranslationService:
         # Rate limiting
         self.last_request_time = 0
         self.min_request_interval = 0.1  # 100ms between requests
+        # Simple in-memory cache to avoid repeatedly hammering the free
+        # translation APIs with identical requests
+        self.cache: Dict[Tuple[str, str], Tuple[str, float]] = {}
     
     def translate_to_english(self, text: str, source_lang: str) -> Tuple[str, float]:
         """
@@ -53,6 +56,10 @@ class TranslationService:
             # Language detection failed, proceed with given source_lang
             pass
         
+        cache_key = (text, source_lang)
+        if cache_key in self.cache:
+            return self.cache[cache_key]
+
         # For now, implement a simple translation using a free service
         # In production, you'd want to use a proper translation API
         translated_text = self._translate_via_libre(text, source_lang, "en")
@@ -65,7 +72,8 @@ class TranslationService:
         
         # Simple confidence score based on text length and complexity
         confidence = min(1.0, len(text) / 1000)  # Longer text = lower confidence
-        
+
+        self.cache[cache_key] = (translated_text, confidence)
         return translated_text, confidence
     
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
@@ -93,6 +101,13 @@ class TranslationService:
             }
 
             response = self.session.get(url, params=params, timeout=10)
+            if response.status_code == 429:
+                # Respect server rate limiting and avoid spamming requests
+                retry_after = int(response.headers.get("Retry-After", "1"))
+                print("Translation rate limited by MyMemory; backing off")
+                time.sleep(retry_after)
+                self.last_request_time = time.time()
+                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
             response.raise_for_status()
 
             data = response.json()

@@ -56,6 +56,12 @@ class TranslationService:
         # For now, implement a simple translation using a free service
         # In production, you'd want to use a proper translation API
         translated_text = self._translate_via_libre(text, source_lang, "en")
+
+        # If MyMemory fails, fall back to Google's lightweight endpoint
+        if translated_text.startswith("[TRANSLATION UNAVAILABLE"):
+            google_text = self._translate_via_google(text, source_lang, "en")
+            if google_text is not None:
+                translated_text = google_text
         
         # Simple confidence score based on text length and complexity
         confidence = min(1.0, len(text) / 1000)  # Longer text = lower confidence
@@ -63,47 +69,81 @@ class TranslationService:
         return translated_text, confidence
     
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
-        """
-        Translate using MyMemory free translation API.
+        """Translate using MyMemory free translation API.
+
+        Falls back to a generic placeholder when the service is unavailable.
         """
         # Rate limiting
         current_time = time.time()
         time_since_last = current_time - self.last_request_time
         if time_since_last < self.min_request_interval:
             time.sleep(self.min_request_interval - time_since_last)
-        
+
         if source == target:
             return text
-            
-        # Use MyMemory free translation API
+
         try:
             # Limit text length to avoid API limits
             text_to_translate = text[:500] if len(text) > 500 else text
-            
+
             url = "https://api.mymemory.translated.net/get"
             params = {
-                'q': text_to_translate,
-                'langpair': f'{source}|{target}',
+                "q": text_to_translate,
+                "langpair": f"{source}|{target}",
             }
-            
+
             response = self.session.get(url, params=params, timeout=10)
             response.raise_for_status()
-            
+
             data = response.json()
-            if data.get('responseStatus') == 200:
-                translated = data['responseData']['translatedText']
+            if data.get("responseStatus") == 200:
+                translated = data["responseData"]["translatedText"]
                 # Clean up common translation artifacts
-                translated = translated.replace('&quot;', '"').replace('&amp;', '&')
+                translated = translated.replace("&quot;", '"').replace("&amp;", "&")
                 self.last_request_time = time.time()
                 return translated
-            else:
-                # Fallback to placeholder
-                return f"[TRANSLATED FROM {source.upper()}] {text}"
-                
+
         except Exception as e:
-            # Fallback to placeholder on error
+            # Log and fall back below
             print(f"Translation failed: {e}")
-            return f"[TRANSLATED FROM {source.upper()}] {text}"
+
+        # If we reach here, translation failed
+        return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
+
+    def _translate_via_google(self, text: str, source: str, target: str) -> Optional[str]:
+        """Fallback translation using Google's web API.
+
+        This uses the unofficial translate.googleapis.com endpoint which does
+        not require an API key and is suitable for small amounts of text.
+        Returns ``None`` if translation fails.
+        """
+        # Rate limiting
+        current_time = time.time()
+        time_since_last = current_time - self.last_request_time
+        if time_since_last < self.min_request_interval:
+            time.sleep(self.min_request_interval - time_since_last)
+
+        if source == target:
+            return text
+
+        try:
+            url = "https://translate.googleapis.com/translate_a/single"
+            params = {
+                "client": "gtx",
+                "sl": source,
+                "tl": target,
+                "dt": "t",
+                "q": text,
+            }
+            response = self.session.get(url, params=params, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            translated = "".join(segment[0] for segment in data[0])
+            self.last_request_time = time.time()
+            return translated
+        except Exception as e:
+            print(f"Google translation failed: {e}")
+            return None
     
     def translate_claims(self, claims: List[Claim]) -> List[Claim]:
         """

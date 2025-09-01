@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from typing import Dict, List, Sequence
+from typing import Dict, List, Sequence, Tuple
+import re
 
 from .api import ArticleFetcher
 from .models import Claim, Entity, IntermediateRepresentation, Section
 from .parse import ParsedArticle, parse_wikitext
+from .translate import TranslationService, TextCleaner
 
 
 class ImageMerger:
@@ -38,18 +40,52 @@ class InfoboxMerger:
 
 
 class TextMerger:
-    """Merge article sections at the sentence level."""
+    """Merge article sections at the sentence level.
+
+    Parameters
+    ----------
+    sections_list:
+        Sequence of ``(language, sections)`` tuples where ``sections`` is a
+        mapping of headings to raw wikitext content from that language.
+    target_lang:
+        Language code of the final merged article. Headings from other
+        languages are translated to this language.
+    """
 
     @staticmethod
-    def merge(sections_list: Sequence[Dict[str, str]]) -> Dict[str, str]:
+    def merge(
+        sections_list: Sequence[Tuple[str, Dict[str, str]]],
+        target_lang: str = "en",
+    ) -> Dict[str, str]:
+        translator = TranslationService()
         grouped: Dict[str, List[str]] = defaultdict(list)
-        for sections in sections_list:
+
+        for lang, sections in sections_list:
             for heading, text in sections.items():
-                sentences = [s.strip() for s in text.split('. ') if s.strip()]
+                # Clean wikitext to plain sentences
+                clean_text = TextCleaner.extract_plain_text(text)
+                if not clean_text:
+                    continue
+
+                heading_norm = heading
+                if lang != target_lang:
+                    heading_norm, _ = translator.translate_to_english(heading, lang)
+
+                heading_ascii = heading_norm.encode("ascii", "ignore").decode().strip()
+                if heading_ascii and not heading_ascii.startswith("[TRANSLATED FROM"):
+                    heading_norm = heading_ascii
+                else:
+                    heading_norm = "Other"
+
+                sentences = [
+                    s.strip() for s in re.split(r"(?<=[.!?]) +", clean_text) if s.strip()
+                ]
+
                 for sentence in sentences:
-                    if sentence not in grouped[heading]:
-                        grouped[heading].append(sentence)
-        return {h: '. '.join(sents) for h, sents in grouped.items()}
+                    if sentence not in grouped[heading_norm]:
+                        grouped[heading_norm].append(sentence)
+
+        return {h: " ".join(sents) for h, sents in grouped.items()}
 
 
 def merge_article(qid: str, languages: List[str], target_lang: str = "en") -> IntermediateRepresentation:
@@ -76,7 +112,10 @@ def merge_article(qid: str, languages: List[str], target_lang: str = "en") -> In
 
     images = ImageMerger.merge([p.images for p in parsed_articles])
     infobox = InfoboxMerger.merge([p.infobox for p in parsed_articles])
-    sections_merged = TextMerger.merge([p.sections for p in parsed_articles])
+    sections_merged = TextMerger.merge(
+        [(lang, p.sections) for lang, p in zip(languages, parsed_articles)],
+        target_lang=target_lang,
+    )
 
     # Build a minimal IntermediateRepresentation
     ir = IntermediateRepresentation(entity=entity)

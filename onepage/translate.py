@@ -190,10 +190,16 @@ class TextCleaner:
                 tag.string = ""
         
         # Get plain text
-        plain = parsed.plain()
+        # ``wikitextparser`` exposes ``plain_text`` for extracting readable text
+        # without any markup. The previous implementation attempted to call a
+        # non-existent ``plain`` attribute which raised ``AttributeError`` when
+        # invoked. Using ``plain_text()`` returns the cleaned string as intended
+        # and allows this utility to be used during merge operations.
+        plain = parsed.plain_text()
         
         # Final cleanup
         plain = re.sub(r'\s+', ' ', plain)
+        plain = re.sub(r'\s+([.,!?])', r'\1', plain)
         return plain.strip()
     
     @staticmethod

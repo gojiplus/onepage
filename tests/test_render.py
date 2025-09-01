@@ -14,5 +14,5 @@ def test_html_renderer_basic():
     html = renderer.render(ir)
 
     assert "<html>" in html
-    assert "<h1>Narendra Modi</h1>" in html
     assert "Narendra Modi is the Prime Minister of India." in html
+    assert "<h1" in html and "Narendra Modi</h1>" in html

@@ -78,8 +78,14 @@ class TextMerger:
                     heading_norm = "Other"
 
                 sentences = [
-                    s.strip() for s in re.split(r"(?<=[.!?]) +", clean_text) if s.strip()
+                    TextCleaner.clean_sentence(s)
+                    for s in re.split(r"(?<=[.!?]) +", clean_text)
+                    if s.strip()
                 ]
+
+                if lang != target_lang:
+                    translations = translator.batch_translate(sentences, lang)
+                    sentences = [TextCleaner.clean_sentence(t[0]) for t in translations]
 
                 for sentence in sentences:
                     if sentence not in grouped[heading_norm]:

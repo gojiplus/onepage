@@ -181,14 +181,15 @@ class TextCleaner:
         parsed = wtp.parse(wikitext)
         
         # Remove templates
-        # Modifying the parsed tree invalidates internal indices for
-        # subsequent elements. Iterate in reverse order so earlier
-        # indices remain valid when later elements are removed.
-        for template in reversed(parsed.templates):
+        # ``wikitextparser`` invalidates indices of later nodes when earlier
+        # ones are mutated.  Iterate over copies of the template/tag lists so
+        # that we can safely mutate the original parse tree without hitting
+        # ``DeadIndexError``.
+        for template in reversed(list(parsed.templates)):
             template.string = ""
 
         # Remove references
-        for tag in reversed(parsed.get_tags()):
+        for tag in reversed(list(parsed.get_tags())):
             if tag.name and tag.name.lower() in ["ref", "references"]:
                 tag.string = ""
         

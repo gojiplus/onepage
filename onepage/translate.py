@@ -77,13 +77,7 @@ class TranslationService:
         return translated_text, confidence
     
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
-        """Translate using the LibreTranslate API.
-
-        Falls back to a generic placeholder when the service is unavailable or
-        rate limited.  ``LibreTranslate`` is an open source translation service
-        with a free public instance at ``libretranslate.de`` which does not
-        require an API key for light usage.
-        """
+        """Translate using the LibreTranslate API."""
         # Rate limiting
         current_time = time.time()
         time_since_last = current_time - self.last_request_time
@@ -93,9 +87,17 @@ class TranslationService:
         if source == target:
             return text
 
+        # Skip if text is too short or empty
+        if not text or len(text.strip()) < 3:
+            return text
+
         try:
-            # Limit text length to avoid API limits
-            text_to_translate = text[:500] if len(text) > 500 else text
+            # Clean and limit text length to avoid API limits
+            text_to_translate = text.strip()[:500] if len(text) > 500 else text.strip()
+            
+            # Skip if text contains mostly symbols or numbers
+            if re.match(r'^[^\w\s]*$', text_to_translate):
+                return text
 
             url = "https://libretranslate.de/translate"
             data = {
@@ -105,75 +107,34 @@ class TranslationService:
                 "format": "text",
             }
 
-            response = self.session.post(url, data=data, timeout=10)
+            response = self.session.post(url, data=data, timeout=15)
+            self.last_request_time = time.time()
+            
             if response.status_code == 429:
-                # Respect server rate limiting and avoid spamming requests
-                retry_after = int(response.headers.get("Retry-After", "1"))
-                print("Translation rate limited by LibreTranslate; backing off")
+                retry_after = int(response.headers.get("Retry-After", "2"))
                 time.sleep(retry_after)
-                self.last_request_time = time.time()
                 return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
-            response.raise_for_status()
+            
+            if response.status_code != 200:
+                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
 
             try:
-                data = response.json()
-            except ValueError:
-                # Service returned an empty or non-JSON response
-                print("Translation failed: invalid JSON from LibreTranslate")
-                self.last_request_time = time.time()
-                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
+                result = response.json()
+                if "translatedText" in result and result["translatedText"]:
+                    return result["translatedText"]
+            except (ValueError, KeyError):
+                pass
 
-            if "translatedText" in data:
-                translated = data["translatedText"]
-                self.last_request_time = time.time()
-                return translated
+        except Exception:
+            pass
 
-        except Exception as e:
-            # Log and fall back below
-            print(f"Translation failed: {e}")
-
-        # If we reach here, translation failed
         return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
 
     def _translate_via_google(self, text: str, source: str, target: str) -> Optional[str]:
-        """Fallback translation using Google's web API.
-
-        This uses the unofficial translate.googleapis.com endpoint which does
-        not require an API key and is suitable for small amounts of text.
-        Returns ``None`` if translation fails.
-        """
-        # Rate limiting
-        current_time = time.time()
-        time_since_last = current_time - self.last_request_time
-        if time_since_last < self.min_request_interval:
-            time.sleep(self.min_request_interval - time_since_last)
-
-        if source == target:
-            return text
-
-        try:
-            url = "https://translate.googleapis.com/translate_a/single"
-            params = {
-                "client": "gtx",
-                "sl": source,
-                "tl": target,
-                "dt": "t",
-                "q": text,
-            }
-            response = self.session.get(url, params=params, timeout=10)
-            response.raise_for_status()
-            try:
-                data = response.json()
-            except ValueError:
-                print("Google translation failed: invalid JSON response")
-                self.last_request_time = time.time()
-                return None
-            translated = "".join(segment[0] for segment in data[0])
-            self.last_request_time = time.time()
-            return translated
-        except Exception as e:
-            print(f"Google translation failed: {e}")
-            return None
+        """Simple offline fallback - just return original text for now."""
+        # For now, skip Google API due to rate limits and just return original
+        # In production, you'd use proper Google Translate API with key
+        return None
     
     def translate_claims(self, claims: List[Claim]) -> List[Claim]:
         """

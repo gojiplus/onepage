@@ -277,28 +277,59 @@ class HTMLRenderer:
         self._references: List[str] = []
 
     def render(self, ir: IntermediateRepresentation) -> str:
-        """Render the IR to a basic HTML document."""
+        """Render the IR to high-quality HTML with full Wikipedia styling."""
         title = ir.entity.labels.get(self.language, ir.entity.qid)
         # Reset reference containers for each render call
         self._ref_counter = 0
         self._ref_map = {}
         self._references = []
+        
         parts = [
-            "<html>",
+            "<!DOCTYPE html>",
+            "<html lang=\"en\" class=\"client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-enabled skin-theme-clientpref-day vector-toc-available\">",
             "<head>",
             "<meta charset=\"utf-8\"/>",
-            f"<title>{title}</title>",
-            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=skins.vector.styles.legacy&only=styles\"/>",
-            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=ext.cite.styles&only=styles\"/>",
+            "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>",
+            f"<title>{title} - Wikipedia</title>",
+            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=skins.vector.styles.legacy|skins.vector.icons|ext.cite.styles|ext.uls.interlanguage|ext.wikimediaBadges&only=styles&skin=vector\"/>",
+            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=site.styles&only=styles&skin=vector\"/>",
+            "<style>",
+            ".infobox { float: right; clear: right; width: 300px; margin: 0 0 1em 1em; padding: 0; border: 1px solid #a2a9b1; background: #f8f9fa; color: black; font-size: 88%; line-height: 1.5em; }",
+            ".infobox th, .infobox td { padding: 0.35em 0.5em; }",
+            ".infobox th { background: #eaecf0; text-align: left; font-weight: bold; }",
+            ".infobox td { text-align: left; }",
+            ".references { font-size: 90%; }",
+            ".reference { margin: 0.5em 0; }",
+            "sup.reference { font-size: 75%; line-height: 1; }",
+            "a.external { background: url(//upload.wikimedia.org/wikipedia/commons/6/64/Icon_External_Link.png) no-repeat right; padding-right: 13px; }",
+            "</style>",
             "</head>",
-            "<body class=\"mw-body\">",
-            f"<h1 id=\"firstHeading\">{title}</h1>",
+            "<body class=\"mediawiki ltr sitedir-ltr mw-hide-empty-elt ns-0 ns-subject mw-editable page-" + title.replace(' ', '_') + " rootpage-" + title.replace(' ', '_') + " skin-vector action-view\">",
+            "<div class=\"mw-page-container\">",
+            "<div class=\"mw-page-container-inner\">",
+            "<div class=\"vector-sitenotice-container\">",
+            "</div>",
+            "<header class=\"mw-header vector-header vector-header-vector-2022 vector-header-logged-out\">",
+            "</header>",
+            "<div class=\"mw-page-container\">",
+            "<div class=\"vector-main\">",
+            "<div id=\"content\" class=\"mw-body\" role=\"main\">",
+            "<header class=\"mw-body-header vector-page-titlebar\">",
+            f"<h1 id=\"firstHeading\" class=\"firstHeading mw-first-heading\">{title}</h1>",
+            "</header>",
+            "<div class=\"vector-body\" id=\"bodyContent\">",
+            "<div id=\"mw-content-text\" class=\"mw-body-content mw-content-ltr\" lang=\"en\" dir=\"ltr\">",
             "<div class=\"mw-parser-output\">",
         ]
 
         infobox_html = self._render_infobox(ir)
         if infobox_html:
             parts.append(infobox_html)
+        
+        # Add images after infobox
+        images_html = self._render_images(ir)
+        if images_html:
+            parts.append(images_html)
 
         lead = self._find_section_by_id(ir.sections, "lead")
         if lead:
@@ -312,14 +343,27 @@ class HTMLRenderer:
                 if section_html:
                     parts.append(section_html)
 
-        # Render references if any were collected
-        if self._references:
+        # Render ALL references from IR, not just the ones linked to content
+        if ir.references:
             parts.append("<h2>References</h2>")
             parts.append("<ol class=\"references\">")
-            parts.extend(self._references)
+            for i, (ref_id, ref) in enumerate(ir.references.items(), 1):
+                formatted_ref = self._format_reference(ref)
+                parts.append(f"<li id=\"cite_note-{i}\">{formatted_ref}</li>")
             parts.append("</ol>")
 
-        parts.extend(["</div>", "</body>", "</html>"])
+        parts.extend([
+            "</div>",  # mw-parser-output
+            "</div>",  # mw-content-text
+            "</div>",  # vector-body
+            "</div>",  # content
+            "</div>",  # vector-main
+            "</div>",  # mw-page-container inner
+            "</div>",  # mw-page-container outer
+            "</div>",  # mw-page-container
+            "</body>",
+            "</html>"
+        ])
         return "\n".join(parts)
 
     def _render_section(self, section: Section, ir: IntermediateRepresentation) -> str:
@@ -401,7 +445,7 @@ class HTMLRenderer:
         parts = []
         title = ref.title or ref.url or "Reference"
         if ref.url:
-            parts.append(f"<cite class=\"citation\"><a href=\"{ref.url}\">{title}</a>")
+            parts.append(f"<cite class=\"citation\"><a href=\"{ref.url}\" class=\"external\">{title}</a>")
         else:
             parts.append(f"<cite class=\"citation\">{title}")
 
@@ -419,3 +463,34 @@ class HTMLRenderer:
 
         parts.append("</cite>")
         return "".join(parts)
+    
+    def _render_images(self, ir: IntermediateRepresentation) -> str:
+        """Render images from metadata."""
+        images = ir.metadata.get("images", [])
+        if not images:
+            return ""
+        
+        parts = ["<div class=\"gallery mw-gallery-traditional\">"]
+        
+        for i, image in enumerate(images[:6]):  # Limit to first 6 images
+            # Clean image filename
+            image_name = image.replace("File:", "").replace("Image:", "")
+            image_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{image_name}?width=300"
+            
+            parts.append(f"""
+            <div class="gallerybox" style="width: 155px;">
+                <div class="thumb" style="width: 150px; height: 150px;">
+                    <div style="margin:0px auto;">
+                        <a href="https://commons.wikimedia.org/wiki/File:{image_name}" class="image">
+                            <img alt="{image_name}" src="{image_url}" style="max-width: 150px; max-height: 150px;"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="gallerytext">
+                    <p>{image_name[:50]}...</p>
+                </div>
+            </div>
+            """)
+        
+        parts.append("</div>")
+        return "\n".join(parts)

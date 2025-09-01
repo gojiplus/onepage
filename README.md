@@ -31,24 +31,33 @@ Different language Wikipedias describe the same topic independently. Sitelinks a
 
 ---
 
-## Quickstart (alpha)
+## Installation & Quickstart
 
 ```bash
-# 0) Install
-pipx install onepage  # or: pip install onepage
+# 0) Install dependencies
+git clone https://github.com/soodoku/onepage.git
+cd onepage
+pip install -r requirements.txt
+
+# Verify installation
+python verify_structure.py
+python -m onepage.cli.main --help
 
 # 1) Fetch sitelinks and pull article content
-onepage fetch --qid Q1058 --languages en,hi --out ./out/Q1058
+python -m onepage.cli.main fetch --qid Q1058 --languages en,hi --out ./out/Q1058
 
 # 2) Build the merged IR (align facts/claims, dedup references)
-onepage build --qid Q1058 --in ./out/Q1058 --out ./out/Q1058
+python -m onepage.cli.main build --qid Q1058 --in ./out/Q1058 --out ./out/Q1058
 
 # 3) Render the final English Wikipedia page (wikitext)
-onepage render --qid Q1058 --lang en --format wikitext \
+python -m onepage.cli.main render --qid Q1058 --lang en --format wikitext \
   --out ./out/Q1058/onepage.en.wikitext
 
 # 4) Optional HTML preview
-onepage preview --qid Q1058 --lang en --out ./out/Q1058/preview.en.html
+python -m onepage.cli.main preview --qid Q1058 --lang en --out ./out/Q1058/preview.en.html
+
+# Or run complete pipeline with config
+python -m onepage.cli.main run --config onepage.yaml --out ./out/Q1058
 ```
 
 **Example** QID: `Q1058` (Narendra Modi). The command above merges English (`enwiki`) and Hindi (`hiwiki`) articles into one English page.
@@ -122,7 +131,9 @@ Output scaffold:
 
 ---
 
-## Installation & config
+## Configuration
+
+Create a YAML config file for batch processing:
 
 ```yaml
 # onepage.yaml
@@ -134,7 +145,24 @@ emit: [ir, wikitext, html]
 ```
 
 ```bash
-onepage run --config onepage.yaml --out ./out/Q1058
+python -m onepage.cli.main run --config onepage.yaml --out ./out/Q1058
+```
+
+## Dependencies
+
+Core requirements:
+- Python 3.8+
+- `click` - CLI framework
+- `requests` - HTTP requests
+- `pyyaml` - YAML configuration
+- `wikitextparser` - Parse Wikipedia wikitext
+- `sentence-transformers` - Multilingual sentence embeddings
+- `numpy` - Numerical computations
+- `beautifulsoup4` - HTML parsing
+
+Install all dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
 ---
@@ -156,16 +184,43 @@ onepage run --config onepage.yaml --out ./out/Q1058
 
 ---
 
-## Roadmap
+## Package Structure
 
-* Additional language adapters (templates, categories).
-* Better cross‑lingual alignment (embeddings are pluggable).
-* Incremental updates via revision watches.
-* Renderers for non‑English output using the same IR.
-* Optional sandbox export to user drafts for review.
+```
+onepage/
+├── core/           # Data models and configuration  
+├── api/            # Wikidata and Wikipedia API clients
+├── processing/     # Text processing, alignment, and IR building
+├── renderers/      # Output generation (wikitext, HTML, attribution)
+└── cli/            # Command-line interface
+```
+
+## Testing
+
+Run the verification script to test basic functionality:
+
+```bash
+python verify_structure.py
+```
+
+Run the example to test with real data:
+
+```bash
+python example.py
+```
+
+Run unit tests:
+
+```bash
+python -m pytest tests/
+```
 
 ---
 
 ## Contributing
 
-Issues and PRs welcome. Focus on: deterministic tests (pin revision IDs), template localization, and attribution robustness.
+Issues and PRs welcome. The implementation is complete and functional. Focus areas for improvement:
+- Enhanced translation service integration
+- Better cross-lingual alignment models
+- Template localization for non-English output
+- Performance optimization for large articles

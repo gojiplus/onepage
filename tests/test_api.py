@@ -3,7 +3,8 @@
 import pytest
 from unittest.mock import Mock, patch
 
-from onepage.api import WikidataClient, WikipediaClient
+from onepage.api.wikidata import WikidataClient
+from onepage.api.wikipedia import WikipediaClient
 
 
 class TestWikidataClient:

@@ -4,7 +4,7 @@ from typing import List, Dict, Any, Optional
 import re
 from datetime import datetime
 
-from ..core.models import IntermediateRepresentation, Section, Claim, Fact, Reference
+from .models import IntermediateRepresentation, Section, Claim, Fact, Reference
 
 
 class WikitextRenderer:

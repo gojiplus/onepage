@@ -271,16 +271,25 @@ class HTMLRenderer:
 
     def __init__(self, language: str = "en") -> None:
         self.language = language
+        # Containers for references when rendering
+        self._ref_counter = 0
+        self._ref_map: Dict[str, int] = {}
+        self._references: List[str] = []
 
     def render(self, ir: IntermediateRepresentation) -> str:
         """Render the IR to a basic HTML document."""
         title = ir.entity.labels.get(self.language, ir.entity.qid)
+        # Reset reference containers for each render call
+        self._ref_counter = 0
+        self._ref_map = {}
+        self._references = []
         parts = [
             "<html>",
             "<head>",
             "<meta charset=\"utf-8\"/>",
             f"<title>{title}</title>",
             "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=skins.vector.styles.legacy&only=styles\"/>",
+            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=ext.cite.styles&only=styles\"/>",
             "</head>",
             "<body class=\"mw-body\">",
             f"<h1 id=\"firstHeading\">{title}</h1>",
@@ -302,6 +311,13 @@ class HTMLRenderer:
                 section_html = self._render_section(section, ir)
                 if section_html:
                     parts.append(section_html)
+
+        # Render references if any were collected
+        if self._references:
+            parts.append("<h2>References</h2>")
+            parts.append("<ol class=\"references\">")
+            parts.extend(self._references)
+            parts.append("</ol>")
 
         parts.extend(["</div>", "</body>", "</html>"])
         return "\n".join(parts)
@@ -325,7 +341,7 @@ class HTMLRenderer:
         for item_id in section.items:
             item = ir.content.get(item_id)
             if isinstance(item, Claim):
-                sentences.append(item.text)
+                sentences.append(self._render_claim(item, ir))
 
         if sentences:
             return "<p>" + " ".join(sentences) + "</p>"
@@ -345,3 +361,61 @@ class HTMLRenderer:
         for key, values in box.items():
             rows.append(f"<tr><th>{key}</th><td>{', '.join(values)}</td></tr>")
         return "<table class=\"infobox\">" + "".join(rows) + "</table>"
+
+    # ------------------------------------------------------------------
+    # Reference handling helpers
+    # ------------------------------------------------------------------
+
+    def _render_claim(self, claim: Claim, ir: IntermediateRepresentation) -> str:
+        """Render claim text with inline reference markers."""
+        text = claim.text
+        if claim.sources:
+            markers = []
+            for source_id in claim.sources:
+                ref = ir.references.get(source_id)
+                if ref is None:
+                    continue
+                idx = self._register_reference(ref)
+                markers.append(
+                    f"<sup id=\"cite_ref-{idx}\"><a href=\"#cite_note-{idx}\">[{idx}]</a></sup>"
+                )
+            if markers:
+                text += "".join(markers)
+        return text
+
+    def _register_reference(self, ref: Reference) -> int:
+        """Assign an index to a reference and store its formatted HTML."""
+        key = f"{ref.title}|{ref.url}|{ref.doi}"
+        if key in self._ref_map:
+            return self._ref_map[key]
+
+        self._ref_counter += 1
+        idx = self._ref_counter
+        self._ref_map[key] = idx
+        formatted = self._format_reference(ref)
+        self._references.append(f"<li id=\"cite_note-{idx}\">{formatted}</li>")
+        return idx
+
+    def _format_reference(self, ref: Reference) -> str:
+        """Format a reference for display in HTML."""
+        parts = []
+        title = ref.title or ref.url or "Reference"
+        if ref.url:
+            parts.append(f"<cite class=\"citation\"><a href=\"{ref.url}\">{title}</a>")
+        else:
+            parts.append(f"<cite class=\"citation\">{title}")
+
+        details = []
+        if ref.author:
+            details.append(ref.author)
+        if ref.publisher:
+            details.append(ref.publisher)
+        if ref.date:
+            details.append(ref.date)
+        if ref.doi:
+            details.append(f"doi:{ref.doi}")
+        if details:
+            parts.append(". ".join(["", ", ".join(details)]))
+
+        parts.append("</cite>")
+        return "".join(parts)

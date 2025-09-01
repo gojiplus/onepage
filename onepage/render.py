@@ -274,10 +274,22 @@ class HTMLRenderer:
 
     def render(self, ir: IntermediateRepresentation) -> str:
         """Render the IR to a basic HTML document."""
-        parts = ["<html>", "<body>"]
-
         title = ir.entity.labels.get(self.language, ir.entity.qid)
-        parts.append(f"<h1>{title}</h1>")
+        parts = [
+            "<html>",
+            "<head>",
+            "<meta charset=\"utf-8\"/>",
+            f"<title>{title}</title>",
+            "<link rel=\"stylesheet\" href=\"https://en.wikipedia.org/w/load.php?modules=skins.vector.styles.legacy&only=styles\"/>",
+            "</head>",
+            "<body class=\"mw-body\">",
+            f"<h1 id=\"firstHeading\">{title}</h1>",
+            "<div class=\"mw-parser-output\">",
+        ]
+
+        infobox_html = self._render_infobox(ir)
+        if infobox_html:
+            parts.append(infobox_html)
 
         lead = self._find_section_by_id(ir.sections, "lead")
         if lead:
@@ -291,7 +303,7 @@ class HTMLRenderer:
                 if section_html:
                     parts.append(section_html)
 
-        parts.extend(["</body>", "</html>"])
+        parts.extend(["</div>", "</body>", "</html>"])
         return "\n".join(parts)
 
     def _render_section(self, section: Section, ir: IntermediateRepresentation) -> str:
@@ -324,3 +336,12 @@ class HTMLRenderer:
             if section.id == section_id:
                 return section
         return None
+
+    def _render_infobox(self, ir: IntermediateRepresentation) -> str:
+        box = ir.metadata.get("infobox")
+        if not box:
+            return ""
+        rows = []
+        for key, values in box.items():
+            rows.append(f"<tr><th>{key}</th><td>{', '.join(values)}</td></tr>")
+        return "<table class=\"infobox\">" + "".join(rows) + "</table>"

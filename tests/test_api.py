@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from onepage.api import WikidataClient, WikipediaClient
+from wikifuse.api import WikidataClient, WikipediaClient
 
 
 class TestWikidataClient:
@@ -14,7 +14,7 @@ class TestWikidataClient:
         """Test client initialization."""
         client = WikidataClient()
         assert client.base_url == "https://www.wikidata.org/w/api.php"
-        assert "onepage" in client.session.headers["User-Agent"]
+        assert "wikifuse" in client.session.headers["User-Agent"]
 
     @patch("requests.Session.get")
     def test_get_sitelinks(self, mock_get):
@@ -58,7 +58,7 @@ class TestWikipediaClient:
     def test_init(self):
         """Test client initialization."""
         client = WikipediaClient()
-        assert "onepage" in client.session.headers["User-Agent"]
+        assert "wikifuse" in client.session.headers["User-Agent"]
 
     def test_get_api_url(self):
         """Test API URL generation."""

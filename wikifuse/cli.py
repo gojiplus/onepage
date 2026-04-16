@@ -1,4 +1,4 @@
-"""Command line interface for onepage."""
+"""Command line interface for wikifuse."""
 
 import json
 import os
@@ -106,7 +106,7 @@ def merge(
         qid, lang_list, target_lang="en", use_llm=use_llm, llm_model=llm_model
     )
 
-    ir_path = os.path.join(out, "onepage.ir.json")
+    ir_path = os.path.join(out, "wikifuse.ir.json")
     with open(ir_path, "w", encoding="utf-8") as f:
         json.dump(ir.to_dict(), f, indent=2, ensure_ascii=False)
 

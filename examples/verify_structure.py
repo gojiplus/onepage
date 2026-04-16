@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the onepage package structure and basic imports."""
+"""Verify the wikifuse package structure and basic imports."""
 
 import sys
 from pathlib import Path
@@ -7,34 +7,34 @@ from pathlib import Path
 def verify_structure():
     """Verify package structure is correct."""
     
-    print("Verifying onepage package structure...")
+    print("Verifying wikifuse package structure...")
     print("=" * 50)
     
     # Check main package files
     required_files = [
-        "onepage/__init__.py",
-        "onepage/core/__init__.py",
-        "onepage/core/models.py",
-        "onepage/core/config.py", 
-        "onepage/api/__init__.py",
-        "onepage/api/wikidata.py",
-        "onepage/api/wikipedia.py",
-        "onepage/api/fetcher.py",
-        "onepage/processing/__init__.py",
-        "onepage/processing/text.py",
-        "onepage/processing/translation.py",
-        "onepage/processing/alignment.py",
-        "onepage/processing/references.py",
-        "onepage/processing/builder.py",
-        "onepage/renderers/__init__.py",
-        "onepage/renderers/wikitext.py",
-        "onepage/renderers/html.py",
-        "onepage/renderers/attribution.py",
-        "onepage/cli/__init__.py",
-        "onepage/cli/main.py",
+        "wikifuse/__init__.py",
+        "wikifuse/core/__init__.py",
+        "wikifuse/core/models.py",
+        "wikifuse/core/config.py", 
+        "wikifuse/api/__init__.py",
+        "wikifuse/api/wikidata.py",
+        "wikifuse/api/wikipedia.py",
+        "wikifuse/api/fetcher.py",
+        "wikifuse/processing/__init__.py",
+        "wikifuse/processing/text.py",
+        "wikifuse/processing/translation.py",
+        "wikifuse/processing/alignment.py",
+        "wikifuse/processing/references.py",
+        "wikifuse/processing/builder.py",
+        "wikifuse/renderers/__init__.py",
+        "wikifuse/renderers/wikitext.py",
+        "wikifuse/renderers/html.py",
+        "wikifuse/renderers/attribution.py",
+        "wikifuse/cli/__init__.py",
+        "wikifuse/cli/main.py",
         "pyproject.toml",
         "README.md",
-        "onepage.yaml",
+        "wikifuse.yaml",
     ]
     
     missing_files = []
@@ -57,7 +57,7 @@ def verify_structure():
     
     try:
         # Test data models
-        from onepage.core.models import Entity, Claim, Fact, Reference
+        from wikifuse.core.models import Entity, Claim, Fact, Reference
         print("✓ Core models import successfully")
         
         # Test basic entity creation
@@ -123,12 +123,12 @@ if __name__ == "__main__":
     
     if structure_ok and deps_ok:
         print("\n" + "=" * 50)
-        print("🎉 onepage package is ready to use!")
+        print("🎉 wikifuse package is ready to use!")
         print("\nTry running:")
-        print("  python -m onepage.cli.main --help")
+        print("  python -m wikifuse.cli.main --help")
         print("  python example.py")
         sys.exit(0)
     else:
         print("\n" + "=" * 50) 
-        print("⚠ Issues found. Please resolve them before using onepage.")
+        print("⚠ Issues found. Please resolve them before using wikifuse.")
         sys.exit(1)

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from onepage.llm import LLMService, MockLLMService
+from wikifuse.llm import LLMService, MockLLMService
 
 
 class TestMockLLMService:
@@ -47,7 +47,7 @@ class TestLLMService:
 
     def test_init_with_api_key(self):
         """Test initialization with API key."""
-        with patch("onepage.llm.OpenAI") as mock_openai:
+        with patch("wikifuse.llm.OpenAI") as mock_openai:
             service = LLMService(api_key="test-key")
             assert service.api_key == "test-key"
             assert service.model == "gpt-4o-mini"
@@ -58,7 +58,7 @@ class TestLLMService:
         """Test initialization reads API key from environment."""
         with (
             patch.dict("os.environ", {"OPENAI_API_KEY": "env-test-key"}),
-            patch("onepage.llm.OpenAI") as mock_openai,
+            patch("wikifuse.llm.OpenAI") as mock_openai,
         ):
             service = LLMService()
             assert service.api_key == "env-test-key"
@@ -71,14 +71,14 @@ class TestLLMService:
 
     def test_merge_sections_empty(self):
         """Test merging empty sections list."""
-        with patch("onepage.llm.OpenAI"):
+        with patch("wikifuse.llm.OpenAI"):
             service = LLMService(api_key="test-key")
             result = service.merge_sections([], "Test Entity", "Introduction")
             assert result == ""
 
     def test_merge_sections_single_returns_content(self):
         """Test merging single section returns its content without LLM call."""
-        with patch("onepage.llm.OpenAI"):
+        with patch("wikifuse.llm.OpenAI"):
             service = LLMService(api_key="test-key")
             sections = [("enwiki", "en", "Single section content.")]
             result = service.merge_sections(sections, "Test Entity", "Introduction")
@@ -92,7 +92,7 @@ class TestLLMService:
         mock_response.choices[0].message.content = "Merged content from LLM."
         mock_openai.return_value.chat.completions.create.return_value = mock_response
 
-        with patch("onepage.llm.OpenAI", mock_openai):
+        with patch("wikifuse.llm.OpenAI", mock_openai):
             service = LLMService(api_key="test-key")
             sections = [
                 ("enwiki", "en", "English content."),
@@ -103,7 +103,7 @@ class TestLLMService:
 
     def test_build_merge_prompt(self):
         """Test prompt construction."""
-        with patch("onepage.llm.OpenAI"):
+        with patch("wikifuse.llm.OpenAI"):
             service = LLMService(api_key="test-key")
             sections = [
                 ("enwiki", "en", "English content."),

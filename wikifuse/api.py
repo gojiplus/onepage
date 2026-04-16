@@ -18,7 +18,7 @@ class WikidataClient:
         self.base_url = base_url
         self.session = requests.Session()
         self.session.headers.update(
-            {"User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"}
+            {"User-Agent": "wikifuse/0.1.0 (https://github.com/gojiplus/wikifuse)"}
         )
 
     def get_entity(self, qid: str, languages: list[str] | None = None) -> Entity:
@@ -121,7 +121,7 @@ class WikipediaClient:
     def __init__(self) -> None:
         self.session = requests.Session()
         self.session.headers.update(
-            {"User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"}
+            {"User-Agent": "wikifuse/0.1.0 (https://github.com/gojiplus/wikifuse)"}
         )
 
     def _get_api_url(self, language: str) -> str:

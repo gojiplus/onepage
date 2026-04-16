@@ -6,8 +6,8 @@ import tempfile
 import pytest
 from click.testing import CliRunner
 
-from onepage.cli import cli
-from onepage.diff import (
+from wikifuse.cli import cli
+from wikifuse.diff import (
     ArticleStats,
     ComparisonResult,
     SectionDiff,
@@ -16,7 +16,7 @@ from onepage.diff import (
     generate_diff_html,
     print_stats,
 )
-from onepage.models import Claim, Entity, IntermediateRepresentation, Section
+from wikifuse.models import Claim, Entity, IntermediateRepresentation, Section
 
 
 def test_count_words():

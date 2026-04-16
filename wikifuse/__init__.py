@@ -1,4 +1,4 @@
-"""onepage: Merge Wikipedia articles across languages into one comprehensive page."""
+"""wikifuse: Merge Wikipedia articles across languages into one comprehensive page."""
 
 from .api import ArticleFetcher, WikidataClient, WikipediaClient
 from .merge import ImageMerger, InfoboxMerger, TextMerger, merge_article

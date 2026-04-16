@@ -1,4 +1,4 @@
-from onepage.translate import TextCleaner
+from wikifuse.translate import TextCleaner
 
 
 def test_extract_plain_text_handles_templates_and_refs():

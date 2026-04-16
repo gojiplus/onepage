@@ -1308,82 +1308,6 @@ wheels = [
 ]
 
 [[package]]
-name = "onepage"
-version = "0.1.0"
-source = { editable = "." }
-dependencies = [
-    { name = "beautifulsoup4" },
-    { name = "click" },
-    { name = "langdetect" },
-    { name = "lxml" },
-    { name = "numpy" },
-    { name = "openai" },
-    { name = "python-dateutil" },
-    { name = "pyyaml" },
-    { name = "requests" },
-    { name = "sentence-transformers" },
-    { name = "torch" },
-    { name = "tqdm" },
-    { name = "transformers" },
-    { name = "wikitextparser" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "deptry" },
-    { name = "mypy" },
-    { name = "pydoclint" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-    { name = "types-pyyaml" },
-    { name = "types-requests" },
-    { name = "vulture" },
-]
-docs = [
-    { name = "furo" },
-    { name = "myst-parser" },
-    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "beautifulsoup4", specifier = ">=4.11.0" },
-    { name = "click", specifier = ">=8.0.0" },
-    { name = "langdetect", specifier = ">=1.0.9" },
-    { name = "lxml", specifier = ">=4.9.0" },
-    { name = "numpy", specifier = ">=1.21.0" },
-    { name = "openai", specifier = ">=1.0.0" },
-    { name = "python-dateutil", specifier = ">=2.8.0" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "requests", specifier = ">=2.28.0" },
-    { name = "sentence-transformers", specifier = ">=2.2.0" },
-    { name = "torch", specifier = ">=1.12.0" },
-    { name = "tqdm", specifier = ">=4.64.0" },
-    { name = "transformers", specifier = ">=4.20.0" },
-    { name = "wikitextparser", specifier = ">=0.55.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "deptry", specifier = ">=0.12.0" },
-    { name = "mypy", specifier = ">=1.0.0" },
-    { name = "pydoclint", specifier = ">=0.4.0" },
-    { name = "pytest", specifier = ">=7.0.0" },
-    { name = "pytest-cov", specifier = ">=4.0.0" },
-    { name = "ruff", specifier = ">=0.4.0" },
-    { name = "types-pyyaml", specifier = ">=6.0.0" },
-    { name = "types-requests", specifier = ">=2.28.0" },
-    { name = "vulture", specifier = ">=2.10" },
-]
-docs = [
-    { name = "furo", specifier = ">=2024.0.0" },
-    { name = "myst-parser", specifier = ">=2.0.0" },
-    { name = "sphinx", specifier = ">=7.0.0" },
-]
-
-[[package]]
 name = "openai"
 version = "2.32.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2469,6 +2393,82 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/35/a2/8e3becb46433538a38726c948d3399905a4c7cabd0df578ede5dc51f0ec2/wcwidth-0.6.0.tar.gz", hash = "sha256:cdc4e4262d6ef9a1a57e018384cbeb1208d8abbc64176027e2c2455c81313159", size = 159684, upload-time = "2026-02-06T19:19:40.919Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/68/5a/199c59e0a824a3db2b89c5d2dade7ab5f9624dbf6448dc291b46d5ec94d3/wcwidth-0.6.0-py3-none-any.whl", hash = "sha256:1a3a1e510b553315f8e146c54764f4fb6264ffad731b3d78088cdb1478ffbdad", size = 94189, upload-time = "2026-02-06T19:19:39.646Z" },
+]
+
+[[package]]
+name = "wikifuse"
+version = "0.1.0"
+source = { editable = "." }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "click" },
+    { name = "langdetect" },
+    { name = "lxml" },
+    { name = "numpy" },
+    { name = "openai" },
+    { name = "python-dateutil" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "sentence-transformers" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
+    { name = "wikitextparser" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "deptry" },
+    { name = "mypy" },
+    { name = "pydoclint" },
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "ruff" },
+    { name = "types-pyyaml" },
+    { name = "types-requests" },
+    { name = "vulture" },
+]
+docs = [
+    { name = "furo" },
+    { name = "myst-parser" },
+    { name = "sphinx", version = "9.0.4", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "sphinx", version = "9.1.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.11.0" },
+    { name = "click", specifier = ">=8.0.0" },
+    { name = "langdetect", specifier = ">=1.0.9" },
+    { name = "lxml", specifier = ">=4.9.0" },
+    { name = "numpy", specifier = ">=1.21.0" },
+    { name = "openai", specifier = ">=1.0.0" },
+    { name = "python-dateutil", specifier = ">=2.8.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "requests", specifier = ">=2.28.0" },
+    { name = "sentence-transformers", specifier = ">=2.2.0" },
+    { name = "torch", specifier = ">=1.12.0" },
+    { name = "tqdm", specifier = ">=4.64.0" },
+    { name = "transformers", specifier = ">=4.20.0" },
+    { name = "wikitextparser", specifier = ">=0.55.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "deptry", specifier = ">=0.12.0" },
+    { name = "mypy", specifier = ">=1.0.0" },
+    { name = "pydoclint", specifier = ">=0.4.0" },
+    { name = "pytest", specifier = ">=7.0.0" },
+    { name = "pytest-cov", specifier = ">=4.0.0" },
+    { name = "ruff", specifier = ">=0.4.0" },
+    { name = "types-pyyaml", specifier = ">=6.0.0" },
+    { name = "types-requests", specifier = ">=2.28.0" },
+    { name = "vulture", specifier = ">=2.10" },
+]
+docs = [
+    { name = "furo", specifier = ">=2024.0.0" },
+    { name = "myst-parser", specifier = ">=2.0.0" },
+    { name = "sphinx", specifier = ">=7.0.0" },
 ]
 
 [[package]]

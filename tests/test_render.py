@@ -1,5 +1,11 @@
-from onepage.models import Claim, Entity, IntermediateRepresentation, Reference, Section
-from onepage.render import HTMLRenderer
+from wikifuse.models import (
+    Claim,
+    Entity,
+    IntermediateRepresentation,
+    Reference,
+    Section,
+)
+from wikifuse.render import HTMLRenderer
 
 
 def test_html_renderer_basic():

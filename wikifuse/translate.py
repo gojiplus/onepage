@@ -26,7 +26,7 @@ class TranslationService:
     def __init__(self):
         self.session = requests.Session()
         self.session.headers.update(
-            {"User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"}
+            {"User-Agent": "wikifuse/0.1.0 (https://github.com/gojiplus/wikifuse)"}
         )
         # Rate limiting
         self.last_request_time = 0

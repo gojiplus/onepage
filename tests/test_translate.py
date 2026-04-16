@@ -1,6 +1,6 @@
 """Tests for translation service error handling and fallback."""
 
-from onepage.translate import TranslationService
+from wikifuse.translate import TranslationService
 
 
 def test_libretranslate_invalid_json(monkeypatch):

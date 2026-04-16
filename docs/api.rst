@@ -1,74 +1,74 @@
 API Reference
 =============
 
-onepage.api
+wikifuse.api
 -----------
 
-.. automodule:: onepage.api
+.. automodule:: wikifuse.api
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.cli
+wikifuse.cli
 -----------
 
-.. automodule:: onepage.cli
+.. automodule:: wikifuse.cli
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.models
+wikifuse.models
 --------------
 
-.. automodule:: onepage.models
+.. automodule:: wikifuse.models
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.parse
+wikifuse.parse
 -------------
 
-.. automodule:: onepage.parse
+.. automodule:: wikifuse.parse
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.merge
+wikifuse.merge
 -------------
 
-.. automodule:: onepage.merge
+.. automodule:: wikifuse.merge
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.render
+wikifuse.render
 --------------
 
-.. automodule:: onepage.render
+.. automodule:: wikifuse.render
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.translate
+wikifuse.translate
 -----------------
 
-.. automodule:: onepage.translate
+.. automodule:: wikifuse.translate
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.llm
+wikifuse.llm
 -----------
 
-.. automodule:: onepage.llm
+.. automodule:: wikifuse.llm
    :members:
    :undoc-members:
    :show-inheritance:
 
-onepage.diff
+wikifuse.diff
 ------------
 
-.. automodule:: onepage.diff
+.. automodule:: wikifuse.diff
    :members:
    :undoc-members:
    :show-inheritance:

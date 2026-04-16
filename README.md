@@ -1,24 +1,36 @@
-# onepage
+# wikifuse
 
-[![PyPI version](https://badge.fury.io/py/onepage.svg)](https://badge.fury.io/py/onepage)
+[![PyPI version](https://badge.fury.io/py/wikifuse.svg)](https://badge.fury.io/py/wikifuse)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/gojiplus/onepage/actions/workflows/ci.yml/badge.svg)](https://github.com/gojiplus/onepage/actions/workflows/ci.yml)
+[![CI](https://github.com/gojiplus/wikifuse/actions/workflows/ci.yml/badge.svg)](https://github.com/gojiplus/wikifuse/actions/workflows/ci.yml)
 
 Merge Wikipedia articles across languages into one comprehensive, source-attributed page.
 
 ## The Problem
 
-Wikipedia articles vary dramatically across languages. A politician's English page might have 3 references while the French version has 25. A scientist's Hindi page might cover their early life in detail while English focuses on achievements. **onepage** merges these perspectives into a single, richer article with full source attribution.
+Wikipedia articles vary dramatically across languages. A politician's English page might have 3 references while the French version has 25. A scientist's Hindi page might cover their early life in detail while English focuses on achievements. **wikifuse** merges these perspectives into a single, richer article with full source attribution.
 
 ## Quick Start
 
 ```bash
-pip install onepage
+pip install wikifuse
 
 # Compare English-only vs merged English+French for Rachida Dati
-onepage diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
+wikifuse diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
 ```
+
+Example output:
+
+```
+$ wikifuse diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
+
+Base (en only):     3,245 words, 12 references
+Merged (en+fr):     5,891 words, 47 references
+Gain:               +81% words, +292% references
+```
+
+See [example diff output](examples/Q27182/diff.html) comparing Rachida Dati's English vs English+French articles.
 
 ## Commands
 
@@ -27,31 +39,31 @@ onepage diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-l
 Shows what you gain by merging across languages:
 
 ```bash
-onepage diff --qid Q27182 --base en --compare en,fr --out ./output/
+wikifuse diff --qid Q27182 --base en --compare en,fr --out ./output/
 ```
 
 ### `fetch` - Download articles
 
 ```bash
-onepage fetch --qid Q1058 --languages en,hi --out ./out/Q1058
+wikifuse fetch --qid Q1058 --languages en,hi --out ./out/Q1058
 ```
 
 ### `merge` - Combine across languages
 
 ```bash
-onepage merge --qid Q1058 --languages en,hi --out ./out/Q1058
+wikifuse merge --qid Q1058 --languages en,hi --out ./out/Q1058
 ```
 
 ### `render` - Output wikitext
 
 ```bash
-onepage render --ir ./out/Q1058/onepage.ir.json --out ./out/Q1058/onepage.wikitext
+wikifuse render --ir ./out/Q1058/wikifuse.ir.json --out ./out/Q1058/wikifuse.wikitext
 ```
 
 ### `preview` - HTML preview
 
 ```bash
-onepage preview --ir ./out/Q1058/onepage.ir.json --out ./out/Q1058/preview.html
+wikifuse preview --ir ./out/Q1058/wikifuse.ir.json --out ./out/Q1058/preview.html
 ```
 
 ## How It Works
@@ -64,15 +76,15 @@ onepage preview --ir ./out/Q1058/onepage.ir.json --out ./out/Q1058/preview.html
 
 ## Output Files
 
-- `onepage.ir.json` - Intermediate Representation with sections, claims, and attribution
-- `onepage.wikitext` - MediaWiki wikitext ready for review
+- `wikifuse.ir.json` - Intermediate Representation with sections, claims, and attribution
+- `wikifuse.wikitext` - MediaWiki wikitext ready for review
 - `preview.html` - HTML preview
 - `diff.html` - Side-by-side comparison (from `diff` command)
 
 ## Configuration
 
 ```yaml
-# onepage.yaml
+# wikifuse.yaml
 qid: Q1058
 languages: [en, hi]
 base_language: en
@@ -83,21 +95,21 @@ emit: [ir, wikitext, html]
 ## Installation
 
 ```bash
-pip install onepage
+pip install wikifuse
 ```
 
 For LLM-powered merging (uses OpenAI):
 
 ```bash
-pip install onepage
+pip install wikifuse
 export OPENAI_API_KEY=your-key
-onepage merge --qid Q1058 --languages en,hi --out ./output/
+wikifuse merge --qid Q1058 --languages en,hi --out ./output/
 ```
 
 Without LLM (basic text merge):
 
 ```bash
-onepage merge --qid Q1058 --languages en,hi --out ./output/ --no-llm
+wikifuse merge --qid Q1058 --languages en,hi --out ./output/ --no-llm
 ```
 
 ## Licensing & Attribution

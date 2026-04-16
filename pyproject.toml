@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "onepage"
+name = "wikifuse"
 version = "0.1.0"
 description = "Merge Wikipedia articles across languages into one comprehensive, source-attributed page"
 readme = "README.md"
@@ -44,16 +44,16 @@ dependencies = [
 ]
 
 [project.scripts]
-onepage = "onepage.cli:main"
+wikifuse = "wikifuse.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/gojiplus/onepage"
-Repository = "https://github.com/gojiplus/onepage"
-Issues = "https://github.com/gojiplus/onepage/issues"
+Homepage = "https://github.com/gojiplus/wikifuse"
+Repository = "https://github.com/gojiplus/wikifuse"
+Issues = "https://github.com/gojiplus/wikifuse/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["onepage*"]
+include = ["wikifuse*"]
 
 [tool.ruff]
 line-length = 88

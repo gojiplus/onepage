@@ -4,7 +4,7 @@ import pytest
 import requests
 from click.testing import CliRunner
 
-from onepage.cli import cli
+from wikifuse.cli import cli
 
 
 def _get_modi_qid() -> str:

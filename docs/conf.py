@@ -3,7 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath(".."))
 
-project = "onepage"
+project = "wikifuse"
 copyright = "2024, Gaurav Sood"
 author = "Gaurav Sood"
 

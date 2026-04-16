@@ -1,6 +1,6 @@
 """Tests for core data models."""
 
-from onepage.models import (
+from wikifuse.models import (
     Claim,
     Entity,
     Fact,

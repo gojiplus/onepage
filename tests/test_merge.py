@@ -1,8 +1,8 @@
 """Tests for merge utilities."""
 
-from onepage.llm import MockLLMService
-from onepage.merge import ImageMerger, InfoboxMerger, TextMerger
-from onepage.translate import TextCleaner
+from wikifuse.llm import MockLLMService
+from wikifuse.merge import ImageMerger, InfoboxMerger, TextMerger
+from wikifuse.translate import TextCleaner
 
 
 def test_extract_plain_text_strips_markup() -> None:

@@ -1,1 +1,1 @@
-"""Tests for onepage."""
+"""Tests for wikifuse."""

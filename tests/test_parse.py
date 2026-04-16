@@ -1,6 +1,6 @@
 """Tests for wikitext parsing utilities."""
 
-from onepage.parse import parse_wikitext
+from wikifuse.parse import parse_wikitext
 
 
 def test_parse_wikitext_basic():

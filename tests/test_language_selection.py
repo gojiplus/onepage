@@ -2,7 +2,7 @@
 
 from unittest.mock import MagicMock, patch
 
-from onepage.api import WikipediaClient, select_top_languages
+from wikifuse.api import WikipediaClient, select_top_languages
 
 
 class TestWikipediaClientGetArticleLength:
@@ -60,8 +60,8 @@ class TestWikipediaClientGetArticleLength:
 class TestSelectTopLanguages:
     """Test select_top_languages function."""
 
-    @patch("onepage.api.WikipediaClient")
-    @patch("onepage.api.WikidataClient")
+    @patch("wikifuse.api.WikipediaClient")
+    @patch("wikifuse.api.WikidataClient")
     def test_select_top_languages_basic(self, mock_wikidata, mock_wikipedia):
         """Test selecting top languages by size."""
         mock_wikidata_instance = MagicMock()
@@ -86,8 +86,8 @@ class TestSelectTopLanguages:
         assert "de" in result
         assert "en" in result
 
-    @patch("onepage.api.WikipediaClient")
-    @patch("onepage.api.WikidataClient")
+    @patch("wikifuse.api.WikipediaClient")
+    @patch("wikifuse.api.WikidataClient")
     def test_select_top_languages_always_includes_english(
         self, mock_wikidata, mock_wikipedia
     ):
@@ -114,8 +114,8 @@ class TestSelectTopLanguages:
 
         assert "en" in result
 
-    @patch("onepage.api.WikipediaClient")
-    @patch("onepage.api.WikidataClient")
+    @patch("wikifuse.api.WikipediaClient")
+    @patch("wikifuse.api.WikidataClient")
     def test_select_top_languages_no_sitelinks(self, mock_wikidata, mock_wikipedia):
         """Test handling entity with no sitelinks."""
         mock_wikidata_instance = MagicMock()
@@ -126,8 +126,8 @@ class TestSelectTopLanguages:
 
         assert result == ["en"]
 
-    @patch("onepage.api.WikipediaClient")
-    @patch("onepage.api.WikidataClient")
+    @patch("wikifuse.api.WikipediaClient")
+    @patch("wikifuse.api.WikidataClient")
     def test_select_top_languages_custom_always_include(
         self, mock_wikidata, mock_wikipedia
     ):

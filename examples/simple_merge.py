@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Minimal example demonstrating the high level merge pipeline."""
 
-from onepage.merge import merge_article
-from onepage.render import WikitextRenderer
+from wikifuse.merge import merge_article
+from wikifuse.render import WikitextRenderer
 
 
 def main():

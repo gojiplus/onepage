@@ -1,4 +1,4 @@
-"""Configuration management for onepage."""
+"""Configuration management for wikifuse."""
 
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -19,7 +19,7 @@ class LLMConfig:
 
 @dataclass
 class Config:
-    """Configuration for onepage operations."""
+    """Configuration for wikifuse operations."""
 
     qid: str
     languages: list[str]

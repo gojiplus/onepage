@@ -29,17 +29,17 @@ jobs:
 
       - name: Run ruff
         run: |
-          uv run ruff check onepage/ tests/
-          uv run ruff format --check onepage/ tests/
+          uv run ruff check wikifuse/ tests/
+          uv run ruff format --check wikifuse/ tests/
 
       - name: Run vulture
-        run: uv run vulture onepage/ --min-confidence 80
+        run: uv run vulture wikifuse/ --min-confidence 80
 
       - name: Run deptry
-        run: uv run deptry onepage/
+        run: uv run deptry wikifuse/
 
       - name: Run pydoclint
-        run: uv run pydoclint onepage/
+        run: uv run pydoclint wikifuse/
 
       - name: Run tests
         run: uv run pytest tests/ -v

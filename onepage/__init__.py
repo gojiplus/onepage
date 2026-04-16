@@ -1,21 +1,9 @@
 """onepage: Merge Wikipedia articles across languages into one comprehensive page."""
 
 from .api import ArticleFetcher, WikidataClient, WikipediaClient
-from .merge import (
-    ImageMerger,
-    InfoboxMerger,
-    TextMerger,
-    merge_article,
-)
-from .models import (
-    Claim,
-    Entity,
-    Fact,
-    IntermediateRepresentation,
-    Provenance,
-    Reference,
-    Section,
-)
+from .merge import ImageMerger, InfoboxMerger, TextMerger, merge_article
+from .models import (Claim, Entity, Fact, IntermediateRepresentation,
+                     Provenance, Reference, Section)
 from .parse import ParsedArticle, parse_wikitext
 
 __all__ = [

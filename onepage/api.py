@@ -56,9 +56,13 @@ class WikidataClient:
         for lang, alias_list in entity_data.get("aliases", {}).items():
             aliases[lang] = [alias["value"] for alias in alias_list]
 
-        return Entity(qid=qid, labels=labels, descriptions=descriptions, aliases=aliases)
+        return Entity(
+            qid=qid, labels=labels, descriptions=descriptions, aliases=aliases
+        )
 
-    def get_sitelinks(self, qid: str, languages: Optional[List[str]] = None) -> Dict[str, str]:
+    def get_sitelinks(
+        self, qid: str, languages: Optional[List[str]] = None
+    ) -> Dict[str, str]:
         """Get sitelinks (Wikipedia article titles) for an entity."""
         params = {
             "action": "wbgetentities",
@@ -85,7 +89,9 @@ class WikidataClient:
                     sitelinks[lang] = sitelink_data["title"]
         return sitelinks
 
-    def get_entity_claims(self, qid: str, properties: Optional[List[str]] = None) -> Dict[str, List[Dict[str, Any]]]:
+    def get_entity_claims(
+        self, qid: str, properties: Optional[List[str]] = None
+    ) -> Dict[str, List[Dict[str, Any]]]:
         """Get claims (statements) for a Wikidata entity."""
         params = {
             "action": "wbgetentities",
@@ -178,10 +184,14 @@ class WikipediaClient:
             "page_id": int(page_id),
             "rev_id": rev_id,
             "timestamp": revision["timestamp"],
-            "provenance": Provenance(wiki=f"{language}wiki", title=title, rev_id=rev_id),
+            "provenance": Provenance(
+                wiki=f"{language}wiki", title=title, rev_id=rev_id
+            ),
         }
 
-    def get_article_extract(self, title: str, language: str, sentences: int = 10) -> Dict[str, Any]:
+    def get_article_extract(
+        self, title: str, language: str, sentences: int = 10
+    ) -> Dict[str, Any]:
         api_url = self._get_api_url(language)
         params = {
             "action": "query",
@@ -204,7 +214,12 @@ class WikipediaClient:
             raise ValueError(f"Page not found: {title}")
         page_data = pages[page_id]
         extract = page_data.get("extract", "")
-        return {"title": title, "language": language, "extract": extract, "page_id": int(page_id)}
+        return {
+            "title": title,
+            "language": language,
+            "extract": extract,
+            "page_id": int(page_id),
+        }
 
     def get_article_sections(self, title: str, language: str) -> List[Dict[str, Any]]:
         api_url = self._get_api_url(language)
@@ -221,7 +236,9 @@ class WikipediaClient:
             raise ValueError(f"Could not fetch sections for {title}")
         return data["parse"]["sections"]
 
-    def search_articles(self, query: str, language: str, limit: int = 10) -> List[Dict[str, Any]]:
+    def search_articles(
+        self, query: str, language: str, limit: int = 10
+    ) -> List[Dict[str, Any]]:
         api_url = self._get_api_url(language)
         params = {
             "action": "query",
@@ -237,6 +254,78 @@ class WikipediaClient:
             return []
         return data["query"]["search"]
 
+    def get_article_length(self, title: str, language: str) -> int:
+        """Get the length (in bytes) of a Wikipedia article.
+
+        Args:
+            title: Article title.
+            language: Language code.
+
+        Returns:
+            Article length in bytes, or 0 if not found.
+        """
+        api_url = self._get_api_url(language)
+        params = {
+            "action": "query",
+            "format": "json",
+            "titles": title,
+            "prop": "info",
+        }
+        response = self.session.get(api_url, params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        if "query" not in data or "pages" not in data["query"]:
+            return 0
+
+        pages = data["query"]["pages"]
+        page_id = list(pages.keys())[0]
+        if page_id == "-1":
+            return 0
+
+        return pages[page_id].get("length", 0)
+
+
+def select_top_languages(
+    qid: str, top_n: int = 2, always_include: Optional[List[str]] = None
+) -> List[str]:
+    """Select the top N languages by article size for a given entity.
+
+    Args:
+        qid: Wikidata QID of the entity.
+        top_n: Number of top languages to select.
+        always_include: Languages to always include even if not in top N.
+
+    Returns:
+        List of language codes for the selected languages.
+    """
+    if always_include is None:
+        always_include = ["en"]
+
+    wikidata = WikidataClient()
+    wikipedia = WikipediaClient()
+
+    sitelinks = wikidata.get_sitelinks(qid)
+    if not sitelinks:
+        return always_include
+
+    sizes: List[tuple] = []
+    for lang, title in sitelinks.items():
+        try:
+            length = wikipedia.get_article_length(title, lang)
+            sizes.append((lang, length))
+        except Exception:
+            sizes.append((lang, 0))
+
+    sizes.sort(key=lambda x: x[1], reverse=True)
+    top_langs = [lang for lang, _ in sizes[:top_n]]
+
+    for lang in always_include:
+        if lang not in top_langs and lang in sitelinks:
+            top_langs.append(lang)
+
+    return top_langs
+
 
 class ArticleFetcher:
     """Fetch Wikipedia articles across languages for a given QID."""
@@ -245,7 +334,9 @@ class ArticleFetcher:
         self.wikidata = WikidataClient()
         self.wikipedia = WikipediaClient()
 
-    def fetch_all(self, qid: str, languages: List[str], output_dir: str) -> Dict[str, Any]:
+    def fetch_all(
+        self, qid: str, languages: List[str], output_dir: str
+    ) -> Dict[str, Any]:
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
@@ -257,13 +348,17 @@ class ArticleFetcher:
         for lang in languages:
             if lang in sitelinks:
                 try:
-                    article_data = self.wikipedia.get_article_wikitext(sitelinks[lang], lang)
+                    article_data = self.wikipedia.get_article_wikitext(
+                        sitelinks[lang], lang
+                    )
                     articles[lang] = article_data
                     article_file = output_path / f"{lang}.json"
                     with open(article_file, "w", encoding="utf-8") as f:
                         serializable = {**article_data}
                         if "provenance" in serializable:
-                            serializable["provenance"] = article_data["provenance"].to_dict()
+                            serializable["provenance"] = article_data[
+                                "provenance"
+                            ].to_dict()
                         json.dump(serializable, f, indent=2, ensure_ascii=False)
                 except Exception as e:  # pragma: no cover - network errors
                     print(f"Warning: Could not fetch {lang} article: {e}")

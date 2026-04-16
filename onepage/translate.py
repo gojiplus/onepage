@@ -1,61 +1,64 @@
 """Translation service integration for cross-lingual alignment."""
 
-import requests
-from typing import List, Dict, Optional, Tuple
-import time
 import re
+import time
+from typing import Dict, List, Optional, Tuple
+
+import requests
 import wikitextparser as wtp
 
 try:
     from langdetect import detect
+
     HAS_LANGDETECT = True
 except ImportError:
     HAS_LANGDETECT = False
+
     def detect(text: str) -> str:
         return "unknown"
+
 
 from .models import Claim
 
 
 class TranslationService:
     """Translation service for converting text to English."""
-    
+
     def __init__(self):
         self.session = requests.Session()
-        self.session.headers.update({
-            "User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"
-        })
+        self.session.headers.update(
+            {"User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"}
+        )
         # Rate limiting
         self.last_request_time = 0
         self.min_request_interval = 0.1  # 100ms between requests
         # Simple in-memory cache to avoid repeatedly hammering the free
         # translation APIs with identical requests
         self.cache: Dict[Tuple[str, str], Tuple[str, float]] = {}
-    
+
     def translate_to_english(self, text: str, source_lang: str) -> Tuple[str, float]:
         """
         Translate text to English.
-        
+
         Args:
             text: Text to translate
             source_lang: Source language code
-            
+
         Returns:
             Tuple of (translated_text, confidence_score)
         """
         # Skip translation if already English
         if source_lang == "en":
             return text, 1.0
-        
+
         # Detect language if not sure
         try:
             detected_lang = detect(text)
             if detected_lang == "en":
                 return text, 1.0
-        except:
-            # Language detection failed, proceed with given source_lang
+        except Exception:
             pass
-        
+
         cache_key = (text, source_lang)
         if cache_key in self.cache:
             return self.cache[cache_key]
@@ -69,13 +72,13 @@ class TranslationService:
             google_text = self._translate_via_google(text, source_lang, "en")
             if google_text is not None:
                 translated_text = google_text
-        
+
         # Simple confidence score based on text length and complexity
         confidence = min(1.0, len(text) / 1000)  # Longer text = lower confidence
 
         self.cache[cache_key] = (translated_text, confidence)
         return translated_text, confidence
-    
+
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
         """Translate using the LibreTranslate API."""
         # Rate limiting
@@ -94,9 +97,9 @@ class TranslationService:
         try:
             # Clean and limit text length to avoid API limits
             text_to_translate = text.strip()[:500] if len(text) > 500 else text.strip()
-            
+
             # Skip if text contains mostly symbols or numbers
-            if re.match(r'^[^\w\s]*$', text_to_translate):
+            if re.match(r"^[^\w\s]*$", text_to_translate):
                 return text
 
             url = "https://libretranslate.de/translate"
@@ -109,12 +112,12 @@ class TranslationService:
 
             response = self.session.post(url, data=data, timeout=15)
             self.last_request_time = time.time()
-            
+
             if response.status_code == 429:
                 retry_after = int(response.headers.get("Retry-After", "2"))
                 time.sleep(retry_after)
                 return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
-            
+
             if response.status_code != 200:
                 return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
 
@@ -130,30 +133,32 @@ class TranslationService:
 
         return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
 
-    def _translate_via_google(self, text: str, source: str, target: str) -> Optional[str]:
+    def _translate_via_google(
+        self, text: str, source: str, target: str
+    ) -> Optional[str]:
         """Simple offline fallback - just return original text for now."""
         # For now, skip Google API due to rate limits and just return original
         # In production, you'd use proper Google Translate API with key
         return None
-    
+
     def translate_claims(self, claims: List[Claim]) -> List[Claim]:
         """
         Translate a list of claims to English for alignment.
-        
+
         Args:
             claims: List of claims to translate
-            
+
         Returns:
             List of claims with English translations
         """
         translated_claims = []
-        
+
         for claim in claims:
             if claim.lang != "en":
                 translated_text, confidence = self.translate_to_english(
                     claim.text, claim.lang
                 )
-                
+
                 # Update the claim with translation
                 claim.text_en = translated_text
                 claim.confidence = confidence
@@ -161,56 +166,58 @@ class TranslationService:
                 # English claims don't need translation
                 claim.text_en = claim.text
                 claim.confidence = 1.0
-            
+
             translated_claims.append(claim)
-        
+
         return translated_claims
-    
-    def batch_translate(self, texts: List[str], source_lang: str) -> List[Tuple[str, float]]:
+
+    def batch_translate(
+        self, texts: List[str], source_lang: str
+    ) -> List[Tuple[str, float]]:
         """
         Translate multiple texts in batch for efficiency.
-        
+
         Args:
             texts: List of texts to translate
             source_lang: Source language code
-            
+
         Returns:
             List of (translated_text, confidence) tuples
         """
         results = []
-        
+
         for text in texts:
             translated, confidence = self.translate_to_english(text, source_lang)
             results.append((translated, confidence))
-            
+
         return results
 
 
 class TextCleaner:
     """Clean and normalize text content."""
-    
+
     @staticmethod
     def clean_sentence(text: str) -> str:
         """Clean a sentence for processing."""
         # Remove extra whitespace
-        text = re.sub(r'\s+', ' ', text.strip())
-        
+        text = re.sub(r"\s+", " ", text.strip())
+
         # Remove citation needed markers
-        text = re.sub(r'\[citation needed\]', '', text, flags=re.IGNORECASE)
-        
+        text = re.sub(r"\[citation needed\]", "", text, flags=re.IGNORECASE)
+
         # Remove disambiguation markers
-        text = re.sub(r'\s*\(disambiguation\)', '', text, flags=re.IGNORECASE)
-        
+        text = re.sub(r"\s*\(disambiguation\)", "", text, flags=re.IGNORECASE)
+
         # Normalize quotation marks
-        text = re.sub(r'[""'']', '"', text)
-        
+        text = re.sub(r'[""' "]", '"', text)
+
         return text
-    
+
     @staticmethod
     def extract_plain_text(wikitext: str) -> str:
         """Extract plain text from wikitext, removing all markup."""
         parsed = wtp.parse(wikitext)
-        
+
         # Remove templates
         # ``wikitextparser`` invalidates indices of later nodes when earlier
         # ones are mutated.  Iterate over copies of the template/tag lists so
@@ -223,7 +230,7 @@ class TextCleaner:
         for tag in reversed(list(parsed.get_tags())):
             if tag.name and tag.name.lower() in ["ref", "references"]:
                 tag.string = ""
-        
+
         # Get plain text
         # ``wikitextparser`` exposes ``plain_text`` for extracting readable text
         # without any markup. The previous implementation attempted to call a
@@ -231,22 +238,22 @@ class TextCleaner:
         # invoked. Using ``plain_text()`` returns the cleaned string as intended
         # and allows this utility to be used during merge operations.
         plain = parsed.plain_text()
-        
+
         # Final cleanup
-        plain = re.sub(r'\s+', ' ', plain)
-        plain = re.sub(r'\s+([.,!?])', r'\1', plain)
+        plain = re.sub(r"\s+", " ", plain)
+        plain = re.sub(r"\s+([.,!?])", r"\1", plain)
         return plain.strip()
-    
+
     @staticmethod
     def normalize_reference_text(ref_text: str) -> str:
         """Normalize reference text for deduplication."""
         # Convert to lowercase
         ref_text = ref_text.lower()
-        
+
         # Remove extra whitespace
-        ref_text = re.sub(r'\s+', ' ', ref_text.strip())
-        
+        ref_text = re.sub(r"\s+", " ", ref_text.strip())
+
         # Normalize URLs
-        ref_text = re.sub(r'https?://(www\.)?', 'https://', ref_text)
+        ref_text = re.sub(r"https?://(www\.)?", "https://", ref_text)
 
         return ref_text

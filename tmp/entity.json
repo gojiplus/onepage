@@ -1,34 +1,20 @@
 {
-  "qid": "Q1058",
+  "qid": "Q27182",
   "labels": {
-    "en": "Narendra Modi",
-    "hi": "नरेन्द्र मोदी"
+    "fr": "Rachida Dati",
+    "en": "Rachida Dati"
   },
   "descriptions": {
-    "en": "Prime Minister of India since 2014",
-    "hi": "भारत के प्रधानमंत्री"
+    "fr": "magistrate et femme politique française",
+    "en": "French politician and magistrate"
   },
   "aliases": {
-    "hi": [
-      "नरेन्द्र दामोदरदास मोदी",
-      "नमो",
-      "नरेंद्रभाई मोदी",
-      "नरेंद्रभाई दामोदरदास मोदी",
-      "मोदी"
-    ],
-    "en": [
-      "Modi",
-      "NaMo",
-      "Modi Ji",
-      "Modiji",
-      "Narendra Bhai",
-      "Narendra Damodardas Modi",
-      "Narendrabhai Damodardas Modi",
-      "Narendrabhai"
+    "fr": [
+      "Dati, Rachida"
     ]
   },
   "sitelinks": {
-    "en": "Narendra Modi",
-    "hi": "नरेन्द्र मोदी"
+    "en": "Rachida Dati",
+    "fr": "Rachida Dati"
   }
 }

@@ -1,4 +1,3 @@
-import pytest
 from onepage.translate import TextCleaner
 
 

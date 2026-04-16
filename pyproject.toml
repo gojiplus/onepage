@@ -42,6 +42,7 @@ dependencies = [
     "tqdm>=4.64.0",
     "python-dateutil>=2.8.0",
     "langdetect>=1.0.9",
+    "openai>=1.0.0",
 ]
 
 [project.optional-dependencies]

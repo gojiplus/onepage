@@ -1,18 +1,18 @@
 """Core data models for the Intermediate Representation (IR)."""
 
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any, Union
-from datetime import datetime
 import json
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional, Union
 
 
 @dataclass
 class Provenance:
     """Source provenance information for content."""
+
     wiki: str  # e.g., "enwiki", "hiwiki"
     title: str  # Article title in the source language
     rev_id: int  # Revision ID
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {
@@ -25,6 +25,7 @@ class Provenance:
 @dataclass
 class Reference:
     """A reference/citation for claims and facts."""
+
     id: str
     doi: Optional[str] = None
     url: Optional[str] = None
@@ -32,7 +33,7 @@ class Reference:
     date: Optional[str] = None
     author: Optional[str] = None
     publisher: Optional[str] = None
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {k: v for k, v in self.__dict__.items() if v is not None}
@@ -41,6 +42,7 @@ class Reference:
 @dataclass
 class Entity:
     """Wikidata entity information."""
+
     qid: str
     labels: Dict[str, str] = field(default_factory=dict)
     descriptions: Dict[str, str] = field(default_factory=dict)
@@ -50,6 +52,7 @@ class Entity:
 @dataclass
 class Claim:
     """A textual claim from a Wikipedia article."""
+
     id: str
     type: str = "claim"
     lang: str = "en"
@@ -58,7 +61,7 @@ class Claim:
     sources: List[str] = field(default_factory=list)
     provenance: Optional[Provenance] = None
     confidence: Optional[float] = None  # Translation/alignment confidence
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         result = {
@@ -83,6 +86,7 @@ class Claim:
 @dataclass
 class Fact:
     """A structured fact (typically from infobox or Wikidata)."""
+
     id: str
     type: str = "fact"
     property: str = ""  # Wikidata property ID (e.g., P39)
@@ -90,7 +94,7 @@ class Fact:
     qualifiers: Dict[str, Any] = field(default_factory=dict)
     sources: List[str] = field(default_factory=list)
     from_source: str = "wikidata"  # "wikidata", "infobox", etc.
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {
@@ -106,11 +110,12 @@ class Fact:
 @dataclass
 class Section:
     """A section in the merged article."""
+
     id: str
     title: Dict[str, str] = field(default_factory=dict)  # multilingual titles
     items: List[str] = field(default_factory=list)  # IDs of claims/facts
     level: int = 2  # Heading level (2 = ==, 3 = ===, etc.)
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         result = {
@@ -127,12 +132,13 @@ class Section:
 @dataclass
 class IntermediateRepresentation:
     """Complete IR for a merged Wikipedia article."""
+
     entity: Entity
     sections: List[Section] = field(default_factory=list)
     content: Dict[str, Union[Claim, Fact]] = field(default_factory=dict)
     references: Dict[str, Reference] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
-    
+
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
         return {
@@ -147,11 +153,11 @@ class IntermediateRepresentation:
             "references": {k: v.to_dict() for k, v in self.references.items()},
             "metadata": self.metadata,
         }
-    
+
     def to_json(self, indent: int = 2) -> str:
         """Serialize to JSON string."""
         return json.dumps(self.to_dict(), indent=indent, ensure_ascii=False)
-    
+
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "IntermediateRepresentation":
         """Create IR from dictionary."""
@@ -161,7 +167,7 @@ class IntermediateRepresentation:
             descriptions=data["entity"].get("descriptions", {}),
             aliases=data["entity"].get("aliases", {}),
         )
-        
+
         sections = [
             Section(
                 id=s["id"],
@@ -171,7 +177,7 @@ class IntermediateRepresentation:
             )
             for s in data["sections"]
         ]
-        
+
         content = {}
         for item_id, item_data in data["content"].items():
             if item_data["type"] == "claim":
@@ -183,7 +189,7 @@ class IntermediateRepresentation:
                         title=prov_data["title"],
                         rev_id=prov_data["rev_id"],
                     )
-                
+
                 content[item_id] = Claim(
                     id=item_id,
                     lang=item_data["lang"],
@@ -202,17 +208,14 @@ class IntermediateRepresentation:
                     sources=item_data.get("sources", []),
                     from_source=item_data.get("from", "wikidata"),
                 )
-        
+
         references = {}
         for ref_id, ref_data in data["references"].items():
             # Remove 'id' from ref_data if it exists to avoid duplicate parameter
             ref_dict = dict(ref_data)
-            ref_dict.pop('id', None)
-            references[ref_id] = Reference(
-                id=ref_id,
-                **ref_dict
-            )
-        
+            ref_dict.pop("id", None)
+            references[ref_id] = Reference(id=ref_id, **ref_dict)
+
         return cls(
             entity=entity,
             sections=sections,
@@ -220,7 +223,7 @@ class IntermediateRepresentation:
             references=references,
             metadata=data.get("metadata", {}),
         )
-    
+
     @classmethod
     def from_json(cls, json_str: str) -> "IntermediateRepresentation":
         """Create IR from JSON string."""

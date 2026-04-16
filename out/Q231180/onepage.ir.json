@@ -1,0 +1,751 @@
+{
+  "entity": {
+    "qid": "Q231180",
+    "labels": {
+      "fr": "Zuydcoote",
+      "en": "Zuydcoote"
+    },
+    "descriptions": {
+      "en": "commune in Nord, France",
+      "fr": "commune française du département du Nord"
+    },
+    "aliases": {
+      "en": [
+        "Zuidkote",
+        "Zuudkote"
+      ],
+      "fr": [
+        "Zuidkote",
+        "Zuudkote"
+      ]
+    }
+  },
+  "sections": [
+    {
+      "id": "lead",
+      "items": [
+        "lead_0"
+      ],
+      "title": {
+        "en": "lead"
+      }
+    },
+    {
+      "id": "gallery",
+      "items": [
+        "gallery_0"
+      ],
+      "title": {
+        "en": "Gallery"
+      }
+    },
+    {
+      "id": "see_also",
+      "items": [
+        "see_also_0"
+      ],
+      "title": {
+        "en": "See also"
+      }
+    },
+    {
+      "id": "references",
+      "items": [
+        "references_0"
+      ],
+      "title": {
+        "en": "References"
+      }
+    }
+  ],
+  "content": {
+    "lead_0": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Zuydcoote (; West Flemish and ) is a commune in the Nord department in northern France.",
+      "sources": [
+        "ref_0",
+        "ref_1",
+        "ref_2",
+        "ref_3",
+        "ref_4",
+        "ref_5",
+        "ref_6",
+        "ref_7",
+        "ref_8",
+        "ref_9",
+        "ref_10",
+        "ref_11",
+        "ref_12",
+        "ref_13",
+        "ref_14",
+        "ref_15",
+        "ref_16",
+        "ref_17",
+        "ref_18",
+        "ref_19",
+        "ref_20",
+        "ref_21",
+        "ref_22",
+        "ref_23"
+      ],
+      "text_en": "Zuydcoote (; West Flemish and ) is a commune in the Nord department in northern France."
+    },
+    "gallery_0": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Zuydcoote - Eglise Saint-Nicolas 2.jpg|Saint-Nicolas church Zuydcoote Military Cemetery 4.JPG|Zuydcoote Military Cemetery Dune fossile de Ghyvelde 01.JPG|Dune fossile de Ghyvelde File:Zuydcoote.JPG|Zuydcoote Beach File:Zuydcoote Beach 37.jpg|Shipwreck of on the Zuydcoote beach.",
+      "sources": [
+        "ref_22",
+        "ref_23",
+        "ref_24",
+        "ref_25",
+        "ref_26",
+        "ref_27",
+        "ref_28",
+        "ref_29",
+        "ref_30",
+        "ref_31",
+        "ref_32",
+        "ref_33",
+        "ref_34",
+        "ref_35",
+        "ref_36",
+        "ref_37",
+        "ref_38",
+        "ref_39",
+        "ref_40",
+        "ref_41",
+        "ref_42",
+        "ref_43",
+        "ref_44",
+        "ref_45"
+      ],
+      "text_en": "Zuydcoote - Eglise Saint-Nicolas 2.jpg|Saint-Nicolas church Zuydcoote Military Cemetery 4.JPG|Zuydcoote Military Cemetery Dune fossile de Ghyvelde 01.JPG|Dune fossile de Ghyvelde File:Zuydcoote.JPG|Zuydcoote Beach File:Zuydcoote Beach 37.jpg|Shipwreck of on the Zuydcoote beach."
+    },
+    "see_also_0": {
+      "type": "claim",
+      "lang": "en",
+      "text": "*Communes of the Nord department",
+      "sources": [
+        "ref_44",
+        "ref_45",
+        "ref_46",
+        "ref_47",
+        "ref_48",
+        "ref_49",
+        "ref_50",
+        "ref_51",
+        "ref_52",
+        "ref_53",
+        "ref_54",
+        "ref_55",
+        "ref_56",
+        "ref_57",
+        "ref_58",
+        "ref_59",
+        "ref_60",
+        "ref_61",
+        "ref_62",
+        "ref_63",
+        "ref_64",
+        "ref_65",
+        "ref_66",
+        "ref_67"
+      ],
+      "text_en": "*Communes of the Nord department"
+    },
+    "references_0": {
+      "type": "claim",
+      "lang": "en",
+      "text": "Category:Communes of Nord (French department) Category:Nord communes articles needing translation from French Wikipedia Category:French Flanders",
+      "sources": [
+        "ref_66",
+        "ref_67",
+        "ref_68",
+        "ref_69",
+        "ref_70",
+        "ref_71",
+        "ref_72",
+        "ref_73",
+        "ref_74",
+        "ref_75",
+        "ref_76",
+        "ref_77",
+        "ref_78",
+        "ref_79",
+        "ref_80",
+        "ref_81",
+        "ref_82",
+        "ref_83",
+        "ref_84",
+        "ref_85",
+        "ref_86",
+        "ref_87",
+        "ref_88",
+        "ref_89"
+      ],
+      "text_en": "Category:Communes of Nord (French department) Category:Nord communes articles needing translation from French Wikipedia Category:French Flanders"
+    }
+  },
+  "references": {
+    "ref_0": {
+      "id": "ref_0",
+      "url": "https://www.data.gouv.fr/fr/datasets/r/2876a346-d50c-4911-934e-19ee07b0e503",
+      "title": "Répertoire national des élus: les maires",
+      "publisher": "data.gouv.fr, Plateforme ouverte des données publi"
+    },
+    "ref_1": {
+      "id": "ref_1",
+      "url": "https://www.insee.fr/fr/metadonnees/geographie/commune/59668-zuydcoote",
+      "title": "[https://www.insee.fr/fr/metadonnees/geographie/commune/59668-zuydcoote INSEE commune file]"
+    },
+    "ref_2": {
+      "id": "ref_2",
+      "title": "{{Cassini-Ehess|41474|Zuydcoote}}"
+    },
+    "ref_3": {
+      "id": "ref_3",
+      "url": "https://www.insee.fr/fr/statistiques/7633058?geo=COM-59668#ancre-POP_T1",
+      "title": "[https://www.insee.fr/fr/statistiques/7633058?geo=COM-59668#ancre-POP_T1 Population en historique de"
+    },
+    "ref_4": {
+      "id": "ref_4",
+      "url": "https://anvt.org/fr/69-non-categorise/460-zuydcoote-zuudkoote",
+      "title": "{{Lien web |url=https://anvt.org/fr/69-non-categorise/460-zuydcoote-zuudkoote |titre=Zuydcoote / Zuu"
+    },
+    "ref_5": {
+      "id": "ref_5",
+      "title": "{{Sandre|E4910600|texte=le fossé de séparation}}"
+    },
+    "ref_6": {
+      "id": "ref_6",
+      "title": "{{Sandre|E4291090|texte=l'Ouden Haven}}"
+    },
+    "ref_7": {
+      "id": "ref_7",
+      "url": "https://www.siges.fr/fr/fiche-territoire/commune/59668",
+      "title": "{{Lien web |url=https://www.siges.fr/fr/fiche-territoire/commune/59668|titre= Fiche communale de Zuy"
+    },
+    "ref_8": {
+      "id": "ref_8",
+      "title": "{{Géoportail |latitude=51.064166|longitude=2.489444 |couches=Hydro|desc=Réseau hydrographique de Zuy"
+    },
+    "ref_9": {
+      "id": "ref_9",
+      "title": "{{sandre|E4910050|texte=le canal Nieuport-Dunkerque}}"
+    },
+    "ref_10": {
+      "id": "ref_10",
+      "title": "Les ruisseaux intermittents sont représentés en traits pointillés."
+    },
+    "ref_11": {
+      "id": "ref_11",
+      "url": "https://www.gesteau.fr/sage/delta-de-l'aa",
+      "title": "{{Lien web |url= https://www.gesteau.fr/sage/delta-de-l'aa |titre= SAGE Delta de l'Aa |site =https:/"
+    },
+    "ref_12": {
+      "id": "ref_12",
+      "url": "https://qualite-riviere.lesagencesdeleau.fr/",
+      "title": "{{Lien web |url= https://qualite-riviere.lesagencesdeleau.fr/|titre=Qualité des eaux de rivière et d"
+    },
+    "ref_13": {
+      "id": "ref_13",
+      "doi": "10.4000/cybergeo.23155",
+      "title": "{{Article |langue= fr |auteur1=Daniel Joly, Thierry Brossard, Hervé Cardot, Jean Cavailhes, Mohamed "
+    },
+    "ref_14": {
+      "id": "ref_14",
+      "doi": "10.37053/lameteorologie-2022-0012",
+      "title": "{{Article |langue= fr |auteur1=Vincent Dubreuil |titre=Le changement climatique en France illustré p"
+    },
+    "ref_15": {
+      "id": "ref_15",
+      "url": "https://meteofrance.com/comprendre-climat/france/le-climat-en-france-metropolitaine",
+      "title": "{{Lien web |titre=Le climat en France hexagonale et Corse. |url=https://meteofrance.com/comprendre-c"
+    },
+    "ref_16": {
+      "id": "ref_16",
+      "url": "https://archive.wikiwix.com/cache/index2.php?url=http%3A%2F%2Fpluiesextremes.meteo.fr%2Ffrance-metropole%2FUn-peu-de-geographie.html#federation=archive.wikiwix.com&tab=url",
+      "title": "{{Lien web |url=https://archive.wikiwix.com/cache/index2.php?url=http%3A%2F%2Fpluiesextremes.meteo.f"
+    },
+    "ref_17": {
+      "id": "ref_17",
+      "url": "https://www.ecologie.gouv.fr/politiques-publiques/reglementation-environnementale-re2020",
+      "title": "{{Lien web|titre=Réglementation environnementale RE2020 |url=https://www.ecologie.gouv.fr/politiques"
+    },
+    "ref_18": {
+      "id": "ref_18",
+      "url": "https://www.ecologie.gouv.fr/sites/default/files/documents/La%20r%C3%A9partition%20des%20d%C3%A9partements%20par%20zone%20climatique.pdf",
+      "title": "{{Lien web|titre=Répartition des départements par zone climatique |url=https://www.ecologie.gouv.fr/"
+    },
+    "ref_19": {
+      "id": "ref_19",
+      "url": "https://fr.distance.to/Zuydcoote,Nord/Dunkerque,Nord",
+      "title": "{{Lien web |url=https://fr.distance.to/Zuydcoote,Nord/Dunkerque,Nord |titre=Orthodromie entre Zuydco"
+    },
+    "ref_20": {
+      "id": "ref_20",
+      "url": "https://object.files.data.gouv.fr/meteofrance/data/synchro_ftp/REF_STATION/FICHECLIM_59183001.pdf",
+      "title": "{{Lien web |url=https://object.files.data.gouv.fr/meteofrance/data/synchro_ftp/REF_STATION/FICHECLIM"
+    },
+    "ref_21": {
+      "id": "ref_21",
+      "url": "https://donneespubliques.meteofrance.fr/metadonnees_publiques/fiches/fiche_59183001.pdf",
+      "title": "{{Lien web |url=https://donneespubliques.meteofrance.fr/metadonnees_publiques/fiches/fiche_59183001."
+    },
+    "ref_22": {
+      "id": "ref_22",
+      "title": "La DREAL distingue, dans la région [[Nord-Pas-de-Calais]], quatre grandes familles de paysages : ceu"
+    },
+    "ref_23": {
+      "id": "ref_23",
+      "url": "https://www.hauts-de-france.developpement-durable.gouv.fr/IMG/pdf/preface.pdf",
+      "title": "{{Lien web\n|format=txt\n|url=https://www.hauts-de-france.developpement-durable.gouv.fr/IMG/pdf/prefac"
+    },
+    "ref_24": {
+      "id": "ref_24",
+      "url": "https://www.hauts-de-france.developpement-durable.gouv.fr/?-Paysages-des-dunes-de-la-mer-du-Nord-",
+      "title": "{{Lien web\n|url=https://www.hauts-de-france.developpement-durable.gouv.fr/?-Paysages-des-dunes-de-la"
+    },
+    "ref_25": {
+      "id": "ref_25",
+      "url": "https://www.insee.fr/fr/information/6439600",
+      "title": "{{Lien web |url=https://www.insee.fr/fr/information/6439600|titre=La grille communale de densité |si"
+    },
+    "ref_26": {
+      "id": "ref_26",
+      "title": "Une unité urbaine est, en France, une commune ou un ensemble de communes présentant une zone de bâti"
+    },
+    "ref_27": {
+      "id": "ref_27",
+      "title": "Dans une agglomération multicommunale, une commune est dite de banlieue lorsqu'elle n'est pas ville-"
+    },
+    "ref_28": {
+      "id": "ref_28",
+      "url": "https://www.insee.fr/fr/metadonnees/geographie/unite-urbaine-2020/59301-bray-dunes",
+      "title": "{{Lien web|url=https://www.insee.fr/fr/metadonnees/geographie/unite-urbaine-2020/59301-bray-dunes |t"
+    },
+    "ref_29": {
+      "id": "ref_29",
+      "title": "{{Métadonnées Commune|59668|zuydcoote|Zuydcoote}}"
+    },
+    "ref_30": {
+      "id": "ref_30",
+      "title": "La notion d'[[aire d'attraction d'une ville|aire d'attraction des villes]] a remplacé en octobre 202"
+    },
+    "ref_31": {
+      "id": "ref_31",
+      "url": "https://www.insee.fr/fr/metadonnees/geographie/aire-attraction-des-villes-2020/048-dunkerque",
+      "title": "{{Lien web|url=https://www.insee.fr/fr/metadonnees/geographie/aire-attraction-des-villes-2020/048-du"
+    },
+    "ref_32": {
+      "id": "ref_32",
+      "url": "https://www.insee.fr/fr/statistiques/4806694",
+      "title": "{{Lien web|url=https://www.insee.fr/fr/statistiques/4806694 |titre=En France, neuf personnes sur dix"
+    },
+    "ref_33": {
+      "id": "ref_33",
+      "url": "https://www.observatoire-des-territoires.gouv.fr/kiosque/zonage-les-communes-soumises-la-loi-littoral",
+      "title": "{{Lien web |url= https://www.observatoire-des-territoires.gouv.fr/kiosque/zonage-les-communes-soumis"
+    },
+    "ref_34": {
+      "id": "ref_34",
+      "url": "https://www.cohesion-territoires.gouv.fr/loi-relative-lamenagement-la-protection-et-la-mise-en-valeur-du-littoral",
+      "title": "{{Lien web |url=https://www.cohesion-territoires.gouv.fr/loi-relative-lamenagement-la-protection-et-"
+    },
+    "ref_35": {
+      "id": "ref_35",
+      "url": "https://www.statistiques.developpement-durable.gouv.fr/corine-land-cover-0",
+      "title": "{{Lien web |url=https://www.statistiques.developpement-durable.gouv.fr/corine-land-cover-0 |titre=CO"
+    },
+    "ref_36": {
+      "id": "ref_36",
+      "url": "https://remonterletemps.ign.fr/comparer/basic?x=2.49027777778&y=51.065&z=14&layer1=GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2&layer2=GEOGRAPHICALGRIDSYSTEMS.ETATMAJOR40&mode=doubleMap",
+      "title": "{{Lien web |url= https://remonterletemps.ign.fr/comparer/basic?x=2.49027777778&y=51.065&z=14&layer1="
+    },
+    "ref_37": {
+      "id": "ref_37",
+      "url": "https://books.google.fr/books?id=jbpVLN1tRNoC&pg=PA1030&lpg=PA1030&dq=toponymie+zuydcoote&source=bl&ots=fhiLdlSsOD&sig=6PfssrDFJnhQeSvjBl_AamAkfz0&hl=fr&sa=X&ved=0ahUKEwjbiZqY5J_UAhVFrxoKHca4C_AQ6AEIOjAE#v=onepage&q=toponymie%20zuydcoote&f=false",
+      "title": "[https://books.google.fr/books?id=jbpVLN1tRNoC&pg=PA1030&lpg=PA1030&dq=toponymie+zuydcoote&source=bl"
+    },
+    "ref_38": {
+      "id": "ref_38",
+      "url": "https://books.google.fr/books?id=HcNCAAAAYAAJ&pg=PA65&dq=%22Abbaye+de+Saint-Winoc%22&hl=fr&sa=X&ei=i9sZT53dAZHtOaL72KQL&ved=0CD8Q6AEwAQ#v=onepage&q=%22Abbaye%20de%20Saint-Winoc%22&f=false",
+      "title": "[[Eugène Mannier]], Études etymologiques, historiques et comparatives sur les noms des villes, bourg"
+    },
+    "ref_39": {
+      "id": "ref_39",
+      "title": "[[Alphonse Wauters]],''Table chronologique des chartes et diplômes imprimés concernant l'histoire de"
+    },
+    "ref_40": {
+      "id": "ref_40",
+      "title": "[[Alphonse Wauters]],''Table chronologique des chartes et diplômes imprimés concernant l'histoire de"
+    },
+    "ref_41": {
+      "id": "ref_41",
+      "url": "https://gallica.bnf.fr/ark:/12148/bpt6k5614855p",
+      "title": "''Mémoire de la Société dunkerquoise pour l'encouragement des sciences, des lettres et des arts'', 1"
+    },
+    "ref_42": {
+      "id": "ref_42",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 34."
+    },
+    "ref_43": {
+      "id": "ref_43",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 35."
+    },
+    "ref_44": {
+      "id": "ref_44",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 36-37."
+    },
+    "ref_45": {
+      "id": "ref_45",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 40-41."
+    },
+    "ref_46": {
+      "id": "ref_46",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 41."
+    },
+    "ref_47": {
+      "id": "ref_47",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 42-43."
+    },
+    "ref_48": {
+      "id": "ref_48",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 59-60."
+    },
+    "ref_49": {
+      "id": "ref_49",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 45."
+    },
+    "ref_50": {
+      "id": "ref_50",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, donne pages 46 et suivantes des précisions sur le f"
+    },
+    "ref_51": {
+      "id": "ref_51",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 55."
+    },
+    "ref_52": {
+      "id": "ref_52",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 56."
+    },
+    "ref_53": {
+      "id": "ref_53",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 58."
+    },
+    "ref_54": {
+      "id": "ref_54",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 59."
+    },
+    "ref_55": {
+      "id": "ref_55",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 60."
+    },
+    "ref_56": {
+      "id": "ref_56",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 63"
+    },
+    "ref_57": {
+      "id": "ref_57",
+      "url": "https://www.westhoekpedia.org/bibliotheque-numerique/",
+      "title": "{{Ouvrage|auteur1=Louis de Baecker|titre=Recherches historiques sur la ville de Bergues|passage=83|é"
+    },
+    "ref_58": {
+      "id": "ref_58",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 64 à 66."
+    },
+    "ref_59": {
+      "id": "ref_59",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, page 67."
+    },
+    "ref_60": {
+      "id": "ref_60",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 69 à 76."
+    },
+    "ref_61": {
+      "id": "ref_61",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 77 à 79."
+    },
+    "ref_62": {
+      "id": "ref_62",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 84 à 88."
+    },
+    "ref_63": {
+      "id": "ref_63",
+      "title": "Raymond de Bertrand, cité dans la bibliographie, pages 95-96."
+    },
+    "ref_64": {
+      "id": "ref_64",
+      "url": "https://books.google.fr/books?id=yIUTAAAAQAAJ&printsec=titlepage&source=gbs_summary_r&cad=0#PPA93,M1",
+      "title": "François Joseph Grille (d'Angers), [https://books.google.fr/books?id=yIUTAAAAQAAJ&printsec=titlepage"
+    },
+    "ref_65": {
+      "id": "ref_65",
+      "title": "''Le Journal de Bourbourg et du canton de Gravelines'', {{n°|756}} du mercredi 27 mars 1895"
+    },
+    "ref_66": {
+      "id": "ref_66",
+      "url": "https://www.memoiredeshommes.sga.defense.gouv.fr/fr/arkotheque/inventaires/ead_ir_consult.php?fam=3&ref=6&le_id=1",
+      "title": "{{Lien web|titre=Journaux des marches et opérations des corps de troupe - Mémoire des hommes|url=htt"
+    },
+    "ref_67": {
+      "id": "ref_67",
+      "title": "Annuaire Ravet Anceau du département du Nord Année 1883"
+    },
+    "ref_68": {
+      "id": "ref_68",
+      "title": "Annuaire Ravet Anceau Département du Nord Année 1887"
+    },
+    "ref_69": {
+      "id": "ref_69",
+      "title": "Annuaire Ravet Anceau du département du Nord Années 1889 à 1894"
+    },
+    "ref_70": {
+      "id": "ref_70",
+      "title": "Annuaire Ravet Anceau Département du Nord Années 1895 à 1900"
+    },
+    "ref_71": {
+      "id": "ref_71",
+      "title": "Annuaire Ravet Anceau département du Nord Années 1901 à 1904"
+    },
+    "ref_72": {
+      "id": "ref_72",
+      "title": "Annuaire Ravet Anceau Département du Nord Années 1905 à 1914"
+    },
+    "ref_73": {
+      "id": "ref_73",
+      "title": "Annuaire Ravet Anceau Département du Nord Années 1922 à 1925"
+    },
+    "ref_74": {
+      "id": "ref_74",
+      "title": "Service relation publique de la communauté urbaine de Dunkerque"
+    },
+    "ref_75": {
+      "id": "ref_75",
+      "title": "Plan et guide de la Communauté urbaine de Dunkerque édition 2002"
+    },
+    "ref_76": {
+      "id": "ref_76",
+      "url": "http://www.lesdunesdeflandre.fr/fr/pageDyn/detail.aspx?ID=175",
+      "title": "{{lien web|titre=Les Dunes de Flandre|url=http://www.lesdunesdeflandre.fr/fr/pageDyn/detail.aspx?ID="
+    },
+    "ref_77": {
+      "id": "ref_77",
+      "url": "http://elections.interieur.gouv.fr/legislatives-2017/059/05914.html",
+      "title": "{{lien web|titre=Résultats des élections législatives 2017|url=http://elections.interieur.gouv.fr/le"
+    },
+    "ref_78": {
+      "id": "ref_78",
+      "url": "http://www.lavoixdunord.fr/region/syndicat-intercommunal-des-dunes-de-flandre-paul-ia17b47588n2118516",
+      "title": "{{lien web|titre=Syndicat intercommunal des dunes de Flandre : Paul Christophe, sans surprise, élu p"
+    },
+    "ref_79": {
+      "id": "ref_79",
+      "url": "https://www.francetvinfo.fr/elections/resultats/nord_59/dunkerque_59140/dunkerque-2_5917",
+      "title": "{{lien web|titre=Canton Dunkerque-2 : résultats des élections départementales 2015|url=https://www.f"
+    },
+    "ref_80": {
+      "id": "ref_80",
+      "url": "https://lenord.fr/jcms/pnw_6353/les-vice-presidents",
+      "title": "{{Lien web|titre=Les vice-présidents|site=Conseil départemental du Nord|url=https://lenord.fr/jcms/p"
+    },
+    "ref_81": {
+      "id": "ref_81",
+      "url": "http://www.lavoixdunord.fr/199112/article/2017-07-31/paul-christophe-passe-les-cles-du-village-florence-vanhille",
+      "title": "{{Article |auteur1=|titre=Zuydcoote - Paul Christophe passe les clés du village à Florence Vanhille "
+    },
+    "ref_82": {
+      "id": "ref_82",
+      "url": "https://www.communaute-urbaine-dunkerque.fr/fileadmin/user_upload/Trombinoscope_-_conseil_communautaire_juillet_2020_-_communaute_urbaine_de_dunkerque.pdf",
+      "title": "https://www.communaute-urbaine-dunkerque.fr/fileadmin/user_upload/Trombinoscope_-_conseil_communauta"
+    },
+    "ref_83": {
+      "id": "ref_83",
+      "url": "http://www.interieur.gouv.fr/Elections/Les-resultats/Presidentielles/elecresult__PR2012/(path)/PR2012/031/059/059668.html",
+      "title": "{{Lien web\n|url=http://www.interieur.gouv.fr/Elections/Les-resultats/Presidentielles/elecresult__PR2"
+    },
+    "ref_84": {
+      "id": "ref_84",
+      "url": "https://www.interieur.gouv.fr/Elections/Les-resultats/Presidentielles/elecresult__presidentielle-2017/(path)/presidentielle-2017/032/059/059668.html",
+      "title": "{{Lien web\n|url=https://www.interieur.gouv.fr/Elections/Les-resultats/Presidentielles/elecresult__pr"
+    },
+    "ref_85": {
+      "id": "ref_85",
+      "url": "https://www.insee.fr/fr/statistiques/5397441?sommaire=5397467&geo=COM-59668#ancre-POP_T3",
+      "title": "{{Lien web |titre=Évolution et structure de la population en 2018 - Commune de Zuydcoote (59668) |ur"
+    },
+    "ref_86": {
+      "id": "ref_86",
+      "url": "http://www.res.sports.gouv.fr/Rech_Equipement.aspx",
+      "title": "{{Lien web\n|url=http://www.res.sports.gouv.fr/Rech_Equipement.aspx\n |titre = Recensement des équipem"
+    },
+    "ref_87": {
+      "id": "ref_87",
+      "url": "https://www.ch-zuydcoote.fr/",
+      "title": "{{lien web|titre=L'Hôpital Maritime de Zuydcoote vous accueille près de Dunkerque|url=https://www.ch"
+    },
+    "ref_88": {
+      "id": "ref_88",
+      "url": "https://ot-dunkerque.com/download/hopital_maritime.pdf",
+      "title": "{{Lien web |titre=Circuit de l'hôpital maritime|url=https://ot-dunkerque.com/download/hopital_mariti"
+    },
+    "ref_89": {
+      "id": "ref_89",
+      "url": "https://www.cirkwi.com/fr/circuit/42469-circuit-de-la-dune-marchand",
+      "title": "{{Lien web |langue=fr|titre=Circuit de la dune marchand|url=https://www.cirkwi.com/fr/circuit/42469-"
+    }
+  },
+  "metadata": {
+    "images": [
+      "Image:LPdF N78 1585915 (reine des belges).png"
+    ],
+    "infobox": {
+      "name": [
+        "Zuydcoote"
+      ],
+      "commune status": [
+        "[[Communes of France|Commune]]"
+      ],
+      "image": [
+        "Mairiedezuydcoote.JPG"
+      ],
+      "caption": [
+        "The town hall in Zuydcoote"
+      ],
+      "image coat of arms": [
+        "Blason ville fr Zuydcoote (Nord).svg"
+      ],
+      "arrondissement": [
+        "Dunkerque",
+        "[[Arrondissement de Dunkerque|Dunkerque]]"
+      ],
+      "canton": [
+        "Dunkerque-2",
+        "[[Canton de Dunkerque-2]]"
+      ],
+      "INSEE": [
+        "59668"
+      ],
+      "postal code": [
+        "59123"
+      ],
+      "mayor": [
+        "Florence Vanhille<ref>{{cite web|title=Répertoire national des élus: les maires|url=https://www.data.gouv.fr/fr/datasets/r/2876a346-d50c-4911-934e-19ee07b0e503|publisher=data.gouv.fr, Plateforme ouverte des données publiques françaises|date=13 September 2022|language=fr}}</ref>"
+      ],
+      "term": [
+        "2020&ndash;2026"
+      ],
+      "intercommunality": [
+        "[[Communauté urbaine de Dunkerque|CU Dunkerque]]"
+      ],
+      "coordinates": [
+        "{{coord|51.065|2.4903|format=dms|display=inline,title}}"
+      ],
+      "elevation m": [
+        "5"
+      ],
+      "elevation min m": [
+        "1"
+      ],
+      "elevation max m": [
+        "26"
+      ],
+      "area km2": [
+        "2.6"
+      ],
+      "population": [
+        "{{France metadata Wikidata|population_total}}",
+        "{{Population de France/dernière_pop}}<!-- Insertion automatique, ne pas modifier -->"
+      ],
+      "population date": [
+        "{{France metadata Wikidata|population_as_of}}"
+      ],
+      "population footnotes": [
+        "{{France metadata Wikidata|population_footnotes}}"
+      ],
+      "demonym": [
+        "Zuydcootois, Zuydcootoises"
+      ],
+      "nom": [
+        "Zuydcoote"
+      ],
+      "légende": [
+        "La mairie de Zuydcoote."
+      ],
+      "blason": [
+        "Blason_ville_fr_Zuydcoote_(Nord).svg"
+      ],
+      "légende blason": [
+        "Zuydcoote#Héraldique"
+      ],
+      "région": [
+        "[[Hauts-de-France]]"
+      ],
+      "département": [
+        "[[Nord (département français)|Nord]]"
+      ],
+      "circonscription législative": [
+        "[[Quatorzième circonscription du Nord|Quatorzième circonscription]]"
+      ],
+      "insee": [
+        "59668"
+      ],
+      "cp": [
+        "59123"
+      ],
+      "maire": [
+        "[[Paul Christophe]]"
+      ],
+      "mandat maire": [
+        "[[Élections municipales de 2026 dans le Nord|2026]]-2033"
+      ],
+      "intercomm": [
+        "[[Communauté urbaine de Dunkerque]]"
+      ],
+      "longitude": [
+        "2.49027777778"
+      ],
+      "latitude": [
+        "51.065"
+      ],
+      "alt mini": [
+        "1"
+      ],
+      "alt maxi": [
+        "26"
+      ],
+      "superficie": [
+        "2.6"
+      ],
+      "type": [
+        "Bourg rural"
+      ],
+      "unité urbaine": [
+        "Bray-Dunes <br><small>([[banlieue]])</small>"
+      ],
+      "aire d'attraction": [
+        "[[Aire d'attraction de Dunkerque|Dunkerque]] <br><small>(commune de la couronne)</small>"
+      ],
+      "année_pop": [
+        "{{Population de France/dernière_année_Infobox}}<!-- Insertion automatique, ne pas modifier -->"
+      ],
+      "gentilé": [
+        "Zuydcootois, Zuydcootoises"
+      ],
+      "géoloc-département": [
+        "Nord/Hauts-de-France"
+      ],
+      "drapeau": [
+        ""
+      ],
+      "légende drapeau": [
+        ""
+      ],
+      "siteweb": [
+        "https://www.zuydcoote.fr/"
+      ]
+    }
+  }
+}

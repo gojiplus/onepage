@@ -6,6 +6,7 @@ import os
 import click
 
 from .api import ArticleFetcher, select_top_languages
+from .diff import compare_articles, generate_diff_html, print_stats
 from .merge import merge_article
 from .render import HTMLRenderer, WikitextRenderer
 
@@ -23,7 +24,7 @@ def cli() -> None:
     "--languages",
     required=False,
     default=None,
-    help="Comma-separated language codes (e.g., en,hi). If not provided, uses --top-langs.",
+    help="Comma-separated language codes (e.g., en,hi). Uses --top-langs if omitted.",
 )
 @click.option(
     "--top-langs",
@@ -56,7 +57,7 @@ def fetch(qid: str, languages: str, top_langs: int, out: str) -> None:
     "--languages",
     required=False,
     default=None,
-    help="Comma-separated language codes (e.g., en,hi). If not provided, uses --top-langs.",
+    help="Comma-separated language codes (e.g., en,hi). Uses --top-langs if omitted.",
 )
 @click.option(
     "--top-langs",
@@ -119,7 +120,7 @@ def render(ir: str, out: str) -> None:
     """Render IR to wikitext."""
     click.echo(f"Rendering {ir} to wikitext")
 
-    with open(ir, "r", encoding="utf-8") as f:
+    with open(ir, encoding="utf-8") as f:
         ir_data = json.load(f)
 
     from .models import IntermediateRepresentation
@@ -142,7 +143,7 @@ def preview(ir: str, out: str) -> None:
     """Generate HTML preview from IR."""
     click.echo(f"Generating HTML preview from {ir}")
 
-    with open(ir, "r", encoding="utf-8") as f:
+    with open(ir, encoding="utf-8") as f:
         ir_data = json.load(f)
 
     from .models import IntermediateRepresentation
@@ -156,6 +157,66 @@ def preview(ir: str, out: str) -> None:
         f.write(html)
 
     click.echo(f"HTML preview written to {out}")
+
+
+@cli.command()
+@click.option("--qid", required=True, help="Wikidata QID (e.g., Q27182)")
+@click.option(
+    "--base",
+    default="en",
+    help="Base language for comparison (default: en).",
+)
+@click.option(
+    "--compare",
+    required=True,
+    help="Comma-separated languages for merged version (e.g., en,fr).",
+)
+@click.option("--out", required=True, type=click.Path(), help="Output directory")
+@click.option(
+    "--use-llm/--no-llm",
+    default=True,
+    help="Use LLM for intelligent text merging (default: enabled).",
+)
+@click.option(
+    "--llm-model",
+    default="gpt-4o-mini",
+    help="LLM model to use for merging (default: gpt-4o-mini).",
+)
+def diff(
+    qid: str,
+    base: str,
+    compare: str,
+    out: str,
+    use_llm: bool,
+    llm_model: str,
+) -> None:
+    """Compare base-only vs merged article to show cross-lingual value."""
+    compare_langs = [lang.strip() for lang in compare.split(",") if lang.strip()]
+
+    if use_llm and not os.environ.get("OPENAI_API_KEY"):
+        click.echo("Warning: OPENAI_API_KEY not set. Falling back to basic text merge.")
+        use_llm = False
+
+    click.echo(
+        f"Comparing {base}-only vs merged ({'+'.join(compare_langs)}) for {qid}..."
+    )
+
+    comparison = compare_articles(
+        qid=qid,
+        base_lang=base,
+        compare_langs=compare_langs,
+        use_llm=use_llm,
+        llm_model=llm_model,
+    )
+
+    click.echo("")
+    click.echo(print_stats(comparison))
+
+    os.makedirs(out, exist_ok=True)
+    html_path = os.path.join(out, "diff.html")
+    generate_diff_html(comparison, html_path)
+    click.echo("")
+    click.echo(f"HTML comparison written to {html_path}")
 
 
 def main() -> None:

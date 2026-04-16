@@ -1,7 +1,6 @@
 """Wikitext renderer from IR to MediaWiki format."""
 
 import re
-from typing import Dict, List, Optional
 
 from .models import Claim, Fact, IntermediateRepresentation, Reference, Section
 
@@ -77,11 +76,11 @@ class WikitextRenderer:
         # Fallback to a generic description
         return f"{{{{Short description|{ir.entity.labels.get(self.language, 'Article')}}}}}"
 
-    def _render_infobox(self, ir: IntermediateRepresentation) -> Optional[str]:
+    def _render_infobox(self, ir: IntermediateRepresentation) -> str | None:
         """Render infobox from facts."""
         # Find facts that should go in infobox
         infobox_facts = []
-        for content_id, content in ir.content.items():
+        for _content_id, content in ir.content.items():
             if isinstance(content, Fact) and content.property in self.infobox_mappings:
                 infobox_facts.append(content)
 
@@ -199,7 +198,7 @@ class WikitextRenderer:
 
     def _render_fact_as_text(
         self, fact: Fact, ir: IntermediateRepresentation
-    ) -> Optional[str]:
+    ) -> str | None:
         """Render a fact as readable text (for facts not in infobox)."""
         # This could be expanded to convert facts to natural language
         return None
@@ -242,18 +241,17 @@ class WikitextRenderer:
         """Render the references section."""
         return "== References ==\n{{Reflist}}"
 
-    def _render_categories(self, ir: IntermediateRepresentation) -> Optional[str]:
+    def _render_categories(self, ir: IntermediateRepresentation) -> str | None:
         """Render categories (simplified)."""
         # This would need to be more sophisticated in a real implementation
         # For now, just add a basic category based on entity type
         categories = []
 
         # Try to infer category from Wikidata facts
-        for content_id, content in ir.content.items():
-            if isinstance(content, Fact):
-                if content.property == "P31":  # instance of
-                    # Could map instance types to categories
-                    pass
+        for _content_id, content in ir.content.items():
+            if isinstance(content, Fact) and content.property == "P31":
+                # Could map instance types to categories
+                pass
 
         # Add a generic category
         entity_name = ir.entity.labels.get(self.language, ir.entity.qid)
@@ -262,8 +260,8 @@ class WikitextRenderer:
         return "\n".join(categories) if categories else None
 
     def _find_section_by_id(
-        self, sections: List[Section], section_id: str
-    ) -> Optional[Section]:
+        self, sections: list[Section], section_id: str
+    ) -> Section | None:
         """Find a section by its ID."""
         for section in sections:
             if section.id == section_id:
@@ -278,8 +276,8 @@ class HTMLRenderer:
         self.language = language
         # Containers for references when rendering
         self._ref_counter = 0
-        self._ref_map: Dict[str, int] = {}
-        self._references: List[str] = []
+        self._ref_map: dict[str, int] = {}
+        self._references: list[str] = []
 
     def render(self, ir: IntermediateRepresentation) -> str:
         """Render the IR to high-quality HTML with full Wikipedia styling."""
@@ -356,7 +354,7 @@ class HTMLRenderer:
         if ir.references:
             parts.append("<h2>References</h2>")
             parts.append('<ol class="references">')
-            for i, (ref_id, ref) in enumerate(ir.references.items(), 1):
+            for i, (_ref_id, ref) in enumerate(ir.references.items(), 1):
                 formatted_ref = self._format_reference(ref)
                 parts.append(f'<li id="cite_note-{i}">{formatted_ref}</li>')
             parts.append("</ol>")
@@ -405,8 +403,8 @@ class HTMLRenderer:
         return ""
 
     def _find_section_by_id(
-        self, sections: List[Section], section_id: str
-    ) -> Optional[Section]:
+        self, sections: list[Section], section_id: str
+    ) -> Section | None:
         for section in sections:
             if section.id == section_id:
                 return section
@@ -489,7 +487,7 @@ class HTMLRenderer:
 
         parts = ['<div class="gallery mw-gallery-traditional">']
 
-        for i, image in enumerate(images[:6]):  # Limit to first 6 images
+        for image in images[:6]:
             # Clean image filename
             image_name = image.replace("File:", "").replace("Image:", "")
             image_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{image_name}?width=300"

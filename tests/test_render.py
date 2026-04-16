@@ -1,5 +1,4 @@
-from onepage.models import (Claim, Entity, IntermediateRepresentation,
-                            Reference, Section)
+from onepage.models import Claim, Entity, IntermediateRepresentation, Reference, Section
 from onepage.render import HTMLRenderer
 
 

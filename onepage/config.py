@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import yaml
 
@@ -22,10 +22,10 @@ class Config:
     """Configuration for onepage operations."""
 
     qid: str
-    languages: List[str]
+    languages: list[str]
     base_language: str = "en"
     max_refs_per_claim: int = 3
-    emit: Optional[List[str]] = None
+    emit: list[str] | None = None
     top_languages: int = 2
     llm: LLMConfig = field(default_factory=LLMConfig)
 
@@ -38,17 +38,17 @@ class Config:
     @classmethod
     def from_file(cls, config_path: Path) -> "Config":
         """Load configuration from a YAML file."""
-        with open(config_path, "r", encoding="utf-8") as f:
+        with open(config_path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
 
         return cls(**data)
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> "Config":
+    def from_dict(cls, data: dict[str, Any]) -> "Config":
         """Create config from dictionary."""
         return cls(**data)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         """Convert config to dictionary."""
         return {
             "qid": self.qid,

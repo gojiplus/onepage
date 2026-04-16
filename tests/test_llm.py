@@ -39,9 +39,11 @@ class TestLLMService:
 
     def test_init_without_api_key_raises(self):
         """Test that initializing without API key raises error."""
-        with patch.dict("os.environ", {}, clear=True):
-            with pytest.raises(ValueError, match="OpenAI API key required"):
-                LLMService()
+        with (
+            patch.dict("os.environ", {}, clear=True),
+            pytest.raises(ValueError, match="OpenAI API key required"),
+        ):
+            LLMService()
 
     def test_init_with_api_key(self):
         """Test initialization with API key."""
@@ -54,11 +56,13 @@ class TestLLMService:
 
     def test_init_with_env_api_key(self):
         """Test initialization reads API key from environment."""
-        with patch.dict("os.environ", {"OPENAI_API_KEY": "env-test-key"}):
-            with patch("onepage.llm.OpenAI") as mock_openai:
-                service = LLMService()
-                assert service.api_key == "env-test-key"
-                mock_openai.assert_called_once_with(api_key="env-test-key")
+        with (
+            patch.dict("os.environ", {"OPENAI_API_KEY": "env-test-key"}),
+            patch("onepage.llm.OpenAI") as mock_openai,
+        ):
+            service = LLMService()
+            assert service.api_key == "env-test-key"
+            mock_openai.assert_called_once_with(api_key="env-test-key")
 
     def test_init_unsupported_provider(self):
         """Test that unsupported provider raises error."""

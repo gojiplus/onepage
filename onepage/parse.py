@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List
 
 import wikitextparser as wtp
 
@@ -12,10 +11,10 @@ import wikitextparser as wtp
 class ParsedArticle:
     """Container for parsed article components."""
 
-    sections: Dict[str, str]
-    images: List[str]
-    infobox: Dict[str, str]
-    references: List[str]
+    sections: dict[str, str]
+    images: list[str]
+    infobox: dict[str, str]
+    references: list[str]
 
 
 def parse_wikitext(wikitext: str) -> ParsedArticle:
@@ -32,14 +31,14 @@ def parse_wikitext(wikitext: str) -> ParsedArticle:
     # Extract images from ``[[File:..]]`` or ``[[Image:..]]`` links and ensure
     # uniqueness. ``wikitextparser`` exposes these as regular wikilinks, so we
     # filter by the link title prefix.
-    images: List[str] = []
+    images: list[str] = []
     for link in parsed.wikilinks:
         title = link.title.strip()
         if title.lower().startswith(("file:", "image:")) and title not in images:
             images.append(title)
 
     # Extract the first infobox template, keeping simple key/value pairs
-    infobox: Dict[str, str] = {}
+    infobox: dict[str, str] = {}
     for template in parsed.templates:
         name = template.name.lower().strip()
         if name.startswith("infobox"):
@@ -50,7 +49,7 @@ def parse_wikitext(wikitext: str) -> ParsedArticle:
             break
 
     # Map section titles to their raw contents
-    sections: Dict[str, str] = {}
+    sections: dict[str, str] = {}
     for section in parsed.sections:
         title = section.title or "lead"
         content = section.contents.strip()
@@ -58,7 +57,7 @@ def parse_wikitext(wikitext: str) -> ParsedArticle:
             sections[title.strip()] = content
 
     # Collect raw reference tags
-    references: List[str] = []
+    references: list[str] = []
     for tag in parsed.get_tags("ref"):
         content = tag.contents.strip()
         if content:

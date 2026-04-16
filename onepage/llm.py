@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, List, Optional, Tuple
+from typing import Any
 
 HAS_OPENAI = False
 OpenAI: Any = None
@@ -16,24 +16,23 @@ except ImportError:
 
 
 class LLMService:
-    """LLM service for merging Wikipedia sections intelligently."""
+    """LLM service for merging Wikipedia sections intelligently.
+
+    Args:
+        api_key: API key for the LLM provider. If None, reads from
+                 OPENAI_API_KEY environment variable.
+        model: Model identifier to use.
+        provider: LLM provider (currently only "openai" supported).
+    """
 
     client: Any
 
     def __init__(
         self,
-        api_key: Optional[str] = None,
+        api_key: str | None = None,
         model: str = "gpt-4o-mini",
         provider: str = "openai",
     ):
-        """Initialize LLM service.
-
-        Args:
-            api_key: API key for the LLM provider. If None, reads from
-                     OPENAI_API_KEY environment variable.
-            model: Model identifier to use.
-            provider: LLM provider (currently only "openai" supported).
-        """
         self.model = model
         self.provider = provider
         self.client = None
@@ -55,7 +54,7 @@ class LLMService:
 
     def merge_sections(
         self,
-        sections: List[Tuple[str, str, str]],
+        sections: list[tuple[str, str, str]],
         entity_name: str,
         section_heading: str,
     ) -> str:
@@ -81,7 +80,7 @@ class LLMService:
 
     def _build_merge_prompt(
         self,
-        sections: List[Tuple[str, str, str]],
+        sections: list[tuple[str, str, str]],
         entity_name: str,
         section_heading: str,
     ) -> str:
@@ -141,7 +140,7 @@ class MockLLMService:
 
     def merge_sections(
         self,
-        sections: List[Tuple[str, str, str]],
+        sections: list[tuple[str, str, str]],
         entity_name: str,
         section_heading: str,
     ) -> str:

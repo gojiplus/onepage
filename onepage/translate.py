@@ -2,7 +2,6 @@
 
 import re
 import time
-from typing import Dict, List, Optional, Tuple
 
 import requests
 import wikitextparser as wtp
@@ -34,9 +33,9 @@ class TranslationService:
         self.min_request_interval = 0.1  # 100ms between requests
         # Simple in-memory cache to avoid repeatedly hammering the free
         # translation APIs with identical requests
-        self.cache: Dict[Tuple[str, str], Tuple[str, float]] = {}
+        self.cache: dict[tuple[str, str], tuple[str, float]] = {}
 
-    def translate_to_english(self, text: str, source_lang: str) -> Tuple[str, float]:
+    def translate_to_english(self, text: str, source_lang: str) -> tuple[str, float]:
         """
         Translate text to English.
 
@@ -133,15 +132,13 @@ class TranslationService:
 
         return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
 
-    def _translate_via_google(
-        self, text: str, source: str, target: str
-    ) -> Optional[str]:
+    def _translate_via_google(self, text: str, source: str, target: str) -> str | None:
         """Simple offline fallback - just return original text for now."""
         # For now, skip Google API due to rate limits and just return original
         # In production, you'd use proper Google Translate API with key
         return None
 
-    def translate_claims(self, claims: List[Claim]) -> List[Claim]:
+    def translate_claims(self, claims: list[Claim]) -> list[Claim]:
         """
         Translate a list of claims to English for alignment.
 
@@ -172,8 +169,8 @@ class TranslationService:
         return translated_claims
 
     def batch_translate(
-        self, texts: List[str], source_lang: str
-    ) -> List[Tuple[str, float]]:
+        self, texts: list[str], source_lang: str
+    ) -> list[tuple[str, float]]:
         """
         Translate multiple texts in batch for efficiency.
 

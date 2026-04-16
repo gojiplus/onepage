@@ -1,7 +1,14 @@
 """Tests for core data models."""
 
-from onepage.models import (Claim, Entity, Fact, IntermediateRepresentation,
-                            Provenance, Reference, Section)
+from onepage.models import (
+    Claim,
+    Entity,
+    Fact,
+    IntermediateRepresentation,
+    Provenance,
+    Reference,
+    Section,
+)
 
 
 class TestEntity:

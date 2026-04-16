@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 
@@ -21,7 +21,7 @@ class WikidataClient:
             {"User-Agent": "onepage/0.1.0 (https://github.com/soodoku/onepage)"}
         )
 
-    def get_entity(self, qid: str, languages: Optional[List[str]] = None) -> Entity:
+    def get_entity(self, qid: str, languages: list[str] | None = None) -> Entity:
         """Fetch entity data from Wikidata."""
         if languages is None:
             languages = ["en"]
@@ -44,15 +44,15 @@ class WikidataClient:
 
         entity_data = data["entities"][qid]
 
-        labels: Dict[str, str] = {}
+        labels: dict[str, str] = {}
         for lang, label_data in entity_data.get("labels", {}).items():
             labels[lang] = label_data["value"]
 
-        descriptions: Dict[str, str] = {}
+        descriptions: dict[str, str] = {}
         for lang, desc_data in entity_data.get("descriptions", {}).items():
             descriptions[lang] = desc_data["value"]
 
-        aliases: Dict[str, List[str]] = {}
+        aliases: dict[str, list[str]] = {}
         for lang, alias_list in entity_data.get("aliases", {}).items():
             aliases[lang] = [alias["value"] for alias in alias_list]
 
@@ -61,8 +61,8 @@ class WikidataClient:
         )
 
     def get_sitelinks(
-        self, qid: str, languages: Optional[List[str]] = None
-    ) -> Dict[str, str]:
+        self, qid: str, languages: list[str] | None = None
+    ) -> dict[str, str]:
         """Get sitelinks (Wikipedia article titles) for an entity."""
         params = {
             "action": "wbgetentities",
@@ -81,7 +81,7 @@ class WikidataClient:
             raise ValueError(f"Entity {qid} not found in Wikidata")
 
         entity_data = data["entities"][qid]
-        sitelinks: Dict[str, str] = {}
+        sitelinks: dict[str, str] = {}
         for site, sitelink_data in entity_data.get("sitelinks", {}).items():
             if site.endswith("wiki"):
                 lang = site[:-4]
@@ -90,8 +90,8 @@ class WikidataClient:
         return sitelinks
 
     def get_entity_claims(
-        self, qid: str, properties: Optional[List[str]] = None
-    ) -> Dict[str, List[Dict[str, Any]]]:
+        self, qid: str, properties: list[str] | None = None
+    ) -> dict[str, list[dict[str, Any]]]:
         """Get claims (statements) for a Wikidata entity."""
         params = {
             "action": "wbgetentities",
@@ -108,7 +108,7 @@ class WikidataClient:
             raise ValueError(f"Entity {qid} not found in Wikidata")
 
         entity_data = data["entities"][qid]
-        claims: Dict[str, List[Dict[str, Any]]] = {}
+        claims: dict[str, list[dict[str, Any]]] = {}
         for prop_id, claim_list in entity_data.get("claims", {}).items():
             if not properties or prop_id in properties:
                 claims[prop_id] = claim_list
@@ -127,7 +127,7 @@ class WikipediaClient:
     def _get_api_url(self, language: str) -> str:
         return f"https://{language}.wikipedia.org/w/api.php"
 
-    def get_article_wikitext(self, title: str, language: str) -> Dict[str, Any]:
+    def get_article_wikitext(self, title: str, language: str) -> dict[str, Any]:
         api_url = self._get_api_url(language)
         page_params = {
             "action": "query",
@@ -191,7 +191,7 @@ class WikipediaClient:
 
     def get_article_extract(
         self, title: str, language: str, sentences: int = 10
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         api_url = self._get_api_url(language)
         params = {
             "action": "query",
@@ -221,7 +221,7 @@ class WikipediaClient:
             "page_id": int(page_id),
         }
 
-    def get_article_sections(self, title: str, language: str) -> List[Dict[str, Any]]:
+    def get_article_sections(self, title: str, language: str) -> list[dict[str, Any]]:
         api_url = self._get_api_url(language)
         params = {
             "action": "parse",
@@ -238,7 +238,7 @@ class WikipediaClient:
 
     def search_articles(
         self, query: str, language: str, limit: int = 10
-    ) -> List[Dict[str, Any]]:
+    ) -> list[dict[str, Any]]:
         api_url = self._get_api_url(language)
         params = {
             "action": "query",
@@ -287,8 +287,8 @@ class WikipediaClient:
 
 
 def select_top_languages(
-    qid: str, top_n: int = 2, always_include: Optional[List[str]] = None
-) -> List[str]:
+    qid: str, top_n: int = 2, always_include: list[str] | None = None
+) -> list[str]:
     """Select the top N languages by article size for a given entity.
 
     Args:
@@ -309,7 +309,7 @@ def select_top_languages(
     if not sitelinks:
         return always_include
 
-    sizes: List[tuple] = []
+    sizes: list[tuple] = []
     for lang, title in sitelinks.items():
         try:
             length = wikipedia.get_article_length(title, lang)
@@ -335,8 +335,8 @@ class ArticleFetcher:
         self.wikipedia = WikipediaClient()
 
     def fetch_all(
-        self, qid: str, languages: List[str], output_dir: str
-    ) -> Dict[str, Any]:
+        self, qid: str, languages: list[str], output_dir: str
+    ) -> dict[str, Any]:
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
 
@@ -344,7 +344,7 @@ class ArticleFetcher:
         sitelinks = self.wikidata.get_sitelinks(qid, languages)
         claims = self.wikidata.get_entity_claims(qid)
 
-        articles: Dict[str, Any] = {}
+        articles: dict[str, Any] = {}
         for lang in languages:
             if lang in sitelinks:
                 try:

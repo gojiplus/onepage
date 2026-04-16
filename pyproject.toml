@@ -7,10 +7,10 @@ name = "onepage"
 version = "0.1.0"
 description = "Merge Wikipedia articles across languages into one comprehensive, source-attributed page"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.11"
 license = {text = "MIT"}
 authors = [
-    {name = "onepage contributors"},
+    {name = "Gaurav Sood", email = "contact@gsood.com"},
 ]
 keywords = ["wikipedia", "wikidata", "translation", "nlp"]
 classifiers = [
@@ -19,11 +19,9 @@ classifiers = [
     "Intended Audience :: Education",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Information Analysis",
     "Topic :: Text Processing :: Linguistic",
 ]
@@ -49,8 +47,10 @@ dependencies = [
 dev = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
-    "black>=22.0.0",
-    "flake8>=5.0.0",
+    "ruff>=0.4.0",
+    "vulture>=2.10",
+    "deptry>=0.12.0",
+    "pydoclint>=0.4.0",
     "mypy>=1.0.0",
     "types-requests>=2.28.0",
     "types-PyYAML>=6.0.0",
@@ -60,26 +60,51 @@ dev = [
 onepage = "onepage.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/soodoku/onepage"
-Repository = "https://github.com/soodoku/onepage"
-Issues = "https://github.com/soodoku/onepage/issues"
+Homepage = "https://github.com/gojiplus/onepage"
+Repository = "https://github.com/gojiplus/onepage"
+Issues = "https://github.com/gojiplus/onepage/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["onepage*"]
 
-[tool.black]
+[tool.ruff]
 line-length = 88
-target-version = ['py38']
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "UP", "B", "C4", "SIM"]
+ignore = ["E501"]
 
 [tool.mypy]
-python_version = "3.8"
+python_version = "3.11"
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
+
+[tool.vulture]
+min_confidence = 80
+
+[tool.pydoclint]
+style = "google"
+arg-type-hints-in-docstring = false
+check-return-types = false
+skip-checking-raises = true
+check-class-attributes = false
+
+[tool.deptry]
+ignore = ["DEP002"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+
+[dependency-groups]
+dev = [
+    "deptry>=0.25.1",
+    "pydoclint>=0.8.3",
+    "ruff>=0.15.10",
+    "vulture>=2.16",
+]

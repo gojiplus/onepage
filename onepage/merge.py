@@ -5,11 +5,11 @@ from __future__ import annotations
 import os
 import re
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from collections.abc import Sequence
+from typing import Any
 
 from .api import ArticleFetcher
-from .models import (Claim, Entity, IntermediateRepresentation, Reference,
-                     Section)
+from .models import Claim, Entity, IntermediateRepresentation, Reference, Section
 from .parse import ParsedArticle, parse_wikitext
 from .translate import TextCleaner, TranslationService
 
@@ -18,8 +18,8 @@ class ImageMerger:
     """Simple merger that unions images from multiple articles."""
 
     @staticmethod
-    def merge(image_lists: Sequence[List[str]]) -> List[str]:
-        merged: List[str] = []
+    def merge(image_lists: Sequence[list[str]]) -> list[str]:
+        merged: list[str] = []
         for images in image_lists:
             for image in images:
                 if image not in merged:
@@ -31,8 +31,8 @@ class InfoboxMerger:
     """Merge infobox dictionaries by unioning parameter values."""
 
     @staticmethod
-    def merge(boxes: Sequence[Dict[str, str]]) -> Dict[str, List[str]]:
-        merged: Dict[str, List[str]] = {}
+    def merge(boxes: Sequence[dict[str, str]]) -> dict[str, list[str]]:
+        merged: dict[str, list[str]] = {}
         for box in boxes:
             for key, value in box.items():
                 merged.setdefault(key, [])
@@ -47,24 +47,22 @@ class TextMerger:
     When LLM is available and enabled, uses LLM to intelligently merge
     sections from multiple language versions. Falls back to sentence-level
     merging when LLM is not available.
+
+    Args:
+        llm_service: Optional LLMService or MockLLMService instance.
+        entity_name: Name of the entity being merged.
     """
 
-    def __init__(self, llm_service: Optional[Any] = None, entity_name: str = ""):
-        """Initialize TextMerger.
-
-        Args:
-            llm_service: Optional LLMService or MockLLMService instance.
-            entity_name: Name of the entity being merged.
-        """
+    def __init__(self, llm_service: Any | None = None, entity_name: str = ""):
         self.llm = llm_service
         self.entity_name = entity_name
         self.translator = TranslationService()
 
     def merge(
         self,
-        sections_list: Sequence[Tuple[str, Dict[str, str]]],
+        sections_list: Sequence[tuple[str, dict[str, str]]],
         target_lang: str = "en",
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Merge sections from multiple language versions.
 
         Args:
@@ -80,11 +78,11 @@ class TextMerger:
 
     def _merge_with_llm(
         self,
-        sections_list: Sequence[Tuple[str, Dict[str, str]]],
+        sections_list: Sequence[tuple[str, dict[str, str]]],
         target_lang: str,
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Merge sections using LLM."""
-        grouped: Dict[str, List[Tuple[str, str, str]]] = defaultdict(list)
+        grouped: dict[str, list[tuple[str, str, str]]] = defaultdict(list)
 
         for lang, sections in sections_list:
             for heading, text in sections.items():
@@ -107,7 +105,7 @@ class TextMerger:
                 wiki = f"{lang}wiki"
                 grouped[heading_norm].append((wiki, lang, clean_text))
 
-        merged: Dict[str, str] = {}
+        merged: dict[str, str] = {}
         for heading, section_list in grouped.items():
             merged_text = self.llm.merge_sections(
                 section_list, self.entity_name, heading
@@ -119,11 +117,11 @@ class TextMerger:
 
     def _merge_fallback(
         self,
-        sections_list: Sequence[Tuple[str, Dict[str, str]]],
+        sections_list: Sequence[tuple[str, dict[str, str]]],
         target_lang: str,
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Fallback merge using sentence-level deduplication."""
-        grouped: Dict[str, List[str]] = defaultdict(list)
+        grouped: dict[str, list[str]] = defaultdict(list)
 
         english_sections = []
         non_english_sections = []
@@ -134,7 +132,7 @@ class TextMerger:
             else:
                 non_english_sections.append((lang, sections))
 
-        for lang, sections in english_sections:
+        for _lang, sections in english_sections:
             for heading, text in sections.items():
                 clean_text = TextCleaner.extract_plain_text(text)
                 if not clean_text or len(clean_text.strip()) < 10:
@@ -171,11 +169,13 @@ class TextMerger:
                 if lang != target_lang:
                     translations = self.translator.batch_translate(sentences, lang)
                     for _original, (translated, _confidence) in zip(
-                        sentences, translations
+                        sentences, translations, strict=False
                     ):
-                        if not translated.startswith("[TRANSLATION UNAVAILABLE"):
-                            if translated not in grouped[heading_norm]:
-                                grouped[heading_norm].append(translated)
+                        if (
+                            not translated.startswith("[TRANSLATION UNAVAILABLE")
+                            and translated not in grouped[heading_norm]
+                        ):
+                            grouped[heading_norm].append(translated)
                 else:
                     for sentence in sentences:
                         if sentence not in grouped[heading_norm]:
@@ -185,7 +185,7 @@ class TextMerger:
 
     def _normalize_heading(
         self, heading: str, lang: str, target_lang: str
-    ) -> Optional[str]:
+    ) -> str | None:
         """Normalize a section heading to the target language."""
         heading_norm = heading.strip()
 
@@ -205,9 +205,9 @@ class TextMerger:
 
     @staticmethod
     def merge_static(
-        sections_list: Sequence[Tuple[str, Dict[str, str]]],
+        sections_list: Sequence[tuple[str, dict[str, str]]],
         target_lang: str = "en",
-    ) -> Dict[str, str]:
+    ) -> dict[str, str]:
         """Static method for backward compatibility."""
         merger = TextMerger()
         return merger.merge(sections_list, target_lang)
@@ -215,10 +215,10 @@ class TextMerger:
 
 def merge_article(
     qid: str,
-    languages: List[str],
+    languages: list[str],
     target_lang: str = "en",
     use_llm: bool = True,
-    llm_api_key: Optional[str] = None,
+    llm_api_key: str | None = None,
     llm_model: str = "gpt-4o-mini",
 ) -> IntermediateRepresentation:
     """High level pipeline: fetch, parse and merge article versions.
@@ -244,7 +244,7 @@ def merge_article(
     entity: Entity = fetched["entity"]
     entity_name = entity.labels.get(target_lang, entity.labels.get("en", qid))
 
-    parsed_articles: List[ParsedArticle] = []
+    parsed_articles: list[ParsedArticle] = []
     languages_fetched = []
     for lang in languages:
         if lang in fetched["articles"]:
@@ -269,7 +269,10 @@ def merge_article(
 
     text_merger = TextMerger(llm_service=llm_service, entity_name=entity_name)
     sections_merged = text_merger.merge(
-        [(lang, p.sections) for lang, p in zip(languages_fetched, parsed_articles)],
+        [
+            (lang, p.sections)
+            for lang, p in zip(languages_fetched, parsed_articles, strict=False)
+        ],
         target_lang=target_lang,
     )
 
@@ -325,7 +328,7 @@ def merge_article(
     return ir
 
 
-def _extract_url_from_ref(ref_content: str) -> Optional[str]:
+def _extract_url_from_ref(ref_content: str) -> str | None:
     """Extract URL from reference content."""
     url_match = re.search(r"url\s*=\s*([^\s|}\]]+)", ref_content)
     if url_match:
@@ -340,7 +343,7 @@ def _extract_url_from_ref(ref_content: str) -> Optional[str]:
     return None
 
 
-def _extract_title_from_ref(ref_content: str) -> Optional[str]:
+def _extract_title_from_ref(ref_content: str) -> str | None:
     """Extract title from reference content."""
     title_match = re.search(r"title\s*=\s*([^|}\]]+)", ref_content)
     if title_match:
@@ -351,7 +354,7 @@ def _extract_title_from_ref(ref_content: str) -> Optional[str]:
     return None
 
 
-def _extract_publisher_from_ref(ref_content: str) -> Optional[str]:
+def _extract_publisher_from_ref(ref_content: str) -> str | None:
     """Extract publisher from reference content."""
     pub_match = re.search(r"(?:publisher|website)\s*=\s*([^|}\]]+)", ref_content)
     if pub_match:
@@ -362,7 +365,7 @@ def _extract_publisher_from_ref(ref_content: str) -> Optional[str]:
     return None
 
 
-def _extract_doi_from_ref(ref_content: str) -> Optional[str]:
+def _extract_doi_from_ref(ref_content: str) -> str | None:
     """Extract DOI from reference content."""
     doi_match = re.search(r"doi\s*=\s*([^\s|}\]]+)", ref_content)
     if doi_match:

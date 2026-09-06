@@ -209,3 +209,5 @@ __marimo__/
 
 # Test artifacts
 tmp/
+
+/out/

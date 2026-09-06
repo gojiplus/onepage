@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "ada-family",
+      "kind": "wikipedia-excerpts",
+      "qid": "Q7259",
+      "label": "Ada Lovelace",
+      "articles": [
+        {
+          "language": "en",
+          "title": "Ada Lovelace",
+          "revision": 1371961179,
+          "timestamp": "2026-08-29T16:16:29Z",
+          "wikitext": "Lovelace was the only [[legitimate child]] of poet [[Lord Byron]] and reformer [[Lady Byron|Anne Isabella Milbanke]].<ref>{{cite web|url=https://www.biography.com/people/ada-lovelace-20825323|title=Ada Lovelace Biography|website=biography.com|date=6 May 2021 }}</ref>",
+          "reference_text": "Lovelace was the only legitimate child of poet Lord Byron and reformer Anne Isabella Milbanke.",
+          "translation": null,
+          "citations": [
+            "{{cite web|url=https://www.biography.com/people/ada-lovelace-20825323|title=Ada Lovelace Biography|website=biography.com|date=6 May 2021 }}"
+          ]
+        },
+        {
+          "language": "fr",
+          "title": "Ada Lovelace",
+          "revision": 238903043,
+          "timestamp": "2026-08-24T10:03:06Z",
+          "wikitext": "Ada est la seule enfant issue du mariage du poète [[Lord Byron|George Gordon Byron]] et de la philanthrope [[Anne Isabella Milbanke|Annabella Milbanke]], cousine de [[Caroline Lamb]], dont la liaison avec Byron fut à l'origine d'un scandale.",
+          "reference_text": "Ada est la seule enfant issue du mariage du poète George Gordon Byron et de la philanthrope Annabella Milbanke, cousine de Caroline Lamb, dont la liaison avec Byron fut à l'origine d'un scandale.",
+          "translation": "Ada is the only child of the marriage of poet George Gordon Byron and philanthropist Annabella Milbanke, cousin of Caroline Lamb, whose affair with Byron caused a scandal.",
+          "citations": []
+        },
+        {
+          "language": "es",
+          "title": "Ada Lovelace",
+          "revision": 174452511,
+          "timestamp": "2026-07-19T22:47:54Z",
+          "wikitext": "Lovelace fue la única hija legítima del poeta [[Lord Byron]] y [[Anna Isabella Noel Byron]]. Byron se separó de su esposa un mes después del nacimiento de Ada y dejó Inglaterra para siempre cuatro meses después. Conmemoró la despedida en un poema que comienza: «¿Es tu rostro como el de tu madre, mi bella hija? ¡ADA! Hija única de mi casa y mi corazón».<ref>{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}</ref>",
+          "reference_text": "Lovelace fue la única hija legítima del poeta Lord Byron y Anna Isabella Noel Byron. Byron se separó de su esposa un mes después del nacimiento de Ada y dejó Inglaterra para siempre cuatro meses después. Conmemoró la despedida en un poema que comienza: «¿Es tu rostro como el de tu madre, mi bella hija? ¡ADA! Hija única de mi casa y mi corazón».",
+          "translation": "Lovelace was the only legitimate daughter of the poet Lord Byron and Anna Isabella Noel Byron. Byron separated from his wife a month after Ada was born and left England forever four months later. He commemorated their parting in a poem that begins: \"Is your face like your mother's, my beautiful daughter? ADA! Only daughter of my house and heart.\"",
+          "citations": [
+            "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}"
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "id": "only-child",
+          "pattern": "only (?:legitimate )?(?:child|daughter).*Byron",
+          "allowed_citations": [
+            "{{cite web|url=https://www.biography.com/people/ada-lovelace-20825323|title=Ada Lovelace Biography|website=biography.com|date=6 May 2021 }}",
+            "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}"
+          ]
+        },
+        {
+          "id": "caroline-affair",
+          "pattern": "Caroline Lamb.*affair.*scandal",
+          "allowed_citations": []
+        },
+        {
+          "id": "separation-one-month",
+          "pattern": "separated.*a month",
+          "allowed_citations": [
+            "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}"
+          ]
+        },
+        {
+          "id": "departure-four-months",
+          "pattern": "left England.*four months",
+          "allowed_citations": [
+            "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}"
+          ]
+        }
+      ],
+      "conflicts": []
+    },
+    {
+      "id": "eiffel-visitors-height",
+      "kind": "wikipedia-excerpts",
+      "qid": "Q243",
+      "label": "Eiffel Tower",
+      "articles": [
+        {
+          "language": "en",
+          "title": "Eiffel Tower",
+          "revision": 1367947019,
+          "timestamp": "2026-08-06T03:31:22Z",
+          "wikitext": "The tower received 5,889,000 visitors in 2022.<ref>Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved 22 March 2022.</ref>",
+          "reference_text": "The tower received 5,889,000 visitors in 2022.",
+          "translation": null,
+          "citations": [
+            "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved 22 March 2022."
+          ]
+        },
+        {
+          "language": "fr",
+          "title": "Tour Eiffel",
+          "revision": 239220518,
+          "timestamp": "2026-09-04T14:25:35Z",
+          "wikitext": "Depuis son ouverture au public, elle a accueilli plus de [[Popularité, notoriété et profil des visiteurs de la tour Eiffel|300 millions de visiteurs]]<ref name=\":0\">{{Article|auteur1=|titre=Paris : la tour Eiffel fête ses 300 millions de visiteurs|périodique=Franceinfo|date=2017-09-28|lire en ligne=https://www.francetvinfo.fr/sciences/histoire/paris-la-tour-eiffel-fete-ses-300-millions-de-visiteurs_2393660.html|consulté le=2018-01-30|pages=}}.</ref>.",
+          "reference_text": "Depuis son ouverture au public, elle a accueilli plus de 300 millions de visiteurs.",
+          "translation": "Since opening to the public, it has welcomed more than 300 million visitors.",
+          "citations": [
+            "{{Article|auteur1=|titre=Paris : la tour Eiffel fête ses 300 millions de visiteurs|périodique=Franceinfo|date=2017-09-28|lire en ligne=https://www.francetvinfo.fr/sciences/histoire/paris-la-tour-eiffel-fete-ses-300-millions-de-visiteurs_2393660.html|consulté le=2018-01-30|pages=}}."
+          ]
+        },
+        {
+          "language": "es",
+          "title": "Torre Eiffel",
+          "revision": 175109131,
+          "timestamp": "2026-08-30T14:22:32Z",
+          "wikitext": "El 15 de marzo de 2022 se sustituyó la antena de radio con la ayuda de un helicóptero, pasando de 324 a 330 m de altura total.<ref>{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/|título=Eiffel Tower grows six metres after new antenna attached|periódico=[[Reuters]]|fecha=15 de marzo de 2022|fechaacceso=26 de marzo de 2022|idioma=en}}</ref>",
+          "reference_text": "El 15 de marzo de 2022 se sustituyó la antena de radio con la ayuda de un helicóptero, pasando de 324 a 330 m de altura total.",
+          "translation": "On 15 March 2022, the radio antenna was replaced with the help of a helicopter, increasing the total height from 324 to 330 m.",
+          "citations": [
+            "{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/|título=Eiffel Tower grows six metres after new antenna attached|periódico=[[Reuters]]|fecha=15 de marzo de 2022|fechaacceso=26 de marzo de 2022|idioma=en}}"
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "id": "visitors-2022",
+          "pattern": "5,889,000 visitors in 2022",
+          "allowed_citations": [
+            "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved 22 March 2022."
+          ]
+        },
+        {
+          "id": "visitors-lifetime",
+          "pattern": "300 million visitors",
+          "allowed_citations": [
+            "{{Article|auteur1=|titre=Paris : la tour Eiffel fête ses 300 millions de visiteurs|périodique=Franceinfo|date=2017-09-28|lire en ligne=https://www.francetvinfo.fr/sciences/histoire/paris-la-tour-eiffel-fete-ses-300-millions-de-visiteurs_2393660.html|consulté le=2018-01-30|pages=}}."
+          ]
+        },
+        {
+          "id": "antenna-date",
+          "pattern": "15 March 2022",
+          "allowed_citations": [
+            "{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/|título=Eiffel Tower grows six metres after new antenna attached|periódico=[[Reuters]]|fecha=15 de marzo de 2022|fechaacceso=26 de marzo de 2022|idioma=en}}"
+          ]
+        },
+        {
+          "id": "height-330",
+          "pattern": "330 (?:m|metres|meters)\\b",
+          "allowed_citations": [
+            "{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/|título=Eiffel Tower grows six metres after new antenna attached|periódico=[[Reuters]]|fecha=15 de marzo de 2022|fechaacceso=26 de marzo de 2022|idioma=en}}"
+          ]
+        }
+      ],
+      "conflicts": []
+    },
+    {
+      "id": "contradictory-dates",
+      "kind": "synthetic-control",
+      "qid": "fixture-conflict",
+      "label": "Example Observatory",
+      "articles": [
+        {
+          "language": "en",
+          "title": "Synthetic conflict probe",
+          "revision": 0,
+          "wikitext": "The Example Observatory opened in 1900.<ref>Synthetic source A</ref>",
+          "reference_text": "The Example Observatory opened in 1900.",
+          "translation": null,
+          "citations": [
+            "Synthetic source A"
+          ]
+        },
+        {
+          "language": "fr",
+          "title": "Synthetic conflict probe",
+          "revision": 0,
+          "wikitext": "L’observatoire Exemple a ouvert en 1901.<ref>Synthetic source B</ref>",
+          "reference_text": "L’observatoire Exemple a ouvert en 1901.",
+          "translation": "The Example Observatory opened in 1901.",
+          "citations": [
+            "Synthetic source B"
+          ]
+        }
+      ],
+      "facts": [
+        {
+          "id": "opened-1900",
+          "pattern": "opened in 1900",
+          "allowed_citations": [
+            "Synthetic source A"
+          ]
+        },
+        {
+          "id": "opened-1901",
+          "pattern": "opened in 1901",
+          "allowed_citations": [
+            "Synthetic source B"
+          ]
+        }
+      ],
+      "conflicts": [
+        [
+          "opened-1900",
+          "opened-1901"
+        ]
+      ]
+    }
+  ]
+}

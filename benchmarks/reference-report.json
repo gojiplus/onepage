@@ -1,0 +1,669 @@
+{
+  "schema_version": 1,
+  "translation_mode": "reference",
+  "fixture_sha256": "a4a1974cbeda6fd010204b45bf6d20a9ba70e3e4c4770c01529d5734aa73e622",
+  "cases": [
+    {
+      "id": "ada-family",
+      "kind": "wikipedia-excerpts",
+      "base": {
+        "facts_total": 4,
+        "facts_retained": 1,
+        "duplicate_fact_mentions": 0,
+        "citation_links": 1,
+        "traceable_citation_links": 1,
+        "cited_fact_mentions_missing_citations": 0,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 0,
+        "conflict_pairs_preserved": 0,
+        "fact_passages": {
+          "only-child": [
+            "claim_0"
+          ],
+          "caroline-affair": [],
+          "separation-one-month": [],
+          "departure-four-months": []
+        }
+      },
+      "merged": {
+        "facts_total": 4,
+        "facts_retained": 4,
+        "duplicate_fact_mentions": 2,
+        "citation_links": 2,
+        "traceable_citation_links": 2,
+        "cited_fact_mentions_missing_citations": 1,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 0,
+        "conflict_pairs_preserved": 0,
+        "fact_passages": {
+          "only-child": [
+            "claim_0",
+            "claim_1",
+            "claim_2"
+          ],
+          "caroline-affair": [
+            "claim_1"
+          ],
+          "separation-one-month": [
+            "claim_2"
+          ],
+          "departure-four-months": [
+            "claim_2"
+          ]
+        }
+      },
+      "base_ir": {
+        "entity": {
+          "qid": "Q7259",
+          "labels": {
+            "en": "Ada Lovelace"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "Lovelace was the only legitimate child of poet Lord Byron and reformer Anne Isabella Milbanke.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "Lovelace was the only legitimate child of poet Lord Byron and reformer Anne Isabella Milbanke.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Ada Lovelace",
+                "rev_id": 1371961179
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "url": "https://www.biography.com/people/ada-lovelace-20825323",
+            "title": "Ada Lovelace Biography",
+            "publisher": "biography.com",
+            "wikitext": "{{cite web|url=https://www.biography.com/people/ada-lovelace-20825323|title=Ada Lovelace Biography|website=biography.com|date=6 May 2021 }}"
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Ada Lovelace",
+              "rev_id": 1371961179
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      },
+      "merged_ir": {
+        "entity": {
+          "qid": "Q7259",
+          "labels": {
+            "en": "Ada Lovelace"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0",
+              "claim_1",
+              "claim_2"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "Lovelace was the only legitimate child of poet Lord Byron and reformer Anne Isabella Milbanke.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "Lovelace was the only legitimate child of poet Lord Byron and reformer Anne Isabella Milbanke.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Ada Lovelace",
+                "rev_id": 1371961179
+              }
+            ]
+          },
+          "claim_1": {
+            "type": "claim",
+            "lang": "en",
+            "text": "Ada is the only child of the marriage of poet George Gordon Byron and philanthropist Annabella Milbanke, cousin of Caroline Lamb, whose affair with Byron caused a scandal.",
+            "sources": [],
+            "text_en": "Ada is the only child of the marriage of poet George Gordon Byron and philanthropist Annabella Milbanke, cousin of Caroline Lamb, whose affair with Byron caused a scandal.",
+            "provenance": [
+              {
+                "wiki": "frwiki",
+                "title": "Ada Lovelace",
+                "rev_id": 238903043
+              }
+            ]
+          },
+          "claim_2": {
+            "type": "claim",
+            "lang": "en",
+            "text": "Lovelace was the only legitimate daughter of the poet Lord Byron and Anna Isabella Noel Byron. Byron separated from his wife a month after Ada was born and left England forever four months later. He commemorated their parting in a poem that begins: \"Is your face like your mother's, my beautiful daughter? ADA! Only daughter of my house and heart.\"",
+            "sources": [
+              "ref_1"
+            ],
+            "text_en": "Lovelace was the only legitimate daughter of the poet Lord Byron and Anna Isabella Noel Byron. Byron separated from his wife a month after Ada was born and left England forever four months later. He commemorated their parting in a poem that begins: \"Is your face like your mother's, my beautiful daughter? ADA! Only daughter of my house and heart.\"",
+            "provenance": [
+              {
+                "wiki": "eswiki",
+                "title": "Ada Lovelace",
+                "rev_id": 174452511
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "url": "https://www.biography.com/people/ada-lovelace-20825323",
+            "title": "Ada Lovelace Biography",
+            "publisher": "biography.com",
+            "wikitext": "{{cite web|url=https://www.biography.com/people/ada-lovelace-20825323|title=Ada Lovelace Biography|website=biography.com|date=6 May 2021 }}"
+          },
+          "ref_1": {
+            "id": "ref_1",
+            "url": "https://www.bartleby.com/205/20.html",
+            "title": "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Ly",
+            "wikitext": "{{Cite web | url=https://www.bartleby.com/205/20.html | título=Last leaving England. I. Personal, Lyric, and Elegiac. Lord Byron. 1881. Poetry of Byron | sitioweb=bartleby.com | fechaacceso=4 de enero de 2020 | idioma=inglés}}"
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en",
+              "fr",
+              "es"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Ada Lovelace",
+              "rev_id": 1371961179
+            },
+            {
+              "wiki": "frwiki",
+              "title": "Ada Lovelace",
+              "rev_id": 238903043
+            },
+            {
+              "wiki": "eswiki",
+              "title": "Ada Lovelace",
+              "rev_id": 174452511
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      }
+    },
+    {
+      "id": "eiffel-visitors-height",
+      "kind": "wikipedia-excerpts",
+      "base": {
+        "facts_total": 4,
+        "facts_retained": 1,
+        "duplicate_fact_mentions": 0,
+        "citation_links": 1,
+        "traceable_citation_links": 1,
+        "cited_fact_mentions_missing_citations": 0,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 0,
+        "conflict_pairs_preserved": 0,
+        "fact_passages": {
+          "visitors-2022": [
+            "claim_0"
+          ],
+          "visitors-lifetime": [],
+          "antenna-date": [],
+          "height-330": []
+        }
+      },
+      "merged": {
+        "facts_total": 4,
+        "facts_retained": 4,
+        "duplicate_fact_mentions": 0,
+        "citation_links": 3,
+        "traceable_citation_links": 3,
+        "cited_fact_mentions_missing_citations": 0,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 0,
+        "conflict_pairs_preserved": 0,
+        "fact_passages": {
+          "visitors-2022": [
+            "claim_0"
+          ],
+          "visitors-lifetime": [
+            "claim_1"
+          ],
+          "antenna-date": [
+            "claim_2"
+          ],
+          "height-330": [
+            "claim_2"
+          ]
+        }
+      },
+      "base_ir": {
+        "entity": {
+          "qid": "Q243",
+          "labels": {
+            "en": "Eiffel Tower"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "The tower received 5,889,000 visitors in 2022.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "The tower received 5,889,000 visitors in 2022.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Eiffel Tower",
+                "rev_id": 1367947019
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "title": "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved ",
+            "wikitext": "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved 22 March 2022."
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Eiffel Tower",
+              "rev_id": 1367947019
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      },
+      "merged_ir": {
+        "entity": {
+          "qid": "Q243",
+          "labels": {
+            "en": "Eiffel Tower"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0",
+              "claim_1",
+              "claim_2"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "The tower received 5,889,000 visitors in 2022.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "The tower received 5,889,000 visitors in 2022.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Eiffel Tower",
+                "rev_id": 1367947019
+              }
+            ]
+          },
+          "claim_1": {
+            "type": "claim",
+            "lang": "en",
+            "text": "Since opening to the public, it has welcomed more than 300 million visitors.",
+            "sources": [
+              "ref_1"
+            ],
+            "text_en": "Since opening to the public, it has welcomed more than 300 million visitors.",
+            "provenance": [
+              {
+                "wiki": "frwiki",
+                "title": "Tour Eiffel",
+                "rev_id": 239220518
+              }
+            ]
+          },
+          "claim_2": {
+            "type": "claim",
+            "lang": "en",
+            "text": "On 15 March 2022, the radio antenna was replaced with the help of a helicopter, increasing the total height from 324 to 330 m.",
+            "sources": [
+              "ref_2"
+            ],
+            "text_en": "On 15 March 2022, the radio antenna was replaced with the help of a helicopter, increasing the total height from 324 to 330 m.",
+            "provenance": [
+              {
+                "wiki": "eswiki",
+                "title": "Torre Eiffel",
+                "rev_id": 175109131
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "title": "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved ",
+            "wikitext": "Tourism Statistics, \"Visit Paris Region\" site of the Paris Ile de France Visitors Bureau, retrieved 22 March 2022."
+          },
+          "ref_1": {
+            "id": "ref_1",
+            "url": "https://www.francetvinfo.fr/sciences/histoire/paris-la-tour-eiffel-fete-ses-300-millions-de-visiteurs_2393660.html",
+            "title": "{{Article|auteur1=|titre=Paris : la tour Eiffel fête ses 300 millions de visiteurs|périodique=France",
+            "wikitext": "{{Article|auteur1=|titre=Paris : la tour Eiffel fête ses 300 millions de visiteurs|périodique=Franceinfo|date=2017-09-28|lire en ligne=https://www.francetvinfo.fr/sciences/histoire/paris-la-tour-eiffel-fete-ses-300-millions-de-visiteurs_2393660.html|consulté le=2018-01-30|pages=}}."
+          },
+          "ref_2": {
+            "id": "ref_2",
+            "url": "https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/",
+            "title": "{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-ante",
+            "wikitext": "{{Cita noticia|url=https://www.reuters.com/world/europe/eiffel-tower-grows-six-metres-after-new-antenna-attached-2022-03-15/|título=Eiffel Tower grows six metres after new antenna attached|periódico=[[Reuters]]|fecha=15 de marzo de 2022|fechaacceso=26 de marzo de 2022|idioma=en}}"
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en",
+              "fr",
+              "es"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Eiffel Tower",
+              "rev_id": 1367947019
+            },
+            {
+              "wiki": "frwiki",
+              "title": "Tour Eiffel",
+              "rev_id": 239220518
+            },
+            {
+              "wiki": "eswiki",
+              "title": "Torre Eiffel",
+              "rev_id": 175109131
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      }
+    },
+    {
+      "id": "contradictory-dates",
+      "kind": "synthetic-control",
+      "base": {
+        "facts_total": 2,
+        "facts_retained": 1,
+        "duplicate_fact_mentions": 0,
+        "citation_links": 1,
+        "traceable_citation_links": 1,
+        "cited_fact_mentions_missing_citations": 0,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 1,
+        "conflict_pairs_preserved": 0,
+        "fact_passages": {
+          "opened-1900": [
+            "claim_0"
+          ],
+          "opened-1901": []
+        }
+      },
+      "merged": {
+        "facts_total": 2,
+        "facts_retained": 2,
+        "duplicate_fact_mentions": 0,
+        "citation_links": 2,
+        "traceable_citation_links": 2,
+        "cited_fact_mentions_missing_citations": 0,
+        "unmatched_passages": 0,
+        "conflict_pairs_total": 1,
+        "conflict_pairs_preserved": 1,
+        "fact_passages": {
+          "opened-1900": [
+            "claim_0"
+          ],
+          "opened-1901": [
+            "claim_1"
+          ]
+        }
+      },
+      "base_ir": {
+        "entity": {
+          "qid": "fixture-conflict",
+          "labels": {
+            "en": "Example Observatory"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "The Example Observatory opened in 1900.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "The Example Observatory opened in 1900.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Synthetic conflict probe",
+                "rev_id": 0
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "title": "Synthetic source A",
+            "wikitext": "Synthetic source A"
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Synthetic conflict probe",
+              "rev_id": 0
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      },
+      "merged_ir": {
+        "entity": {
+          "qid": "fixture-conflict",
+          "labels": {
+            "en": "Example Observatory"
+          },
+          "descriptions": {},
+          "aliases": {}
+        },
+        "sections": [
+          {
+            "id": "lead",
+            "items": [
+              "claim_0",
+              "claim_1"
+            ],
+            "title": {
+              "en": "lead"
+            }
+          }
+        ],
+        "content": {
+          "claim_0": {
+            "type": "claim",
+            "lang": "en",
+            "text": "The Example Observatory opened in 1900.",
+            "sources": [
+              "ref_0"
+            ],
+            "text_en": "The Example Observatory opened in 1900.",
+            "provenance": [
+              {
+                "wiki": "enwiki",
+                "title": "Synthetic conflict probe",
+                "rev_id": 0
+              }
+            ]
+          },
+          "claim_1": {
+            "type": "claim",
+            "lang": "en",
+            "text": "The Example Observatory opened in 1901.",
+            "sources": [
+              "ref_1"
+            ],
+            "text_en": "The Example Observatory opened in 1901.",
+            "provenance": [
+              {
+                "wiki": "frwiki",
+                "title": "Synthetic conflict probe",
+                "rev_id": 0
+              }
+            ]
+          }
+        },
+        "references": {
+          "ref_0": {
+            "id": "ref_0",
+            "title": "Synthetic source A",
+            "wikitext": "Synthetic source A"
+          },
+          "ref_1": {
+            "id": "ref_1",
+            "title": "Synthetic source B",
+            "wikitext": "Synthetic source B"
+          }
+        },
+        "metadata": {
+          "merge": {
+            "target_language": "en",
+            "languages": [
+              "en",
+              "fr"
+            ],
+            "llm_model": null
+          },
+          "source_articles": [
+            {
+              "wiki": "enwiki",
+              "title": "Synthetic conflict probe",
+              "rev_id": 0
+            },
+            {
+              "wiki": "frwiki",
+              "title": "Synthetic conflict probe",
+              "rev_id": 0
+            }
+          ],
+          "images": [],
+          "infobox": {}
+        }
+      }
+    }
+  ]
+}

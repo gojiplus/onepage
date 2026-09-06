@@ -29,8 +29,8 @@ jobs:
 
       - name: Run ruff
         run: |
-          uv run ruff check wikifuse/ tests/
-          uv run ruff format --check wikifuse/ tests/
+          uv run ruff check wikifuse/ tests/ benchmarks/
+          uv run ruff format --check wikifuse/ tests/ benchmarks/
 
       - name: Run vulture
         run: uv run vulture wikifuse/ --min-confidence 80

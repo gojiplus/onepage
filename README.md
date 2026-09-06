@@ -45,6 +45,17 @@ Shows what you gain by merging across languages:
 wikifuse diff --qid Q27182 --base en --compare en,fr --out ./output/
 ```
 
+A comparison captures each requested source article once and includes the base language in both versions. It writes `sources.json`, `base.ir.json`, `merged.ir.json`, `comparison.json`, and `ATTRIBUTION.md` alongside the HTML. These files preserve the source revisions, output text, and merge settings used in that run. Missing requested articles stop the comparison.
+
+Recreate the HTML from its saved result without fetching articles, translating, or calling an LLM:
+
+```bash
+wikifuse diff-preview --comparison ./output/comparison.json --out ./output/replayed.html
+```
+
+Word and reference counts describe output size; they do not establish factual accuracy or translation quality.
+
+
 ### `fetch` - Download articles
 
 ```bash

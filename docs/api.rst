@@ -2,7 +2,7 @@ API Reference
 =============
 
 wikifuse.api
------------
+------------
 
 .. automodule:: wikifuse.api
    :members:
@@ -10,7 +10,7 @@ wikifuse.api
    :show-inheritance:
 
 wikifuse.cli
------------
+------------
 
 .. automodule:: wikifuse.cli
    :members:
@@ -18,7 +18,7 @@ wikifuse.cli
    :show-inheritance:
 
 wikifuse.models
---------------
+---------------
 
 .. automodule:: wikifuse.models
    :members:
@@ -26,7 +26,7 @@ wikifuse.models
    :show-inheritance:
 
 wikifuse.parse
--------------
+--------------
 
 .. automodule:: wikifuse.parse
    :members:
@@ -34,7 +34,7 @@ wikifuse.parse
    :show-inheritance:
 
 wikifuse.merge
--------------
+--------------
 
 .. automodule:: wikifuse.merge
    :members:
@@ -42,7 +42,7 @@ wikifuse.merge
    :show-inheritance:
 
 wikifuse.render
---------------
+---------------
 
 .. automodule:: wikifuse.render
    :members:
@@ -50,7 +50,7 @@ wikifuse.render
    :show-inheritance:
 
 wikifuse.translate
------------------
+------------------
 
 .. automodule:: wikifuse.translate
    :members:
@@ -58,7 +58,7 @@ wikifuse.translate
    :show-inheritance:
 
 wikifuse.llm
------------
+------------
 
 .. automodule:: wikifuse.llm
    :members:
@@ -66,7 +66,7 @@ wikifuse.llm
    :show-inheritance:
 
 wikifuse.diff
-------------
+-------------
 
 .. automodule:: wikifuse.diff
    :members:

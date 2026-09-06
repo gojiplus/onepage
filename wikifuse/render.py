@@ -1,6 +1,7 @@
 """Wikitext renderer from IR to MediaWiki format."""
 
 import re
+from urllib.parse import quote
 
 from .models import Claim, Fact, IntermediateRepresentation, Reference, Section
 
@@ -205,6 +206,8 @@ class WikitextRenderer:
 
     def _format_reference(self, ref: Reference) -> str:
         """Format a reference for citation."""
+        if ref.wikitext:
+            return ref.wikitext
         if ref.doi:
             # Use Cite journal template for DOI
             parts = ["{{Cite journal"]
@@ -350,13 +353,10 @@ class HTMLRenderer:
                 if section_html:
                     parts.append(section_html)
 
-        # Render ALL references from IR, not just the ones linked to content
-        if ir.references:
+        if self._references:
             parts.append("<h2>References</h2>")
             parts.append('<ol class="references">')
-            for i, (_ref_id, ref) in enumerate(ir.references.items(), 1):
-                formatted_ref = self._format_reference(ref)
-                parts.append(f'<li id="cite_note-{i}">{formatted_ref}</li>')
+            parts.extend(self._references)
             parts.append("</ol>")
 
         parts.extend(
@@ -433,16 +433,14 @@ class HTMLRenderer:
                 if ref is None:
                     continue
                 idx = self._register_reference(ref)
-                markers.append(
-                    f'<sup id="cite_ref-{idx}"><a href="#cite_note-{idx}">[{idx}]</a></sup>'
-                )
+                markers.append(f'<sup><a href="#cite_note-{idx}">[{idx}]</a></sup>')
             if markers:
                 text += "".join(markers)
         return text
 
     def _register_reference(self, ref: Reference) -> int:
         """Assign an index to a reference and store its formatted HTML."""
-        key = f"{ref.title}|{ref.url}|{ref.doi}"
+        key = ref.id
         if key in self._ref_map:
             return self._ref_map[key]
 
@@ -511,3 +509,36 @@ class HTMLRenderer:
 
         parts.append("</div>")
         return "\n".join(parts)
+
+
+def render_attribution(ir: IntermediateRepresentation) -> str:
+    """List source revisions and their contributor histories for a merged article."""
+    sources = list(ir.metadata.get("source_articles", []))
+    for claim in ir.content.values():
+        if isinstance(claim, Claim):
+            for source in claim.provenance:
+                if source.to_dict() not in sources:
+                    sources.append(source.to_dict())
+    lines = [
+        "# Attribution",
+        "",
+        "This document combines and may translate or reorder Wikipedia text.",
+        "Wikipedia text is available under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).",
+        "Source revisions and contributor histories:",
+        "",
+    ]
+    for source in sources:
+        language = source["wiki"][:-4]
+        title = (
+            source["title"]
+            .replace("\\", "\\\\")
+            .replace("[", "\\[")
+            .replace("]", "\\]")
+        )
+        base = f"https://{language}.wikipedia.org/w/index.php"
+        revision = f"{base}?oldid={source['rev_id']}"
+        history = f"{base}?title={quote(source['title'], safe='')}&action=history"
+        lines.append(
+            f"- [{title} ({language}), revision {source['rev_id']}]({revision}); [contributors]({history})"
+        )
+    return "\n".join(lines) + "\n"

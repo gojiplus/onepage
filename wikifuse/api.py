@@ -162,7 +162,7 @@ class WikipediaClient:
         content_params = {
             "action": "query",
             "format": "json",
-            "pageids": page_id,
+            "revids": rev_id,
             "prop": "revisions",
             "rvprop": "content",
             "rvslots": "main",

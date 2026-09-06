@@ -43,14 +43,14 @@ class TestClaim:
             lang="en",
             text="Narendra Modi is an Indian politician.",
             sources=["r1", "r2"],
-            provenance=provenance,
+            provenance=[provenance],
         )
 
         assert claim.id == "c1"
         assert claim.lang == "en"
         assert claim.text == "Narendra Modi is an Indian politician."
         assert claim.sources == ["r1", "r2"]
-        assert claim.provenance.wiki == "enwiki"
+        assert claim.provenance[0].wiki == "enwiki"
 
     def test_claim_to_dict(self):
         """Test claim serialization to dictionary."""

@@ -30,7 +30,7 @@ Merged (en+fr):     5,891 words, 47 references
 Gain:               +81% words, +292% references
 ```
 
-See [example diff output](examples/Q27182/diff.html) comparing Rachida Dati's English vs English+French articles.
+See [example diff output](https://github.com/gojiplus/wikifuse/blob/main/examples/Q27182/diff.html) comparing Rachida Dati's English vs English+French articles.
 
 ## Commands
 
@@ -68,15 +68,20 @@ wikifuse preview --ir ./out/Q1058/wikifuse.ir.json --out ./out/Q1058/preview.htm
 
 ## How It Works
 
-1. **Fetch**: Download articles from multiple language Wikipedias using Wikidata QID
-2. **Translate**: Non-English text translated to English for alignment
-3. **Align**: Sentence embeddings cluster semantically similar claims
-4. **Merge**: Deduplicate while preserving unique content and references
-5. **Render**: Output wikitext or HTML with full provenance
+1. **Fetch**: Download articles from multiple language Wikipedias at recorded revision IDs.
+2. **Parse**: Keep source passages attached to their inline references, including named references reused within an article.
+3. **Translate**: Translate non-English passages to English.
+4. **Merge**: Combine identical passages within a section, retaining their references and source revisions. With an API key, the LLM orders passages without rewriting them. Invalid ordering responses leave the original order intact.
+5. **Render**: Output wikitext or HTML with citations linked to the passages that supplied them.
+
+A passage ends at an inline citation or paragraph break; it can contain several sentences. The parser preserves those citation boundaries without deciding whether a reference supports every statement in the passage. Undefined or conflicting named references, and references without preceding text in their paragraph, raise an error.
+
+Each claim's `provenance` field is a list of source records containing `wiki`, `title`, and `rev_id`. Regenerate older IR files that stored a single provenance object. Reference records retain their original citation wikitext.
 
 ## Output Files
 
-- `wikifuse.ir.json` - Intermediate Representation with sections, claims, and attribution
+- `wikifuse.ir.json` - Intermediate Representation with sections, claims, references, and source revisions
+- `ATTRIBUTION.md` - Source revision and contributor-history links, written by `merge`
 - `wikifuse.wikitext` - MediaWiki wikitext ready for review
 - `preview.html` - HTML preview
 - `diff.html` - Side-by-side comparison (from `diff` command)
@@ -98,7 +103,7 @@ emit: [ir, wikitext, html]
 pip install wikifuse
 ```
 
-For LLM-powered merging (uses OpenAI):
+For LLM ordering of source passages (uses OpenAI):
 
 ```bash
 pip install wikifuse

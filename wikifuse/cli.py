@@ -6,7 +6,7 @@ import os
 import click
 
 from .api import ArticleFetcher, select_top_languages
-from .diff import compare_articles, generate_diff_html, print_stats
+from .diff import ComparisonResult, compare_articles, generate_diff_html, print_stats
 from .merge import merge_article
 from .render import HTMLRenderer, WikitextRenderer, render_attribution
 from .translate import TranslationError
@@ -107,7 +107,7 @@ def merge(
         ir = merge_article(
             qid, lang_list, target_lang="en", use_llm=use_llm, llm_model=llm_model
         )
-    except TranslationError as error:
+    except (TranslationError, ValueError) as error:
         raise click.ClickException(str(error)) from error
 
     ir_path = os.path.join(out, "wikifuse.ir.json")
@@ -215,8 +215,9 @@ def diff(
             compare_langs=compare_langs,
             use_llm=use_llm,
             llm_model=llm_model,
+            output_dir=out,
         )
-    except TranslationError as error:
+    except (TranslationError, ValueError) as error:
         raise click.ClickException(str(error)) from error
 
     click.echo("")
@@ -227,6 +228,22 @@ def diff(
     generate_diff_html(comparison, html_path)
     click.echo("")
     click.echo(f"HTML comparison written to {html_path}")
+
+
+@cli.command("diff-preview")
+@click.option(
+    "--comparison",
+    required=True,
+    type=click.Path(exists=True),
+    help="Saved comparison.json file",
+)
+@click.option("--out", required=True, type=click.Path(), help="Output HTML file")
+def diff_preview(comparison: str, out: str) -> None:
+    """Render a saved comparison without network access or model calls."""
+    with open(comparison, encoding="utf-8") as handle:
+        result = ComparisonResult.from_dict(json.load(handle))
+    generate_diff_html(result, out)
+    click.echo(f"HTML comparison written to {out}")
 
 
 def main() -> None:

@@ -6,6 +6,7 @@ import os
 import re
 from collections import defaultdict
 from collections.abc import Sequence
+from tempfile import TemporaryDirectory
 from typing import Any
 
 from .api import ArticleFetcher
@@ -225,11 +226,32 @@ def merge_article(
     llm_model:
         LLM model to use for merging.
     """
-    fetcher = ArticleFetcher()
-    fetched = fetcher.fetch_all(qid, languages, output_dir="./tmp")
+    with TemporaryDirectory(prefix="wikifuse-") as source_dir:
+        fetched = ArticleFetcher().fetch_all(qid, languages, output_dir=source_dir)
+    return merge_fetched(
+        fetched, languages, target_lang, use_llm, llm_api_key, llm_model
+    )
+
+
+def merge_fetched(
+    fetched: dict[str, Any],
+    languages: list[str],
+    target_lang: str = "en",
+    use_llm: bool = True,
+    llm_api_key: str | None = None,
+    llm_model: str = "gpt-4o-mini",
+    translator: TranslationService | None = None,
+) -> IntermediateRepresentation:
+    """Merge a captured set of source articles without fetching them again."""
+    if not languages:
+        raise ValueError("At least one source language is required")
+    languages = list(dict.fromkeys(languages))
+    missing = [lang for lang in languages if lang not in fetched["articles"]]
+    if missing:
+        raise ValueError(f"Missing requested source articles: {', '.join(missing)}")
 
     entity: Entity = fetched["entity"]
-    entity_name = entity.labels.get(target_lang, entity.labels.get("en", qid))
+    entity_name = entity.labels.get(target_lang, entity.labels.get("en", entity.qid))
 
     parsed_articles: list[ParsedArticle] = []
     languages_fetched = []
@@ -255,6 +277,8 @@ def merge_article(
                 pass
 
     text_merger = TextMerger(entity_name=entity_name)
+    if translator is not None:
+        text_merger.translator = translator
     ir = IntermediateRepresentation(entity=entity)
     reference_ids: dict[str, str] = {}
     grouped: dict[str, list[Claim]] = {}
@@ -317,6 +341,11 @@ def merge_article(
             )
         )
 
+    ir.metadata["merge"] = {
+        "target_language": target_lang,
+        "languages": languages,
+        "llm_model": llm_model if llm_service is not None else None,
+    }
     ir.metadata["source_articles"] = [
         fetched["articles"][lang]["provenance"].to_dict() for lang in languages_fetched
     ]

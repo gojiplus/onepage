@@ -2,13 +2,19 @@
 
 from __future__ import annotations
 
+import json
 import os
 import re
-from dataclasses import dataclass, field
+from dataclasses import asdict, dataclass, field
 from html import escape
+from pathlib import Path
+from tempfile import TemporaryDirectory
+from typing import Any
 
-from .merge import merge_article
+from .api import ArticleFetcher
+from .merge import merge_fetched
 from .models import IntermediateRepresentation
+from .render import render_attribution
 
 
 @dataclass
@@ -46,6 +52,32 @@ class ComparisonResult:
     merged_stats: ArticleStats
     new_sections: list[str] = field(default_factory=list)
     section_diffs: dict[str, SectionDiff] = field(default_factory=dict)
+
+    base_ir: IntermediateRepresentation | None = None
+    merged_ir: IntermediateRepresentation | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        """Serialize the exact inputs to the comparison renderer."""
+        result = asdict(self)
+        result["base_ir"] = self.base_ir.to_dict() if self.base_ir is not None else None
+        result["merged_ir"] = (
+            self.merged_ir.to_dict() if self.merged_ir is not None else None
+        )
+        return result
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ComparisonResult:
+        """Restore a comparison without network calls or model execution."""
+        values = dict(data)
+        values["base_stats"] = ArticleStats(**values["base_stats"])
+        values["merged_stats"] = ArticleStats(**values["merged_stats"])
+        values["section_diffs"] = {
+            key: SectionDiff(**value) for key, value in values["section_diffs"].items()
+        }
+        for name in ("base_ir", "merged_ir"):
+            if values.get(name) is not None:
+                values[name] = IntermediateRepresentation.from_dict(values[name])
+        return cls(**values)
 
 
 def _count_words(text: str) -> int:
@@ -105,6 +137,7 @@ def compare_articles(
     compare_langs: list[str],
     use_llm: bool = True,
     llm_model: str = "gpt-4o-mini",
+    output_dir: str | None = None,
 ) -> ComparisonResult:
     """Generate both base-only and merged versions and compute differences.
 
@@ -114,6 +147,7 @@ def compare_articles(
         compare_langs: Languages to include in the merged version.
         use_llm: Whether to use LLM for intelligent text merging.
         llm_model: LLM model to use.
+        output_dir: Directory for captured sources and comparison artifacts.
 
     Returns:
         ComparisonResult with statistics and diffs.
@@ -121,22 +155,59 @@ def compare_articles(
     if use_llm and not os.environ.get("OPENAI_API_KEY"):
         use_llm = False
 
-    base_ir = merge_article(
-        qid,
+    if not compare_langs:
+        raise ValueError("At least one comparison language is required")
+    languages = list(dict.fromkeys([base_lang, *compare_langs]))
+    with TemporaryDirectory(prefix="wikifuse-diff-") as temporary_dir:
+        fetched = ArticleFetcher().fetch_all(qid, languages, output_dir=temporary_dir)
+    base_ir = merge_fetched(
+        fetched,
         [base_lang],
         target_lang=base_lang,
         use_llm=use_llm,
         llm_model=llm_model,
     )
-
-    merged_ir = merge_article(
-        qid,
-        compare_langs,
-        target_lang=base_lang,
-        use_llm=use_llm,
-        llm_model=llm_model,
+    merged_ir = merge_fetched(
+        fetched, languages, target_lang=base_lang, use_llm=use_llm, llm_model=llm_model
     )
+    comparison = compare_irs(base_ir, merged_ir, base_lang, languages)
+    if output_dir:
+        output = Path(output_dir)
+        output.mkdir(parents=True, exist_ok=True)
+        snapshot = {
+            "entity": asdict(fetched["entity"]),
+            "articles": {
+                lang: {**article, "provenance": article["provenance"].to_dict()}
+                for lang, article in fetched["articles"].items()
+            },
+            "claims": fetched.get("claims", {}),
+            "languages": languages,
+        }
+        (output / "sources.json").write_text(
+            json.dumps(snapshot, indent=2, ensure_ascii=False), encoding="utf-8"
+        )
+        (output / "base.ir.json").write_text(base_ir.to_json(), encoding="utf-8")
+        (output / "merged.ir.json").write_text(merged_ir.to_json(), encoding="utf-8")
+        (output / "comparison.json").write_text(
+            json.dumps(comparison.to_dict(), indent=2, ensure_ascii=False),
+            encoding="utf-8",
+        )
+        (output / "ATTRIBUTION.md").write_text(
+            render_attribution(merged_ir), encoding="utf-8"
+        )
+    return comparison
 
+
+def compare_irs(
+    base_ir: IntermediateRepresentation,
+    merged_ir: IntermediateRepresentation,
+    base_lang: str,
+    compare_langs: list[str],
+) -> ComparisonResult:
+    """Compare frozen merge outputs in stable section order."""
+    if base_ir.entity.qid != merged_ir.entity.qid:
+        raise ValueError("Comparison inputs must describe the same QID")
+    qid = base_ir.entity.qid
     base_stats = _extract_stats(base_ir)
     merged_stats = _extract_stats(merged_ir)
 
@@ -155,9 +226,9 @@ def compare_articles(
             new_sections.append(title)
 
     section_diffs: dict[str, SectionDiff] = {}
-    all_section_ids = {s.id for s in base_ir.sections} | {
-        s.id for s in merged_ir.sections
-    }
+    all_section_ids = list(
+        dict.fromkeys(s.id for s in [*base_ir.sections, *merged_ir.sections])
+    )
 
     for section_id in all_section_ids:
         base_section = next((s for s in base_ir.sections if s.id == section_id), None)
@@ -209,6 +280,8 @@ def compare_articles(
         merged_stats=merged_stats,
         new_sections=new_sections,
         section_diffs=section_diffs,
+        base_ir=base_ir,
+        merged_ir=merged_ir,
     )
 
 

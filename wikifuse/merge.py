@@ -232,7 +232,7 @@ def merge_article(
     target_lang:
         Language used for the merged text.
     use_llm:
-        Whether to use LLM for intelligent text merging.
+        Whether to use LLM to order source passages.
     llm_api_key:
         OpenAI API key. If None, reads from OPENAI_API_KEY env var.
     llm_model:
@@ -267,61 +267,76 @@ def merge_article(
             except (ImportError, ValueError):
                 pass
 
-    text_merger = TextMerger(llm_service=llm_service, entity_name=entity_name)
-    sections_merged = text_merger.merge(
-        [
-            (lang, p.sections)
-            for lang, p in zip(languages_fetched, parsed_articles, strict=False)
-        ],
-        target_lang=target_lang,
-    )
-
-    all_references = []
-    for p in parsed_articles:
-        all_references.extend(p.references)
-
+    text_merger = TextMerger(entity_name=entity_name)
     ir = IntermediateRepresentation(entity=entity)
+    reference_ids: dict[str, str] = {}
+    grouped: dict[str, list[Claim]] = {}
+    for lang, parsed in zip(languages_fetched, parsed_articles, strict=True):
+        source = fetched["articles"][lang]["provenance"]
+        for heading, passages in parsed.passages.items():
+            normalized = text_merger._normalize_heading(heading, lang, target_lang)
+            if normalized is None:
+                continue
+            claims = grouped.setdefault(normalized, [])
+            for passage in passages:
+                text = TextCleaner.extract_plain_text(passage.text)
+                if not text:
+                    continue
+                if lang != target_lang:
+                    text, _ = text_merger.translator.translate_to_english(text, lang)
+                    if text.startswith("[TRANSLATION UNAVAILABLE"):
+                        continue
+                sources = []
+                for raw in passage.references:
+                    if raw not in reference_ids:
+                        ref_id = f"ref_{len(reference_ids)}"
+                        reference_ids[raw] = ref_id
+                        ir.references[ref_id] = Reference(
+                            id=ref_id,
+                            title=_extract_title_from_ref(raw) or raw[:100],
+                            url=_extract_url_from_ref(raw),
+                            publisher=_extract_publisher_from_ref(raw),
+                            doi=_extract_doi_from_ref(raw),
+                            wikitext=raw,
+                        )
+                    sources.append(reference_ids[raw])
+                existing = next((claim for claim in claims if claim.text == text), None)
+                if existing is not None:
+                    existing.sources.extend(
+                        ref for ref in sources if ref not in existing.sources
+                    )
+                    if source not in existing.provenance:
+                        existing.provenance.append(source)
+                else:
+                    claim = Claim(
+                        id=f"claim_{len(ir.content)}",
+                        lang=target_lang,
+                        text=text,
+                        text_en=text if target_lang == "en" else None,
+                        sources=sources,
+                        provenance=[source],
+                    )
+                    claims.append(claim)
+                    ir.content[claim.id] = claim
 
-    for i, ref_content in enumerate(all_references):
-        ref_id = f"ref_{i}"
-        ref = Reference(
-            id=ref_id,
-            title=_extract_title_from_ref(ref_content) or ref_content[:100],
-            url=_extract_url_from_ref(ref_content),
-            author=None,
-            date=None,
-            publisher=_extract_publisher_from_ref(ref_content),
-            doi=_extract_doi_from_ref(ref_content),
-        )
-        ir.references[ref_id] = ref
-
-    ref_ids = list(ir.references.keys())
-    ref_per_section = (
-        max(1, len(ref_ids) // len(sections_merged)) if sections_merged else 0
-    )
-
-    for i, (heading, text) in enumerate(sections_merged.items()):
-        section_id = heading.lower().replace(" ", "_")
-        claim_id = f"{section_id}_0"
-
-        start_idx = i * ref_per_section
-        end_idx = min(start_idx + ref_per_section + 2, len(ref_ids))
-        claim_sources = ref_ids[start_idx:end_idx] if ref_ids else []
-
-        claim = Claim(
-            id=claim_id,
-            lang=target_lang,
-            text=text,
-            text_en=text,
-            sources=claim_sources,
-        )
-        ir.content[claim_id] = claim
+    for heading, claims in grouped.items():
+        if not claims:
+            continue
+        if llm_service is not None:
+            claims = llm_service.order_claims(claims, entity_name, heading)
+        section_id = heading
         ir.sections.append(
             Section(
-                id=section_id, title={target_lang: heading}, items=[claim_id], level=2
+                id=section_id,
+                title={target_lang: heading},
+                items=[claim.id for claim in claims],
+                level=2,
             )
         )
 
+    ir.metadata["source_articles"] = [
+        fetched["articles"][lang]["provenance"].to_dict() for lang in languages_fetched
+    ]
     ir.metadata["images"] = images
     ir.metadata["infobox"] = infobox
 

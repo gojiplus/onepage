@@ -33,6 +33,7 @@ class Reference:
     date: str | None = None
     author: str | None = None
     publisher: str | None = None
+    wikitext: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -59,7 +60,7 @@ class Claim:
     text: str = ""
     text_en: str | None = None  # English translation for alignment
     sources: list[str] = field(default_factory=list)
-    provenance: Provenance | None = None
+    provenance: list[Provenance] = field(default_factory=list)
     confidence: float | None = None  # Translation/alignment confidence
 
     def to_dict(self) -> dict[str, Any]:
@@ -73,11 +74,7 @@ class Claim:
         if self.text_en:
             result["text_en"] = self.text_en
         if self.provenance:
-            result["provenance"] = {
-                "wiki": self.provenance.wiki,
-                "title": self.provenance.title,
-                "rev_id": self.provenance.rev_id,
-            }
+            result["provenance"] = [source.to_dict() for source in self.provenance]
         if self.confidence is not None:
             result["confidence"] = self.confidence
         return result
@@ -181,14 +178,9 @@ class IntermediateRepresentation:
         content = {}
         for item_id, item_data in data["content"].items():
             if item_data["type"] == "claim":
-                prov_data = item_data.get("provenance")
-                provenance = None
-                if prov_data:
-                    provenance = Provenance(
-                        wiki=prov_data["wiki"],
-                        title=prov_data["title"],
-                        rev_id=prov_data["rev_id"],
-                    )
+                provenance = [
+                    Provenance(**source) for source in item_data.get("provenance", [])
+                ]
 
                 content[item_id] = Claim(
                     id=item_id,

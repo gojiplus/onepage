@@ -8,7 +8,7 @@ import click
 from .api import ArticleFetcher, select_top_languages
 from .diff import compare_articles, generate_diff_html, print_stats
 from .merge import merge_article
-from .render import HTMLRenderer, WikitextRenderer
+from .render import HTMLRenderer, WikitextRenderer, render_attribution
 
 
 @click.group()
@@ -69,7 +69,7 @@ def fetch(qid: str, languages: str, top_langs: int, out: str) -> None:
 @click.option(
     "--use-llm/--no-llm",
     default=True,
-    help="Use LLM for intelligent text merging (default: enabled).",
+    help="Use LLM to order source passages (default: enabled).",
 )
 @click.option(
     "--llm-model",
@@ -109,6 +109,9 @@ def merge(
     ir_path = os.path.join(out, "wikifuse.ir.json")
     with open(ir_path, "w", encoding="utf-8") as f:
         json.dump(ir.to_dict(), f, indent=2, ensure_ascii=False)
+
+    with open(os.path.join(out, "ATTRIBUTION.md"), "w", encoding="utf-8") as f:
+        f.write(render_attribution(ir))
 
     click.echo(f"Merged IR written to {ir_path}")
 
@@ -175,7 +178,7 @@ def preview(ir: str, out: str) -> None:
 @click.option(
     "--use-llm/--no-llm",
     default=True,
-    help="Use LLM for intelligent text merging (default: enabled).",
+    help="Use LLM to order source passages (default: enabled).",
 )
 @click.option(
     "--llm-model",

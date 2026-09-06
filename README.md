@@ -13,8 +13,11 @@ Wikipedia articles vary dramatically across languages. A politician's English pa
 
 ## Quick Start
 
+Cross-language commands need a LibreTranslate service. The default hosted endpoint requires an API key; you can also configure your own server below.
+
 ```bash
 pip install wikifuse
+export WIKIFUSE_TRANSLATE_API_KEY=your-key
 
 # Compare English-only vs merged English+French for Rachida Dati
 wikifuse diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
@@ -86,16 +89,22 @@ Each claim's `provenance` field is a list of source records containing `wiki`, `
 - `preview.html` - HTML preview
 - `diff.html` - Side-by-side comparison (from `diff` command)
 
-## Configuration
+## Translation Configuration
 
-```yaml
-# wikifuse.yaml
-qid: Q1058
-languages: [en, hi]
-base_language: en
-max_refs_per_claim: 3
-emit: [ir, wikitext, html]
+The default endpoint is `https://libretranslate.com/translate`. Set `WIKIFUSE_TRANSLATE_API_KEY` to your service key, or point `WIKIFUSE_TRANSLATE_URL` to your own LibreTranslate `/translate` endpoint:
+
+```bash
+export WIKIFUSE_TRANSLATE_URL=http://localhost:5000/translate
+wikifuse merge --qid Q1058 --languages en,hi --out ./output/ --no-llm
 ```
+
+Set the API key only if your server requires one. `--no-llm` disables OpenAI passage ordering; translation still uses the configured service.
+
+Translation sends the full input in chunks of at most 500 characters, splitting at whitespace where possible. Requests time out after 15 seconds of inactivity. Transient network failures and HTTP 429/500/502/503/504 responses get at most three attempts per chunk, with retry waits capped at 30 seconds. Permanent HTTP errors and malformed responses fail immediately.
+
+If any chunk fails, the Python API raises `TranslationError`. The CLI reports the source and target languages, failed chunk, and error, then exits unsuccessfully without replacing the merged IR or diff output. Failed translations are not cached. Successful translations return no confidence estimate (`None`); same-language inputs return their original text with `1.0`.
+
+See the [LibreTranslate API documentation](https://docs.libretranslate.com/api/operations/translate/) for endpoint and key configuration.
 
 ## Installation
 

@@ -9,6 +9,7 @@ from .api import ArticleFetcher, select_top_languages
 from .diff import compare_articles, generate_diff_html, print_stats
 from .merge import merge_article
 from .render import HTMLRenderer, WikitextRenderer, render_attribution
+from .translate import TranslationError
 
 
 @click.group()
@@ -102,9 +103,12 @@ def merge(
         use_llm = False
 
     os.makedirs(out, exist_ok=True)
-    ir = merge_article(
-        qid, lang_list, target_lang="en", use_llm=use_llm, llm_model=llm_model
-    )
+    try:
+        ir = merge_article(
+            qid, lang_list, target_lang="en", use_llm=use_llm, llm_model=llm_model
+        )
+    except TranslationError as error:
+        raise click.ClickException(str(error)) from error
 
     ir_path = os.path.join(out, "wikifuse.ir.json")
     with open(ir_path, "w", encoding="utf-8") as f:
@@ -204,13 +208,16 @@ def diff(
         f"Comparing {base}-only vs merged ({'+'.join(compare_langs)}) for {qid}..."
     )
 
-    comparison = compare_articles(
-        qid=qid,
-        base_lang=base,
-        compare_langs=compare_langs,
-        use_llm=use_llm,
-        llm_model=llm_model,
-    )
+    try:
+        comparison = compare_articles(
+            qid=qid,
+            base_lang=base,
+            compare_langs=compare_langs,
+            use_llm=use_llm,
+            llm_model=llm_model,
+        )
+    except TranslationError as error:
+        raise click.ClickException(str(error)) from error
 
     click.echo("")
     click.echo(print_stats(comparison))

@@ -1,193 +1,182 @@
 """Translation service integration for cross-lingual alignment."""
 
+import math
+import os
 import re
 import time
+from contextlib import suppress
+from email.utils import parsedate_to_datetime
+from urllib.parse import urlsplit
 
 import requests
 import wikitextparser as wtp
 
-try:
-    from langdetect import detect
-
-    HAS_LANGDETECT = True
-except ImportError:
-    HAS_LANGDETECT = False
-
-    def detect(text: str) -> str:
-        return "unknown"
-
-
 from .models import Claim
 
 
-class TranslationService:
-    """Translation service for converting text to English."""
+class TranslationError(RuntimeError):
+    """A translation could not be completed without losing source content."""
 
-    def __init__(self):
+
+class TranslationService:
+    """Translate complete inputs using a configurable LibreTranslate endpoint."""
+
+    def __init__(self, url: str | None = None, api_key: str | None = None):
+        self.url = (
+            url
+            if url is not None
+            else os.environ.get(
+                "WIKIFUSE_TRANSLATE_URL", "https://libretranslate.com/translate"
+            )
+        )
+        try:
+            endpoint = urlsplit(self.url)
+            valid_endpoint = endpoint.scheme in {"http", "https"} and bool(
+                endpoint.hostname
+            )
+        except ValueError:
+            valid_endpoint = False
+        if not valid_endpoint:
+            raise TranslationError(
+                "WIKIFUSE_TRANSLATE_URL must be an HTTP(S) translation endpoint."
+            )
+        self.api_key = (
+            api_key
+            if api_key is not None
+            else os.environ.get("WIKIFUSE_TRANSLATE_API_KEY")
+        )
         self.session = requests.Session()
         self.session.headers.update(
             {"User-Agent": "wikifuse/0.1.0 (https://github.com/gojiplus/wikifuse)"}
         )
-        # Rate limiting
-        self.last_request_time = 0
-        self.min_request_interval = 0.1  # 100ms between requests
-        # Simple in-memory cache to avoid repeatedly hammering the free
-        # translation APIs with identical requests
-        self.cache: dict[tuple[str, str], tuple[str, float]] = {}
+        self.last_request_time = 0.0
+        self.min_request_interval = 0.1
+        self.cache: dict[tuple[str, str, str], tuple[str, float | None]] = {}
 
-    def translate_to_english(self, text: str, source_lang: str) -> tuple[str, float]:
+    def translate_to_english(
+        self, text: str, source_lang: str
+    ) -> tuple[str, float | None]:
+        """Translate the complete text, raising TranslationError on failure.
+
+        Successful translations have no estimated confidence; unchanged English
+        text has confidence 1.0. Failures are never cached.
         """
-        Translate text to English.
+        return self.translate(text, source_lang, "en")
 
-        Args:
-            text: Text to translate
-            source_lang: Source language code
-
-        Returns:
-            Tuple of (translated_text, confidence_score)
-        """
-        # Skip translation if already English
-        if source_lang == "en":
+    def translate(
+        self, text: str, source_lang: str, target_lang: str
+    ) -> tuple[str, float | None]:
+        """Translate complete text to the requested language or raise TranslationError."""
+        if source_lang == target_lang or not text.strip():
             return text, 1.0
+        cache_key = (text, source_lang, target_lang)
+        if cache_key not in self.cache:
+            translated = self._translate_via_libre(text, source_lang, target_lang)
+            self.cache[cache_key] = (translated, None)
+        return self.cache[cache_key]
 
-        # Detect language if not sure
-        try:
-            detected_lang = detect(text)
-            if detected_lang == "en":
-                return text, 1.0
-        except Exception:
-            pass
-
-        cache_key = (text, source_lang)
-        if cache_key in self.cache:
-            return self.cache[cache_key]
-
-        # For now, implement a simple translation using a free service
-        # In production, you'd want to use a proper translation API
-        translated_text = self._translate_via_libre(text, source_lang, "en")
-
-        # If LibreTranslate fails, fall back to Google's lightweight endpoint
-        if translated_text.startswith("[TRANSLATION UNAVAILABLE"):
-            google_text = self._translate_via_google(text, source_lang, "en")
-            if google_text is not None:
-                translated_text = google_text
-
-        # Simple confidence score based on text length and complexity
-        confidence = min(1.0, len(text) / 1000)  # Longer text = lower confidence
-
-        self.cache[cache_key] = (translated_text, confidence)
-        return translated_text, confidence
+    @staticmethod
+    def _chunks(text: str) -> list[str]:
+        chunks = []
+        while len(text) > 500:
+            boundaries = list(re.finditer(r"\s+", text[:500]))
+            end = boundaries[-1].end() if boundaries else 500
+            chunks.append(text[:end])
+            text = text[end:]
+        if text:
+            chunks.append(text)
+        return chunks
 
     def _translate_via_libre(self, text: str, source: str, target: str) -> str:
-        """Translate using the LibreTranslate API."""
-        # Rate limiting
-        current_time = time.time()
-        time_since_last = current_time - self.last_request_time
-        if time_since_last < self.min_request_interval:
-            time.sleep(self.min_request_interval - time_since_last)
-
-        if source == target:
+        """Translate every chunk, returning no partial result if any chunk fails."""
+        if source == target or not text.strip():
             return text
+        translated = []
+        for index, chunk in enumerate(self._chunks(text), 1):
+            if not chunk.strip():
+                continue
+            try:
+                translated.append(self._request_chunk(chunk, source, target))
+            except TranslationError as error:
+                raise TranslationError(
+                    f"Translation from {source} to {target} failed at chunk {index}: {error}"
+                ) from error
+        return " ".join(translated)
 
-        # Skip if text is too short or empty
-        if not text or len(text.strip()) < 3:
-            return text
+    @staticmethod
+    def _retry_delay(header: str | None, attempt: int) -> float:
+        delay = float(2**attempt)
+        if header:
+            try:
+                delay = float(header)
+            except ValueError:
+                with suppress(TypeError, ValueError, OverflowError):
+                    delay = parsedate_to_datetime(header).timestamp() - time.time()
+        return min(30.0, max(0.0, delay)) if math.isfinite(delay) else float(2**attempt)
 
-        try:
-            # Clean and limit text length to avoid API limits
-            text_to_translate = text.strip()[:500] if len(text) > 500 else text.strip()
-
-            # Skip if text contains mostly symbols or numbers
-            if re.match(r"^[^\w\s]*$", text_to_translate):
-                return text
-
-            url = "https://libretranslate.de/translate"
-            data = {
-                "q": text_to_translate,
-                "source": source,
-                "target": target,
-                "format": "text",
-            }
-
-            response = self.session.post(url, data=data, timeout=15)
-            self.last_request_time = time.time()
-
-            if response.status_code == 429:
-                retry_after = int(response.headers.get("Retry-After", "2"))
-                time.sleep(retry_after)
-                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
-
+    def _request_chunk(self, text: str, source: str, target: str) -> str:
+        data = {"q": text, "source": source, "target": target, "format": "text"}
+        if self.api_key:
+            data["api_key"] = self.api_key
+        for attempt in range(3):
+            wait = self.min_request_interval - (
+                time.monotonic() - self.last_request_time
+            )
+            if wait > 0:
+                time.sleep(wait)
+            self.last_request_time = time.monotonic()
+            try:
+                response = self.session.post(self.url, data=data, timeout=15)
+            except (requests.Timeout, requests.ConnectionError):
+                if attempt < 2:
+                    time.sleep(2**attempt)
+                    continue
+                raise TranslationError(
+                    "Translation service timed out or could not be reached after 3 attempts."
+                ) from None
+            except requests.RequestException:
+                raise TranslationError("Translation request failed.") from None
+            if response.status_code in {429, 500, 502, 503, 504} and attempt < 2:
+                time.sleep(
+                    self._retry_delay(response.headers.get("Retry-After"), attempt)
+                )
+                continue
             if response.status_code != 200:
-                return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
-
+                raise TranslationError(
+                    f"Translation service returned HTTP {response.status_code}. "
+                    "Check WIKIFUSE_TRANSLATE_URL and WIKIFUSE_TRANSLATE_API_KEY."
+                )
             try:
                 result = response.json()
-                if "translatedText" in result and result["translatedText"]:
-                    return result["translatedText"]
-            except (ValueError, KeyError):
-                pass
-
-        except Exception:
-            pass
-
-        return f"[TRANSLATION UNAVAILABLE FROM {source.upper()}]"
-
-    def _translate_via_google(self, text: str, source: str, target: str) -> str | None:
-        """Simple offline fallback - just return original text for now."""
-        # For now, skip Google API due to rate limits and just return original
-        # In production, you'd use proper Google Translate API with key
-        return None
+            except ValueError:
+                raise TranslationError(
+                    "Translation service returned invalid JSON."
+                ) from None
+            translated = (
+                result.get("translatedText") if isinstance(result, dict) else None
+            )
+            if not isinstance(translated, str) or not translated.strip():
+                raise TranslationError(
+                    "Translation service returned no valid translatedText string."
+                )
+            return translated.strip()
+        raise TranslationError("Translation retries exhausted.")
 
     def translate_claims(self, claims: list[Claim]) -> list[Claim]:
-        """
-        Translate a list of claims to English for alignment.
-
-        Args:
-            claims: List of claims to translate
-
-        Returns:
-            List of claims with English translations
-        """
-        translated_claims = []
-
-        for claim in claims:
-            if claim.lang != "en":
-                translated_text, confidence = self.translate_to_english(
-                    claim.text, claim.lang
-                )
-
-                # Update the claim with translation
-                claim.text_en = translated_text
-                claim.confidence = confidence
-            else:
-                # English claims don't need translation
-                claim.text_en = claim.text
-                claim.confidence = 1.0
-
-            translated_claims.append(claim)
-
-        return translated_claims
+        """Translate all claims before updating any claim's English text."""
+        results = [
+            self.translate_to_english(claim.text, claim.lang) for claim in claims
+        ]
+        for claim, (text, confidence) in zip(claims, results, strict=True):
+            claim.text_en = text
+            claim.confidence = confidence
+        return claims
 
     def batch_translate(
-        self, texts: list[str], source_lang: str
-    ) -> list[tuple[str, float]]:
-        """
-        Translate multiple texts in batch for efficiency.
-
-        Args:
-            texts: List of texts to translate
-            source_lang: Source language code
-
-        Returns:
-            List of (translated_text, confidence) tuples
-        """
-        results = []
-
-        for text in texts:
-            translated, confidence = self.translate_to_english(text, source_lang)
-            results.append((translated, confidence))
-
-        return results
+        self, texts: list[str], source_lang: str, target_lang: str = "en"
+    ) -> list[tuple[str, float | None]]:
+        """Translate complete inputs, raising if any input cannot be translated."""
+        return [self.translate(text, source_lang, target_lang) for text in texts]
 
 
 class TextCleaner:

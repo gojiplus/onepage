@@ -112,8 +112,8 @@ def test_translated_duplicates_keep_both_revisions_and_references():
     with (
         patch("wikifuse.merge.ArticleFetcher.fetch_all", return_value=fetched),
         patch(
-            "wikifuse.merge.TranslationService.translate_to_english",
-            side_effect=lambda text, lang: (translations[text], 1.0),
+            "wikifuse.merge.TranslationService.translate",
+            side_effect=lambda text, lang, target: (translations[text], 1.0),
         ),
     ):
         ir = merge_article("Q1", ["en", "fr"], use_llm=False)

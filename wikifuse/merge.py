@@ -91,15 +91,11 @@ class TextMerger:
                     continue
 
                 heading_norm = self._normalize_heading(heading, lang, target_lang)
-                if heading_norm is None:
-                    continue
 
                 if lang != target_lang:
-                    translated, _ = self.translator.translate_to_english(
-                        clean_text, lang
+                    translated, _ = self.translator.translate(
+                        clean_text, lang, target_lang
                     )
-                    if translated.startswith("[TRANSLATION UNAVAILABLE"):
-                        continue
                     clean_text = translated
 
                 wiki = f"{lang}wiki"
@@ -157,8 +153,6 @@ class TextMerger:
                     continue
 
                 heading_norm = self._normalize_heading(heading, lang, target_lang)
-                if heading_norm is None:
-                    continue
 
                 sentences = [
                     TextCleaner.clean_sentence(s)
@@ -167,14 +161,13 @@ class TextMerger:
                 ]
 
                 if lang != target_lang:
-                    translations = self.translator.batch_translate(sentences, lang)
+                    translations = self.translator.batch_translate(
+                        sentences, lang, target_lang
+                    )
                     for _original, (translated, _confidence) in zip(
                         sentences, translations, strict=False
                     ):
-                        if (
-                            not translated.startswith("[TRANSLATION UNAVAILABLE")
-                            and translated not in grouped[heading_norm]
-                        ):
+                        if translated not in grouped[heading_norm]:
                             grouped[heading_norm].append(translated)
                 else:
                     for sentence in sentences:
@@ -183,23 +176,17 @@ class TextMerger:
 
         return {h: " ".join(sents) for h, sents in grouped.items() if sents}
 
-    def _normalize_heading(
-        self, heading: str, lang: str, target_lang: str
-    ) -> str | None:
+    def _normalize_heading(self, heading: str, lang: str, target_lang: str) -> str:
         """Normalize a section heading to the target language."""
         heading_norm = heading.strip()
+        if heading_norm == "lead":
+            return "lead"
 
         if lang != target_lang:
-            translated_heading, _ = self.translator.translate_to_english(heading, lang)
-            if translated_heading.startswith("[TRANSLATION UNAVAILABLE"):
-                return None
+            translated_heading, _ = self.translator.translate(
+                heading, lang, target_lang
+            )
             heading_norm = translated_heading.strip()
-
-        heading_ascii = heading_norm.encode("ascii", "ignore").decode().strip()
-        if heading_ascii and len(heading_ascii) > 2:
-            heading_norm = heading_ascii
-        elif lang != target_lang:
-            return None
 
         return heading_norm
 
@@ -275,17 +262,13 @@ def merge_article(
         source = fetched["articles"][lang]["provenance"]
         for heading, passages in parsed.passages.items():
             normalized = text_merger._normalize_heading(heading, lang, target_lang)
-            if normalized is None:
-                continue
             claims = grouped.setdefault(normalized, [])
             for passage in passages:
                 text = TextCleaner.extract_plain_text(passage.text)
                 if not text:
                     continue
                 if lang != target_lang:
-                    text, _ = text_merger.translator.translate_to_english(text, lang)
-                    if text.startswith("[TRANSLATION UNAVAILABLE"):
-                        continue
+                    text, _ = text_merger.translator.translate(text, lang, target_lang)
                 sources = []
                 for raw in passage.references:
                     if raw not in reference_ids:

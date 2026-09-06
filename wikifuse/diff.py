@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 import re
 from dataclasses import dataclass, field
+from html import escape
 
 from .merge import merge_article
 from .models import IntermediateRepresentation
@@ -274,7 +275,7 @@ def _build_new_sections_html(new_sections: list[str]) -> str:
     """Build HTML for new sections list."""
     if not new_sections:
         return ""
-    items = "".join(f"<li>{s}</li>" for s in new_sections)
+    items = "".join(f"<li>{escape(s)}</li>" for s in new_sections)
     return (
         '<div class="new-sections">'
         "<h2>New Sections from Other Languages</h2>"
@@ -292,7 +293,7 @@ def generate_diff_html(comparison: ComparisonResult, output_path: str) -> None:
     """
     base = comparison.base_stats
     merged = comparison.merged_stats
-    langs_str = "+".join(comparison.compare_langs)
+    langs_str = escape("+".join(comparison.compare_langs))
 
     def format_change(base_val: int, merged_val: int) -> str:
         diff = merged_val - base_val
@@ -315,7 +316,7 @@ def generate_diff_html(comparison: ComparisonResult, output_path: str) -> None:
             f"""
         <div class="section {"new-section" if diff.is_new else ""}">
             <div class="section-header">
-                <h3>{diff.title} {new_badge}</h3>
+                <h3>{escape(diff.title)} {new_badge}</h3>
                 <span class="word-count">
                     {diff.base_word_count} words &rarr; {diff.merged_word_count} words
                     (<span class="{word_change_class}">{word_change_str}</span>)
@@ -325,12 +326,12 @@ def generate_diff_html(comparison: ComparisonResult, output_path: str) -> None:
                 <summary>Show content</summary>
                 <div class="content-comparison">
                     <div class="base-content">
-                        <h4>{comparison.base_lang.upper()}-only</h4>
-                        <p>{diff.base_text or "<em>No content</em>"}</p>
+                        <h4>{escape(comparison.base_lang.upper())}-only</h4>
+                        <p>{escape(diff.base_text) or "<em>No content</em>"}</p>
                     </div>
                     <div class="merged-content">
                         <h4>Merged</h4>
-                        <p>{diff.merged_text or "<em>No content</em>"}</p>
+                        <p>{escape(diff.merged_text) or "<em>No content</em>"}</p>
                     </div>
                 </div>
             </details>
@@ -343,7 +344,7 @@ def generate_diff_html(comparison: ComparisonResult, output_path: str) -> None:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comparison: {comparison.entity_name} ({comparison.qid})</title>
+    <title>Comparison: {escape(comparison.entity_name)} ({escape(comparison.qid)})</title>
     <style>
         * {{
             box-sizing: border-box;
@@ -464,16 +465,16 @@ def generate_diff_html(comparison: ComparisonResult, output_path: str) -> None:
     </style>
 </head>
 <body>
-    <h1>{comparison.entity_name} ({comparison.qid})</h1>
-    <p>Comparing: {comparison.base_lang.upper()}-only vs Merged ({langs_str})</p>
+    <h1>{escape(comparison.entity_name)} ({escape(comparison.qid)})</h1>
+    <p>Comparing: {escape(comparison.base_lang.upper())}-only vs Merged ({langs_str})</p>
 
     <div class="stats-table">
         <h2>Summary Statistics</h2>
         <table>
             <tr>
                 <th>Metric</th>
-                <th>{comparison.base_lang.upper()}-only</th>
-                <th>Merged ({"+".join(comparison.compare_langs)})</th>
+                <th>{escape(comparison.base_lang.upper())}-only</th>
+                <th>Merged ({langs_str})</th>
                 <th>Change</th>
             </tr>
             <tr>

@@ -1,7 +1,8 @@
 """Wikitext renderer from IR to MediaWiki format."""
 
 import re
-from urllib.parse import quote
+from html import escape
+from urllib.parse import quote, urlsplit
 
 from .models import Claim, Fact, IntermediateRepresentation, Reference, Section
 
@@ -284,7 +285,7 @@ class HTMLRenderer:
 
     def render(self, ir: IntermediateRepresentation) -> str:
         """Render the IR to high-quality HTML with full Wikipedia styling."""
-        title = ir.entity.labels.get(self.language, ir.entity.qid)
+        title = escape(ir.entity.labels.get(self.language, ir.entity.qid))
         # Reset reference containers for each render call
         self._ref_counter = 0
         self._ref_map = {}
@@ -292,7 +293,7 @@ class HTMLRenderer:
 
         parts = [
             "<!DOCTYPE html>",
-            '<html lang="en" class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-enabled skin-theme-clientpref-day vector-toc-available">',
+            f'<html lang="{escape(self.language)}" class="client-nojs vector-feature-language-in-header-enabled vector-feature-language-in-main-page-header-disabled vector-feature-sticky-header-disabled vector-feature-page-tools-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-main-menu-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 vector-feature-night-mode-enabled skin-theme-clientpref-day vector-toc-available">',
             "<head>",
             '<meta charset="utf-8"/>',
             '<meta name="viewport" content="width=device-width, initial-scale=1.0"/>',
@@ -328,7 +329,7 @@ class HTMLRenderer:
             f'<h1 id="firstHeading" class="firstHeading mw-first-heading">{title}</h1>',
             "</header>",
             '<div class="vector-body" id="bodyContent">',
-            '<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="en" dir="ltr">',
+            f'<div id="mw-content-text" class="mw-body-content mw-content-ltr" lang="{escape(self.language)}" dir="ltr">',
             '<div class="mw-parser-output">',
         ]
 
@@ -379,9 +380,9 @@ class HTMLRenderer:
         parts = []
         title = section.title.get(self.language)
         if title:
-            level = max(2, section.level)
+            level = min(6, max(2, section.level))
             heading_tag = f"h{level}"
-            parts.append(f"<{heading_tag}>{title}</{heading_tag}>")
+            parts.append(f"<{heading_tag}>{escape(title)}</{heading_tag}>")
 
         content = self._render_section_content(section, ir)
         if content:
@@ -416,7 +417,9 @@ class HTMLRenderer:
             return ""
         rows = []
         for key, values in box.items():
-            rows.append(f"<tr><th>{key}</th><td>{', '.join(values)}</td></tr>")
+            rows.append(
+                f"<tr><th>{escape(key)}</th><td>{escape(', '.join(values))}</td></tr>"
+            )
         return '<table class="infobox">' + "".join(rows) + "</table>"
 
     # ------------------------------------------------------------------
@@ -425,7 +428,7 @@ class HTMLRenderer:
 
     def _render_claim(self, claim: Claim, ir: IntermediateRepresentation) -> str:
         """Render claim text with inline reference markers."""
-        text = claim.text
+        text = escape(claim.text)
         if claim.sources:
             markers = []
             for source_id in claim.sources:
@@ -454,23 +457,24 @@ class HTMLRenderer:
     def _format_reference(self, ref: Reference) -> str:
         """Format a reference for display in HTML."""
         parts = []
-        title = ref.title or ref.url or "Reference"
-        if ref.url:
+        title = escape(ref.title or ref.url or "Reference")
+        url = _http_url(ref.url)
+        if url:
             parts.append(
-                f'<cite class="citation"><a href="{ref.url}" class="external">{title}</a>'
+                f'<cite class="citation"><a href="{escape(url)}" class="external">{title}</a>'
             )
         else:
             parts.append(f'<cite class="citation">{title}')
 
         details = []
         if ref.author:
-            details.append(ref.author)
+            details.append(escape(ref.author))
         if ref.publisher:
-            details.append(ref.publisher)
+            details.append(escape(ref.publisher))
         if ref.date:
-            details.append(ref.date)
+            details.append(escape(ref.date))
         if ref.doi:
-            details.append(f"doi:{ref.doi}")
+            details.append(f"doi:{escape(ref.doi)}")
         if details:
             parts.append(". ".join(["", ", ".join(details)]))
 
@@ -488,20 +492,21 @@ class HTMLRenderer:
         for image in images[:6]:
             # Clean image filename
             image_name = image.replace("File:", "").replace("Image:", "")
-            image_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{image_name}?width=300"
+            encoded_name = quote(image_name, safe="")
+            image_url = f"https://commons.wikimedia.org/wiki/Special:FilePath/{encoded_name}?width=300"
 
             parts.append(
                 f"""
             <div class="gallerybox" style="width: 155px;">
                 <div class="thumb" style="width: 150px; height: 150px;">
                     <div style="margin:0px auto;">
-                        <a href="https://commons.wikimedia.org/wiki/File:{image_name}" class="image">
-                            <img alt="{image_name}" src="{image_url}" style="max-width: 150px; max-height: 150px;"/>
+                        <a href="https://commons.wikimedia.org/wiki/File:{encoded_name}" class="image">
+                            <img alt="{escape(image_name)}" src="{image_url}" style="max-width: 150px; max-height: 150px;"/>
                         </a>
                     </div>
                 </div>
                 <div class="gallerytext">
-                    <p>{image_name[:50]}...</p>
+                    <p>{escape(image_name[:50])}...</p>
                 </div>
             </div>
             """
@@ -542,3 +547,18 @@ def render_attribution(ir: IntermediateRepresentation) -> str:
             f"- [{title} ({language}), revision {source['rev_id']}]({revision}); [contributors]({history})"
         )
     return "\n".join(lines) + "\n"
+
+
+def _http_url(url: str | None) -> str | None:
+    """Accept absolute HTTP(S) links without browser-normalized control characters."""
+    if not url or re.search(r"[\s\x00-\x1f\x7f\\]", url):
+        return None
+    try:
+        parts = urlsplit(url)
+        if parts.scheme.lower() not in {"http", "https"} or not parts.hostname:
+            return None
+        if parts.port is not None and not 0 < parts.port <= 65535:
+            return None
+    except ValueError:
+        return None
+    return url

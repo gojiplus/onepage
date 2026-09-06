@@ -1,5 +1,7 @@
 """wikifuse: Merge Wikipedia articles across languages into one comprehensive page."""
 
+from importlib.metadata import version
+
 from .api import ArticleFetcher, WikidataClient, WikipediaClient
 from .merge import ImageMerger, InfoboxMerger, TextMerger, merge_article
 from .models import (
@@ -32,4 +34,4 @@ __all__ = [
     "Section",
 ]
 
-__version__ = "0.1.0"
+__version__ = version("wikifuse")

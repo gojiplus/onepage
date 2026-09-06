@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![CI](https://github.com/gojiplus/wikifuse/actions/workflows/ci.yml/badge.svg)](https://github.com/gojiplus/wikifuse/actions/workflows/ci.yml)
 
-Merge Wikipedia articles across languages into one comprehensive, source-attributed page.
+Combine Wikipedia passages across languages while preserving their citations and source revisions.
 
 ## The Problem
 
@@ -22,18 +22,6 @@ export WIKIFUSE_TRANSLATE_API_KEY=your-key
 # Compare English-only vs merged English+French for Rachida Dati
 wikifuse diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
 ```
-
-Example output:
-
-```
-$ wikifuse diff --qid Q27182 --base en --compare en,fr --out ./rachida_dati/ --no-llm
-
-Base (en only):     3,245 words, 12 references
-Merged (en+fr):     5,891 words, 47 references
-Gain:               +81% words, +292% references
-```
-
-See [example diff output](https://github.com/gojiplus/wikifuse/blob/main/examples/Q27182/diff.html) comparing Rachida Dati's English vs English+French articles.
 
 ## Commands
 
@@ -144,6 +132,22 @@ wikifuse merge --qid Q1058 --languages en,hi --out ./output/ --no-llm
 - Wikidata statements are under compatible open licenses
 
 ## Contributing
+
+The base installation includes Click, Requests, wikitextparser, and the OpenAI client. It does not install Torch, Transformers, or an embedding model.
+
+Run the same checks used in CI:
+
+```bash
+uv sync --locked --group docs
+uv run ruff check wikifuse/ tests/
+uv run ruff format --check wikifuse/ tests/
+uv run vulture wikifuse/ --min-confidence 80
+uv run deptry wikifuse/
+uv run pydoclint wikifuse/
+uv run pytest tests/ -v
+uv run sphinx-build docs docs/_build -b html -W
+uv build
+```
 
 Issues and PRs welcome. Focus areas:
 - Enhanced translation service integration

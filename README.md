@@ -157,3 +157,10 @@ Issues and PRs welcome. Focus areas:
 ## License
 
 MIT
+
+## Quality benchmark
+
+The [multilingual benchmark](https://github.com/gojiplus/wikifuse/tree/main/benchmarks) records fact retention, repeated
+facts, citation attachment, and conflicting claims using pinned Wikipedia excerpts.
+Its offline reference run is reproducible; live translation quality is evaluated
+separately with a configured service.
